@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+8. Crea un script que pregunte cual de los ejercicios anteriores quieres ejecutar. Utiliza
+funciones. Cada script debe estar en un archivo js distinto. No hay que incluirlo. (1 punto)
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <script src="js/ej1.js"></script>
+        <script src="js/ej2.js"></script>
+        <script src="js/ej3.js"></script>
+        <script src="js/ej4.js"></script>
+        <script src="js/ej5.js"></script>
+        <script src="js/ej6.js"></script>
+        <script src="js/ej7.js"></script>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            var cadena=prompt ("Introduce número de ejercicio(1..7) o otra cosa para salir");
+            switch(cadena)
+            {
+                case "1":ej1();break;
+                case "2":ej2();break;
+                case "3":ej3();break;
+                case "4":ej4();break;
+                case "5":ej5();break;
+                case "6":ej6();break;
+                case "7":ej7();break;
+                case "0":break;
+                default:alert("Has metido un número incorrecto");break;
+            }
+            
+            
+        </script>
+    </body>
+</html>

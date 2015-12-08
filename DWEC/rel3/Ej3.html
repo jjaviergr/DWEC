@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<!--
+3. Crear un script que muestre una cadena de color azul, en negrita y cursiva al mismo tiempo.
+(0,5 puntos)
+-->
+<html>
+<body>
+    <p id="cadena"></p>
+    <script>
+        var str = "Mi cadena";
+        str = str.bold();
+        str=str.fontcolor("blue");
+        str=str.italics();
+        document.getElementById("cadena").innerHTML = str;
+    </script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!--
+ 4. En este ejercicio vamos a realizar un congreso de los imputados. Para ello deberá crear
+varias “clases”.
+ a) Los objetos tienen que estar en arrays. Un array de proposiciones de ley, y un array de
+partido políticos.
+ b) Cree un Objeto que se llame ley que contenga el texto de la proposición de ley y del
+partido que venga.
+• Partido que la ha creado.
+• Si se ha aprobado o no
+ c) Objeto de Partido. Cada partido tendrá un nombre, e ideario (izquierda, derecha, centro,
+vendidos, etc...).
+ d) Cree un Objeto político que contenga los siguientes datos:
+• Nombre .
+• Apellidos.
+• DNI.
+• Partido al que pertenece.
+• Provincia a la que representa.
+• Ideología (izquierdas, derechas, centro, vendidos)
+• Un método votar que reciba un objeto proposición de ley. Si viene de su partido
+votará que sí un 98% de las veces. Si no será en contra en un 0.5% y en el restante
+1.5% votará abstención.
+ e) Simule un parlamento. Deberás crear un array de políticos, y otro array de proposiciones
+de ley. Deberéis tener la opción de añadir políticos, partidos, proposiciones de ley.
+ f) En la web deberéis mostrar entre otras cosas estadísticas, del tipo miembros de un
+partido, políticos por ideas y si se os ocurre algo más mejor.
+ g) En la página web mostrando el resultado de la votación con un plano del parlamento con
+luces led parecido a este:
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .semi-circulo 
+            {
+                width: 800px; 
+                height: 400px; 
+                border: 2px solid #555; 
+                /*background: #5cb85c;*/
+                -moz-border-radius:0 0 100px 100px ;
+                -webkit-border-radius: 0 0 100px 100px;
+                border-radius: 0px 0px 500px 500px;
+            }
+            .caja { margin-top:  1em;
+                    margin-left: 2em;
+                    margin-rigth: 2em;
+                    float:bottom;
+                    width: 790px;
+                    height: 390px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="semi-circulo" id="micirculo">
+            <div class="caja" id="caja">
+        <script>
+         //creo un parlamento
+         var parla=new parlamento;
+         
+         //creo un partido
+         var mipartido=new partido("mipartido","ultraultrisimaextrema");
+         //creo otro partido
+         var otropartido=new partido("otropartido","ultraultrisimoderado");
+         
+         //meto los partidos en el parlamento
+         parla.add_partido(mipartido);
+         parla.add_partido(otropartido);
+         
+       //  document.write("Partidos de parlamento "+parla.Appartidos.length);
+         
+         
+         
+        //Genero politicos y los meto en su correspondiente partido y en el 
+        //parlamento
+         var aleatorio;
+         for (i=0;i<200;i++)
+         {
+             aleatorio=Math.random(1);
+             if (aleatorio >0.5)
+             {
+                poli=new politico("fulano",i,mipartido,"elepe_sur","ultra");
+                mipartido.add_politico(poli);
+            }
+            else
+            {
+                poli=new politico("fulano",i,otropartido,"elepe_norte","moderada");
+                otropartido.add_politico(poli);
+            }
+            parla.add_politico(poli);
+         }
+         
+         
+         //document.write("<br>politicos mi partido :"+mipartido.Apoliticos.length);
+         //document.write("<br>politicos mi otropartido :"+otropartido.Apoliticos.length);
+         //creo una ley
+         var miley=new ley("propuesta","elepe_sur","");
+        
+         //meto una ley en el parlamento
+         parla.add_pp_ley(miley);
+         
+         //document.write("<br>Leyes en parlamento "+parla.App_ley.length);
+         
+         //pongo al parlamento a votar
+         var resultados=parla.votar_leyes();
+        
+         //muestro estadisticas resultados
+         parla.estadisticas(resultados);
+         
+        //////////////////////////funciones///////////////////////////////////
+        function ley(texto_,partido_)
+        {
+            this.texto_proposicion_ley=texto_;
+            this.partido_origen=partido_;
+            this.aprobada="NO";
+            this.aprobar_ley=function aprobar_ley()
+            {
+                this.aprobada="SI";
+            };
+        }
+        
+        function partido(nombre_,ideario_)
+        {
+            this.Apoliticos=new Array();
+            this.nombre=nombre_;
+            this.ideario=ideario_;
+            
+            this.add_politico=function add_politico(poli)
+            {
+                 this.Apoliticos.push(poli);                 
+            };
+        }
+        
+        
+        function politico(nombre_,apellidos_,dni_,partido_,provincia_,ideologia_)
+        {
+            politico.contador=0; 
+            politico.getContador=function getContador()
+            { 
+                return politico.contador;
+            }
+        
+            this.nombre=nombre_;
+            this.apellidos=apellidos_;
+            this.dni=dni_;
+            this.partido=partido_;
+            this.provincia=provincia_;
+            this.ideologia=ideologia_;
+           
+           
+            this.votar=function votar(pp_ley)
+            {
+               
+                var resultado="";
+                //document.write("<br>Tu partido :"+this.partido);
+               //document.write("<br>partido origen ley "+pp_ley.partido_origen);
+                if ((this.partido==pp_ley.partido_origen) && politico.contador<98)
+                    resultado="SI";
+                else
+                {
+                    if ( politico.contador<99)
+                       resultado="NO";
+                    else
+                        resultado="Abstención";
+                }
+                
+                if (politico.contador%101===0)
+                    politico.contador=0;
+                
+                politico.contador++;
+                //document.write(politico.getContador());
+                
+                return resultado;
+            };
+           
+             
+        
+        }  
+        
+       
+        function parlamento()
+        {        
+            this.Apoliticos=new Array();//politico();
+            this.App_ley=new Array();//ley();
+            this.Appartidos=new Array();//partido();
+            
+            
+            
+            this.votar_leyes=function votar_leyes()
+            {
+                var i,j;
+                var resultados_votaciones=new Array();
+                //document.write("<br>Proceso votar Apoliticos "+this.Apoliticos.length);
+                //document.write("<br>Proceso votar App_ley "+this.App_ley.length);                
+                
+                
+                
+                for (i=0;i<this.App_ley.length;i++)
+                {
+                   
+                    for (j=0;j<this.Apoliticos.length;j++)
+                    {
+                       //document.write("<br>"+this.Apoliticos[j].partido);
+                       resultados_votaciones[j]=this.Apoliticos[j].votar(this.App_ley[i]);
+                       //document.write(" "+j+" "+resultados_votaciones[i]);                 
+                        
+                    }
+                }
+                //document.write(" Parlamento resultados proceso votar :"+ resultados_votaciones.length);
+                return resultados_votaciones;
+            };
+           
+           
+            this.add_pp_ley=function add_pp_ley(ly)
+            {
+                this.App_ley.push(ly);
+                
+            };
+            
+            this.add_partido=function add_partido(part)
+            {
+                 this.Appartidos.push(part);                 
+            };
+             
+            this.add_politico=function add_politico(poli)
+            {
+               this.Apoliticos.push(poli);            
+            };
+             
+            this.estadisticas=function estadisticas(Acad)
+            {
+                //document.write(Acad.length);
+                var i;
+                var str = " x ";
+               
+                //%partido
+                //%provincia
+                //%ideologia
+                
+                var escano,contenido;
+                
+                
+                for (i=0;i<Acad.length;i++)
+                {
+                   
+                    contenido=document.createTextNode(str);
+                    
+                    escano=document.createElement('n');
+                    
+                    escano.appendChild(contenido);
+                    
+                    document.getElementById("caja").appendChild(escano);
+                    //document.getElementsByTagName('n')[i].style.backgroundColor="blue";
+                    
+                    //document.write(Acad[i]);
+                    document.getElementsByTagName('n')[i].style.padding="0.1em 0.1em 0.1em 0.1em";
+                    
+                    if (Acad[i]=="SI")
+                    { 
+                       document.getElementsByTagName('n')[i].style.backgroundColor="blue";
+                       
+                    }
+                    
+                    if (Acad[i]=="NO")
+                    {
+                       document.getElementsByTagName("n")[i].style.backgroundColor="red";
+                    }
+                    
+                    if (Acad[i]=="Abstención")
+                    {
+                       document.getElementsByTagName("n")[i].style.backgroundColor="yellow";
+                    }
+                    
+                    
+                     
+                }
+                            
+            };            
+        }
+       
+      
+        </script>
+        </div>
+        </div>
+    </body>
+</html>

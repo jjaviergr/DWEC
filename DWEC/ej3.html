@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+ 3. Cree un array de productos típicos navideños.
+ a) Ordénelos alfabéticamente.
+ b) Muéstrelos en pantalla.
+ c) Pida añadir alguno que no esté y añádalo en su posición correcta. 
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            var lista=new Array("turron","mantecado","mazapan","bombones");
+            lista.sort();
+            document.write("<p>");
+                for (i=0;i<lista.length;i++)
+                {
+                    document.write(lista[i]+" ");
+                }
+            document.write("</p>");
+            var otro=prompt("Mete otro producto");
+            
+            lista.push(otro);
+            
+            lista.sort();
+            
+            document.write("<p>");
+                for (i=0;i<lista.length;i++)
+                {
+                    document.write(lista[i]+" ");
+                }
+            document.write("</p>");
+            
+        </script>
+    </body>
+</html>

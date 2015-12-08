@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+7. Aumente la detección de navegadores. Ahora deberéis detectar todos los navegadores
+existentes. (1 punto)
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p id="nombre"></p>
+        <script>
+            
+       cadena="Tu navegador es  " + navigator.appName 
+       cadena+="<br> " + navigator.appCodeName;
+       cadena+="<br> " + navigator.product;
+       
+       
+       cadena+="<br> " + navigator.userAgent;
+     
+       document.getElementById("nombre").innerHTML =cadena;
+        </script>
+    </body>
+</html>
