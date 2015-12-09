@@ -44,8 +44,8 @@ luces led parecido a este:
                 border-radius: 0px 0px 500px 500px;
             }
             .caja { margin-top:  1em;
-                    margin-left: 2em;
-                    margin-rigth: 2em;
+                    margin-left: 0.75em;
+                    margin-rigth: 0.75em;
                     float:bottom;
                     width: 790px;
                     height: 390px;
@@ -79,13 +79,13 @@ luces led parecido a este:
          {
              aleatorio=Math.random(1);
              if (aleatorio >0.5)
-             {
-                poli=new politico("fulano",i,mipartido,"elepe_sur","ultra");
+             {//                   ombre_,apellidos_,dni_,partido_,provincia_,ideologia
+                poli=new politico("fulano","de los palotes","123456",mipartido,"elepe_sur","ultra");
                 mipartido.add_politico(poli);
             }
             else
             {
-                poli=new politico("fulano",i,otropartido,"elepe_norte","moderada");
+                poli=new politico("jaimito","cuentacuentos","123456",otropartido,"elepe_norte","moderado");
                 otropartido.add_politico(poli);
             }
             parla.add_politico(poli);
@@ -95,7 +95,7 @@ luces led parecido a este:
          //document.write("<br>politicos mi partido :"+mipartido.Apoliticos.length);
          //document.write("<br>politicos mi otropartido :"+otropartido.Apoliticos.length);
          //creo una ley
-         var miley=new ley("propuesta","elepe_sur","");
+         var miley=new ley("propuesta",mipartido,"Subida de sueldo");
         
          //meto una ley en el parlamento
          parla.add_pp_ley(miley);
@@ -135,12 +135,7 @@ luces led parecido a este:
         
         function politico(nombre_,apellidos_,dni_,partido_,provincia_,ideologia_)
         {
-            politico.contador=0; 
-            politico.getContador=function getContador()
-            { 
-                return politico.contador;
-            }
-        
+                    
             this.nombre=nombre_;
             this.apellidos=apellidos_;
             this.dni=dni_;
@@ -151,31 +146,30 @@ luces led parecido a este:
            
             this.votar=function votar(pp_ley)
             {
+                var numero=Math.random()*100+1;
+                var n=0;
                
-                var resultado="";
+                var resultado=new Array();
                 //document.write("<br>Tu partido :"+this.partido);
                //document.write("<br>partido origen ley "+pp_ley.partido_origen);
-                if ((this.partido==pp_ley.partido_origen) && politico.contador<98)
-                    resultado="SI";
+                if ((this.partido.nombre===pp_ley.partido_origen.nombre) && numero<98)
+                {
+                  resultado.push("SI,"+this.partido.nombre);                    
+                }
                 else
                 {
-                    if ( politico.contador<99)
-                       resultado="NO";
+                    if (numero<98.5)
+                    {
+                       resultado.push("NO,"+this.partido.nombre);                        
+                    }
                     else
-                        resultado="Abstención";
-                }
-                
-                if (politico.contador%101===0)
-                    politico.contador=0;
-                
-                politico.contador++;
-                //document.write(politico.getContador());
-                
+                    {
+                       resultado.push("Abstención,"+this.partido.nombre);
+                    }
+                }                
                 return resultado;
             };
            
-             
-        
         }  
         
        
@@ -231,51 +225,129 @@ luces led parecido a este:
             this.estadisticas=function estadisticas(Acad)
             {
                 //document.write(Acad.length);
-                var i;
-                var str = " x ";
+                var i,si=0,no=0,abstenc=0;
+                
+                var escano,aspecto,str,arr;
                
-                //%partido
-                //%provincia
-                //%ideologia
-                
-                var escano,contenido;
-                
-                
                 for (i=0;i<Acad.length;i++)
                 {
-                   
-                    contenido=document.createTextNode(str);
-                    
+                    aspecto=document.createElement('div');
                     escano=document.createElement('n');
-                    
-                    escano.appendChild(contenido);
+                    escano.appendChild(aspecto);
                     
                     document.getElementById("caja").appendChild(escano);
-                    //document.getElementsByTagName('n')[i].style.backgroundColor="blue";
+                                        
+                    document.getElementsByTagName('n')[i].style.padding="0.3em ";
+                    document.getElementsByTagName('n')[i].style.Height="0.15em";
+                    document.getElementsByTagName('n')[i].style.Width="0.15em";
+                    document.getElementsByTagName('n')[i].style.float="left";
+                    document.getElementsByTagName('n')[i].style.marginTop="0.1em";
+                    document.getElementsByTagName('n')[i].style.marginBottom="0.1em";
+                    document.getElementsByTagName('n')[i].style.marginRight="0.1em";
+                    document.getElementsByTagName('n')[i].style.marginLeft="0.1em";
                     
-                    //document.write(Acad[i]);
-                    document.getElementsByTagName('n')[i].style.padding="0.1em 0.1em 0.1em 0.1em";
+                   
+                    var Vpartidos_contador_SI=new Array();
+                    var Vpartidos_contador_NO=new Array();
+                    var Vpartidos_contador_ABS=new Array();
+                    for (var z=0;z<this.Appartidos.length;z++)
+                    {
+                        Vpartidos_contador_SI.push(0);
+                        Vpartidos_contador_NO.push(0);
+                        Vpartidos_contador_ABS.push(0);
+                    }
+                   
+                    str=Acad[i].toString();
+                    arr=str.split(',');
                     
-                    if (Acad[i]=="SI")
+                    if (arr[0]==="SI")
                     { 
-                       document.getElementsByTagName('n')[i].style.backgroundColor="blue";
+                       document.getElementsByTagName('n')[i].style.backgroundColor="lightgreen";  
+                       si++;                          
+                    }
+                    
+                   
+                    if (arr[0]==="NO")
+                    {
+                       document.getElementsByTagName("n")[i].style.backgroundColor="lightblue";
+                       no++;                   
+                    }
+                    
+                    if (arr[0]==="Abstención")
+                    {
+                       document.getElementsByTagName("n")[i].style.backgroundColor="cyan";
+                       abstenc++;
                        
                     }
                     
-                    if (Acad[i]=="NO")
-                    {
-                       document.getElementsByTagName("n")[i].style.backgroundColor="red";
-                    }
-                    
-                    if (Acad[i]=="Abstención")
-                    {
-                       document.getElementsByTagName("n")[i].style.backgroundColor="yellow";
-                    }
-                    
-                    
-                     
                 }
-                            
+                //////////////////////////////////////
+                 for (i=0;i<Acad.length;i++)
+                 {
+                     str=Acad[i].toString();
+                     arr=str.split(',');
+                     switch(arr[0])
+                     {
+                         case "SI":
+                         for(var z=0;z<this.Appartidos.length;z++)    
+                         {
+                             if (this.Appartidos[z].nombre===arr[1])
+                             {
+                                 Vpartidos_contador_SI[z]++;
+                             }
+                         }
+                    
+                         ;break;
+                         case "NO":
+                         for(var z=0;z<this.Appartidos.length;z++)    
+                         {
+                             if (this.Appartidos[z].nombre===arr[1])
+                             {
+                                 Vpartidos_contador_NO[z]++;
+                             }
+                         }
+                             
+                    ;break;
+                         case "Abstención":
+                                  for(var z=0;z<this.Appartidos.length;z++)    
+                         {
+                             if (this.Appartidos[z].nombre===arr[1])
+                             {
+                                 Vpartidos_contador_ABS[z]++;
+                             }
+                         }
+                    ;break;
+                     }
+                 }
+                //////////////////////////////////////
+                for (i=0;i<15;i++)
+                   document.write("<br>"); 
+               
+                document.write("SI :"+si);
+                for (i=0;i<Vpartidos_contador_SI.length;i++)
+                {
+                   document.write("<br>");
+                   document.write(this.Appartidos[i].nombre+" "+Vpartidos_contador_SI[i]);                
+                }
+                
+                document.write("<br><br>");
+                document.write("NO :"+no);
+                
+                for (i=0;i<this.Appartidos.length;i++)
+                {
+                   document.write("<br>");
+                   document.write(this.Appartidos[i].nombre+" "+Vpartidos_contador_NO[i]);                
+                }
+                
+               
+                 document.write("<br><br>");
+                document.write("ABS :"+abstenc);
+                for (i=0;i<this.Appartidos.length;i++)
+                {
+                   document.write("<br>");
+                   document.write(this.Appartidos[i].nombre+" "+Vpartidos_contador_ABS[i]);                
+                }
+               
             };            
         }
        
