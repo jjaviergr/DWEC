@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+1. Elaborar una función que compruebe que la letra del DNI es la correcta.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            
+  
+            var dni=prompt("Introduce tu DNI con letra (sin espacios): ");
+            if (verificaDNI(dni))
+                alert ("El DNI es correcto\n");
+              else
+                alert("El DNI no es correcto\n");
+
+              
+            
+            function letraDNI(dni)
+            {
+              var letra=new Array("T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E");
+             
+               //alert(Number(dni)%23+"-"+letra[dni%23]);
+              return letra[dni%23];
+            }
+            
+            function verificaDNI(dni)
+            {
+              var numero=0;
+              if (dni.length!==9)
+                  return false;
+              else
+              {
+               
+                numero=dni.slice(0,dni.length-1);
+                               
+                return (letraDNI(numero).toLowerCase()===dni.charAt(8).toLowerCase());
+                
+              }
+            }
+                        
+        </script>
+    </body>
+</html>

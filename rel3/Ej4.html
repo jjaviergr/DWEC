@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+4. Crea un script que introduciendo una fecha de nacimiento nos indique el animal que le
+corresponde según el calendario chino. (0,5 puntos)-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>       
+        <script>
+           var animales="Raton,Bufalo,Tigre,Gato,Dragon,Serpiente,Caballo,Cabra,Mono,Gallo,Perro,Jabali";
+           cfecha=prompt("Pon Fecha Nacimiento(dd/mm/yyyy ))");
+           //cfecha="02/11/1976";
+           var fecha=new Date(cfecha);
+           var year=fecha.getFullYear();
+           var pos=year % 12;
+           var contador=1;
+           var tuanimal="";
+           for (i=0;(i<animales.length) ;i++)
+           {
+               if (animales.charAt(i)==',')
+                  contador++;
+               if (contador==pos)
+                  tuanimal += animales.charAt(i);
+               if (contador>pos)
+                   break;
+           }           
+           document.write(tuanimal.replace(",",""));
+        </script>
+    </body>
+</html>

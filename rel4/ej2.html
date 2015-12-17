@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+ 2. Crear un programa que muestre, de forma descendente, los 15 primeros números primos.
+Estos números primos deben estar almacenados en un array. Todas los document.write
+tienen que utilizar este array.
+ a) De la lista anterior, mostrar los 3 últimos números.
+ b) Mostrar todos los números primos superiores a 45.
+ c) Elimine los números primos que se encuentren en las posiciones pares.
+
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            
+            var pr=calcula_primos();
+            document.write("<p>Array de números :</p>");
+            for(i=0;i<pr.length;i++)
+            {
+               document.write(pr[i]+" ");
+            }
+            
+            //a
+            document.write("<p>(a) De la lista anterior, mostrar los 3 últimos números.</p>");
+            for(i=pr.length-3;i<pr.length;i++)
+            {
+               document.write(pr[i]+" ");
+            }
+            
+            //b Mostrar todos los números primos superiores a 45
+            document.write("<p>(b)Mostrar todos los números primos superiores a 45</p>");
+            for(i=0;i<pr.length;i++)
+            {
+                if (pr[i]>45)
+                   document.write(pr[i]+" ");
+            }
+            
+            //c) Elimine los números primos que se encuentren en las posiciones pares.
+            document.write("<p>c) Elimine los números primos que se encuentren en las posiciones pares.</p>");
+            for(i=0;i<pr.length;i++)
+            {
+                if (i%2==0)
+                {
+                    document.write(pr[i]+" ");
+                }
+            }
+            
+            function calcula_primos()
+            {
+                var contador=0,dividendo=2,divisor=dividendo-1;
+                var resto=-1;
+                var primos=new Array();
+               var primo=2; 
+               
+               while (contador<15 )
+               {
+
+                    divisor = 1;
+                    do
+                    {
+                        divisor++;
+                    } 
+                    while ((primo)%(divisor)!=0);
+
+                    if (primo==divisor)
+                    {
+                        primos.push(primo);
+                        contador++;
+                    }                    
+                    primo++;
+                    
+                    
+                        
+                };
+                        
+                        
+                        
+                 
+                return(primos);
+            }
+        </script>
+    </body>
+</html>

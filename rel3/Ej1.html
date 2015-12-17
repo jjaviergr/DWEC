@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+ 1. Crea un script te pida introducir una palabra y una letra y te diga el número de repeticiones
+de la letra en la palabras (Utilizar objeto String) (1 punto).
+-->
+<html>
+    <head>
+        <title>EJ1</title>
+        <meta charset="UTF-8">        
+    </head>
+    <body>
+        <script>
+            nombre=new String();
+            palabra=new String();
+                       
+            nombre=prompt("Introduce una palabra :");
+            palabra=prompt("Introduce una letra");
+            
+            vector=nombre.split(palabra);
+           
+            cantidad=vector.length-1
+            document.write("La cantidad de veces que se repita la palabra "
+                    +palabra + " es "+cantidad);
+            
+            
+        </script>
+    </body>
+</html>
