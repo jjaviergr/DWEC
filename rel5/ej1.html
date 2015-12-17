@@ -28,7 +28,11 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
         
         function has_hecho_doble_click(x) // Nunca es invocado por OnDoubleClick         
         {//por que el navegador llama 2 veces a Onclick
-            doble_click=true;
+            this.doble_click=true;
+            var imagen=document.getElementById("uno");
+            alert (""+imagen.click().cancelable);
+            imagen.addEventListener("click", function(event){ event.preventDefault()});
+            
             cadena="Has hecho doble click en ";
             switch(x.id)
             {
@@ -41,13 +45,16 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
     
         function has_hecho_click() 
         {
-            if (doble_click===false)
+            if (this.doble_click===false)
             {   
                 setTimeout(function(){ alert("1 click"); }, 1500);            
             }
             else
             {
-               setTimeout(function d(){doble_click=false;},1500);
+               //setTimeout(function(){ this.doble_click=false; },1500);
+              // document.getElementById("uno").onclick().pre
+            //  document.getElementById("uno").addEventListener("click", function(event){ event.preventDefault()});
+               
             }
         }
         /*
