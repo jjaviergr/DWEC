@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+1. Crea una aplicación en la cual aparezcan tres imágenes, sobre ellas debes
+controlar que:
+a. Controlar que cada una de ellas se ha cargado correctamente. En caso
+contrario mostrar algún mensaje de error.
+b. Al hacer click con el ratón sobre cada una nos muestre el nombre de la
+misma.
+c. Al salir de las imágenes te informe de ello.
+d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <img id="uno" src="img/image.jpg"  onerror="Error(this);"  ondblclick="has_hecho_doble_click(x);" onmouseout="te_has_ido(this);">
+            <img id="dos" src="img/images1.jpg" onerror="Error(this);" ondblclick="has_hecho_doble_click(x);" onclick="has_hecho_click(this)"   onmouseout="te_has_ido(this);">
+            <img id="tres" src="img/images2.jpg" onerror="Error(this);" onclick="has_hecho_click(this)"  ondblclick="has_hecho_doble_click(x);" onmouseout="te_has_ido(this);">
+        </div>
+        <div>
+        <script>
+            
+        function estilos(x)
+        {
+            switch(x.id)
+            {
+               case "uno":alert ("1");break;
+               case "dos":alert ("2");break;
+               case "tres":alert ("3");break;
+            }
+        }
+        function te_has_ido(x)
+        {
+            switch(x.id)
+            {
+               case "uno":alert ("Te has salido de Foto1") ;break;
+               case "dos":alert ("Te has salido de Foto2");break;
+               case "tres":alert ("Te has salido de Foto3");break;
+            }
+        }
+        function has_hecho_click(x)
+        {
+            cadena="Has hecho 1 click en ";
+            switch(x.id)
+            {
+               case "uno":cadena+"Foto1";break;
+               case "dos":cadena+"Foto2";break;
+               case "tres":cadena+"Foto3";break;
+            }
+            alert (cadena);
+        }
+        
+        function has_hecho_doble_click(x)
+        {
+            cadena="Has hecho doble click en ";
+            switch(x.id)
+            {
+               case "uno":cadena+"Foto1";break;
+               case "dos":cadena+"Foto2";break;
+               case "tres":cadena+"Foto3";break;
+            }
+            alert (cadena);
+        }
+        
+        function Error(x)
+        {
+            cadena="Ha ocurrido un error en";
+            switch(x.id)
+            {
+               case "uno":cadena+"Foto1";break;
+               case "dos":cadena+"Foto2";break;
+               case "tres":cadena+"Foto3";break;
+            }
+            alert (cadena);
+            
+        }
+        </script>
+        </div>
+    </body>
+</html>
