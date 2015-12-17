@@ -17,13 +17,40 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
     </head>
     <body>
         <div>
-            <img id="uno" src="img/image.jpg"  onerror="Error(this);"  ondblclick="has_hecho_doble_click(x);" onmouseout="te_has_ido(this);">
-            <img id="dos" src="img/images1.jpg" onerror="Error(this);" ondblclick="has_hecho_doble_click(x);" onclick="has_hecho_click(this)"   onmouseout="te_has_ido(this);">
-            <img id="tres" src="img/images2.jpg" onerror="Error(this);" onclick="has_hecho_click(this)"  ondblclick="has_hecho_doble_click(x);" onmouseout="te_has_ido(this);">
+            <img id="uno" src="img/image.jpg"  onerror="Error(this);"   onclick="has_hecho_click()"  onmouseout="te_has_ido(this);" ondblclick="has_hecho_doble_click(x);">
+           <!-- <img id="dos" src="img/images1.jpg" onerror="Error(this);"  onclick="has_hecho_click(this)"   onmouseout="te_has_ido(this);">
+            <img id="tres" src="img/images2.jpg" onerror="Error(this);"  onclick="has_hecho_click(this)" onmouseout="te_has_ido(this);">-->
         </div>
         <div>
         <script>
             
+        var doble_click=false;
+        
+        function has_hecho_doble_click(x) // Nunca es invocado por OnDoubleClick         
+        {//por que el navegador llama 2 veces a Onclick
+            doble_click=true;
+            cadena="Has hecho doble click en ";
+            switch(x.id)
+            {
+               case "uno":cadena+"Foto1";break;
+               case "dos":cadena+"Foto2";break;
+               case "tres":cadena+"Foto3";break;
+            }
+            alert (cadena);
+        }
+    
+        function has_hecho_click() 
+        {
+            if (doble_click===false)
+            {   
+                setTimeout(function(){ alert("1 click"); }, 1500);            
+            }
+            else
+            {
+               setTimeout(function d(){doble_click=false;},1500);
+            }
+        }
+        /*
         function estilos(x)
         {
             switch(x.id)
@@ -42,7 +69,14 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
                case "tres":alert ("Te has salido de Foto3");break;
             }
         }
-        function has_hecho_click(x)
+        
+        
+        var anterior=null,actual=null;
+        var intervalo=20000;
+        
+       
+        
+        function click_simple(x)
         {
             cadena="Has hecho 1 click en ";
             switch(x.id)
@@ -51,20 +85,10 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
                case "dos":cadena+"Foto2";break;
                case "tres":cadena+"Foto3";break;
             }
-            alert (cadena);
+            alert(cadena);
         }
         
-        function has_hecho_doble_click(x)
-        {
-            cadena="Has hecho doble click en ";
-            switch(x.id)
-            {
-               case "uno":cadena+"Foto1";break;
-               case "dos":cadena+"Foto2";break;
-               case "tres":cadena+"Foto3";break;
-            }
-            alert (cadena);
-        }
+        
         
         function Error(x)
         {
@@ -78,6 +102,7 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
             alert (cadena);
             
         }
+        */
         </script>
         </div>
     </body>
