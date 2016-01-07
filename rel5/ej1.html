@@ -17,22 +17,21 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
     </head>
     <body>
         <div>
-            <img id="uno" src="img/image.jpg"  onerror="Error(this);"   onclick="has_hecho_click()"  onmouseout="te_has_ido(this);" ondblclick="has_hecho_doble_click(x);">
-           <!-- <img id="dos" src="img/images1.jpg" onerror="Error(this);"  onclick="has_hecho_click(this)"   onmouseout="te_has_ido(this);">
-            <img id="tres" src="img/images2.jpg" onerror="Error(this);"  onclick="has_hecho_click(this)" onmouseout="te_has_ido(this);">-->
+            <img id="uno" src="img/image.jpg"    onerror="Error(this);"   ondblclick="has_hecho_doble_click(this)" onclick="has_hecho_click(this)" onmouseout="te_has_ido(this)" >
+            <img id="dos" src="img/images1.jpg"  onerror="Error(this);"   ondblclick="has_hecho_doble_click(this)" onclick="has_hecho_click(this)" onmouseout="te_has_ido(this);"  >
+            <img id="tres" src="img/images2.jpg" onerror="Error(this);"   ondblclick="has_hecho_doble_click(this)" onclick="has_hecho_click(this)" onmouseout="te_has_ido(this);"  >
         </div>
         <div>
         <script>
             
-        var doble_click=false;
+        has_hecho_doble_click.doble_click="false";
         
         function has_hecho_doble_click(x) // Nunca es invocado por OnDoubleClick         
         {//por que el navegador llama 2 veces a Onclick
-            this.doble_click=true;
-            var imagen=document.getElementById("uno");
-            alert (""+imagen.click().cancelable);
-            imagen.addEventListener("click", function(event){ event.preventDefault()});
-            
+            //x.preventDefault();
+            //x.stopImmediatePropagation();
+            //x.stopPropagation();
+            has_hecho_doble_click.doble_click="true";
             cadena="Has hecho doble click en ";
             switch(x.id)
             {
@@ -41,23 +40,28 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
                case "tres":cadena+"Foto3";break;
             }
             alert (cadena);
+            //setTimeout(doble_click=false,2000);
         }
     
-        function has_hecho_click() 
+        function has_hecho_click(x) 
         {
-            if (this.doble_click===false)
+            if (has_hecho_doble_click.doble_click==="false")
             {   
-                setTimeout(function(){ alert("1 click"); }, 1500);            
+                setTimeout(function(){ alert("Has hecho click en "+x.id); }, 1500);  
+                
             }
             else
             {
+               
+                //has_hecho_doble_click.doble_click="false";
+                //alert("Ha sido doble click");
                //setTimeout(function(){ this.doble_click=false; },1500);
               // document.getElementById("uno").onclick().pre
             //  document.getElementById("uno").addEventListener("click", function(event){ event.preventDefault()});
                
             }
         }
-        /*
+        
         function estilos(x)
         {
             switch(x.id)
@@ -83,17 +87,6 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
         
        
         
-        function click_simple(x)
-        {
-            cadena="Has hecho 1 click en ";
-            switch(x.id)
-            {
-               case "uno":cadena+"Foto1";break;
-               case "dos":cadena+"Foto2";break;
-               case "tres":cadena+"Foto3";break;
-            }
-            alert(cadena);
-        }
         
         
         
@@ -109,7 +102,7 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
             alert (cadena);
             
         }
-        */
+        
         </script>
         </div>
     </body>
