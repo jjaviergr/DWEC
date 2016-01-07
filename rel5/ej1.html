@@ -17,50 +17,67 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
     </head>
     <body>
         <div>
-            <img id="uno" src="img/image.jpg"    onerror="Error(this);"   ondblclick="has_hecho_doble_click(this)" onclick="has_hecho_click(this)" onmouseout="te_has_ido(this)" >
-            <img id="dos" src="img/images1.jpg"  onerror="Error(this);"   ondblclick="has_hecho_doble_click(this)" onclick="has_hecho_click(this)" onmouseout="te_has_ido(this);"  >
-            <img id="tres" src="img/images2.jpg" onerror="Error(this);"   ondblclick="has_hecho_doble_click(this)" onclick="has_hecho_click(this)" onmouseout="te_has_ido(this);"  >
+            <img id="uno" src="img/image.jpg"    onerror="Error(this);"   ondblclick="on_click(this)" onclick="on_click(this)" onmouseout="te_has_ido(this)" >
+            <img id="dos" src="img/images1.jpg"  onerror="Error(this);"   ondblclick="on_click(this)" onclick="on_click(this)" onmouseout="te_has_ido(this)"  >
+            <img id="tres" src="img/images2.jpg" onerror="Error(this);"   ondblclick="on_click(this)" onclick="on_click(this)" onmouseout="te_has_ido(this)"  >
         </div>
         <div>
         <script>
-            
-        has_hecho_doble_click.doble_click="false";
+         
+       
         
-        function has_hecho_doble_click(x) // Nunca es invocado por OnDoubleClick         
-        {//por que el navegador llama 2 veces a Onclick
-            //x.preventDefault();
-            //x.stopImmediatePropagation();
-            //x.stopPropagation();
-            has_hecho_doble_click.doble_click="true";
-            cadena="Has hecho doble click en ";
-            switch(x.id)
-            {
-               case "uno":cadena+"Foto1";break;
-               case "dos":cadena+"Foto2";break;
-               case "tres":cadena+"Foto3";break;
-            }
-            alert (cadena);
-            //setTimeout(doble_click=false,2000);
-        }
-    
-        function has_hecho_click(x) 
+        function simple_click(x)
         {
-            if (has_hecho_doble_click.doble_click==="false")
-            {   
-                setTimeout(function(){ alert("Has hecho click en "+x.id); }, 1500);  
-                
-            }
-            else
-            {
-               
-                //has_hecho_doble_click.doble_click="false";
-                //alert("Ha sido doble click");
-               //setTimeout(function(){ this.doble_click=false; },1500);
-              // document.getElementById("uno").onclick().pre
-            //  document.getElementById("uno").addEventListener("click", function(event){ event.preventDefault()});
-               
-            }
+            alert ("Has hecho click en "+x.id);         
         }
+        
+        function doble_click(x) 
+        {   
+            alert ("Has hecho doble click en "+x.id);         
+        }
+        on_click.contador=0;
+        on_click.tiempo1=0;
+        on_click.tiempo2=0;
+        function on_click(x) 
+        {
+           
+           var r=0;
+           
+           on_click.contador++;
+           if (on_click.contador===0)
+              on_click.tiempo1=new Date().getTime();
+           else
+           {
+               if (on_click.contador===1)
+                   on_click.tiempo2=new Date().getTime();
+           }
+           if (on_click.contador % 2 === 0)
+           {                   
+               on_click.contador=0
+
+           }
+
+           
+           r=on_click.tiempo2-on_click.tiempo1;
+
+           r=r/60000 
+
+           if ((r<25000000) && (on_click.tiempo2>0))
+           {
+               doble_click(x);
+               r=0;
+               on_click.tiempo2=0;
+               on_click.tiempo1=0;
+           }
+           else
+           {
+             setTimeout(simple_click(x),800);
+           }
+
+          
+          
+        }
+        
         
         function estilos(x)
         {
@@ -80,15 +97,6 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
                case "tres":alert ("Te has salido de Foto3");break;
             }
         }
-        
-        
-        var anterior=null,actual=null;
-        var intervalo=20000;
-        
-       
-        
-        
-        
         
         function Error(x)
         {
