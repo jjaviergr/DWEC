@@ -39,8 +39,7 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
         on_click.tiempo1=0;
         on_click.tiempo2=0;
         function on_click(x) 
-        {
-           
+        {           
            var r=0;
            
            on_click.contador++;
@@ -53,14 +52,12 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
            }
            if (on_click.contador % 2 === 0)
            {                   
-               on_click.contador=0
-
+               on_click.contador=0;
            }
-
            
            r=on_click.tiempo2-on_click.tiempo1;
 
-           r=r/60000 
+           r=r/60000;
 
            if ((r<25000000) && (on_click.tiempo2>0))
            {
@@ -73,21 +70,8 @@ d. Al hacer doble click te muestre algún efecto visual sobre la imagen.
            {
              setTimeout(simple_click(x),800);
            }
-
-          
-          
         }
-        
-        
-        function estilos(x)
-        {
-            switch(x.id)
-            {
-               case "uno":alert ("1");break;
-               case "dos":alert ("2");break;
-               case "tres":alert ("3");break;
-            }
-        }
+                        
         function te_has_ido(x)
         {
             switch(x.id)
