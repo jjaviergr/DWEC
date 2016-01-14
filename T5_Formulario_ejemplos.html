@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!--
+Realiza una pequeña aplicación en la que exista un formulario con los distintos tipos de input vistos. 
+
+Valida cada campo para que el usuario no pueda introducir un tipo de datos diferente al requerido (onsubmit).
+
+Valida también para que no pueda dejar campos en blanco (eventos de teclado y ratón).
+
+Introduce alguna opción para que el "action" dependa de la elección del usuario.
+
+
+El archivo a subir a la plataforma debe llamarse como sigue: 
+DWEC_Nombre_Tema5_formulario.
+Estado de la entrega
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .azul{
+            color: red;
+            border-bottom: 4px solid blue;
+            }
+            .rojo{
+                color: blue;
+                border-bottom: 4px solid red;
+            }
+            .col{ background-color: #FFFF00;}
+            .color{ padding: .2em; background-color: #FFFF00;}
+            div { margin: .4em 0;}
+            div label { width: 25%; float: left;}
+            .boton{ display:block;margin: 1em 0;}
+
+            
+        </style>
+    </head>
+    <body>
+        
+            <form name="" method="GET">
+                <p>
+                <label>texto 1:</label>
+                <input type="text" id="t1" />
+                <label>texto 2:</label>
+                <input type="text" id="t2" />
+                <input type="submit" value="pulsar" id="btpulsar"/>
+                </p>
+            </form>
+        
+        <p>
+        <form action="pagina.php" method="post" enctype="multipart/form-data" > <br/>
+            <p>
+                Nombre:<input type="text" name="nombre" value="" size="42" maxlength="30"/> 
+                Apellidos:<input type="text" name="ape" value="" size="40" maxlength="80"/> 
+                DNI:<input type="text" name="dni" value="" size="10" maxlength="9" />
+                <br/>
+                Sexo:
+                <input type="radio" name="sexo" value="hombre" checked="checked"/> 
+                Hombre
+                <input type="radio" name="sexo" value="mujer" /> 
+                Mujer
+                <br/><br/>
+                Incluir mi foto: <input type="file" name="foto" /> 
+                <input name="publ" type="checkbox" value="publicidad" checked="checked"/> 
+                <br/><br/>
+                Enviar publicidad
+                <input type="submit" name="enviar" value="Guardar cambios" /> <br/><br/>
+                <input type="reset" name="limpiar" value="Borrar los datos introducidos"/> <br/>
+            </p>
+        </form>
+       
+        <br>
+        <p>
+            <input class="azul" type="button" value="Botón azul" /><br>
+            <input class="rojo" type="button" value="Botón rojo" /><br>
+            <input class="col" type="text" value="texto" /><br>
+            <input class="color" type="text" value="texto" /><br>
+        </p>
+        
+        <fieldset>
+            <legend>Formulario</legend>
+            <div>
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" />
+            </div>
+            <div>
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos" size="35" />
+            </div>
+            <input class="btn" type="submit" value="Darme de alta" />
+        </fieldset>
+        <br>
+        
+        <!--onsubmit-->
+        <form action="URL" method="post" name="formValidado" onsubmit="return validar()">
+            <p>...</p>
+        </form>
+        
+    <script>
+        function iniciar()
+        {
+            cadena1=document.getElementById("t1");
+            cadena2=document.getElementById("t2");
+            bt_pulsado=document.getElementById('btpulsar');
+            bt_pulsado.addEventListener("click",validacion, false);
+        }
+        
+        function validacion()
+        {
+            variable1=cadena1.value.toString();
+            variable2=cadena2.value.toString();
+        }
+        
+        function enviar(form)
+        {
+            if (formulario.alta.checked === true)
+            {
+                formulario.action = "paginas/alta.html";
+            }
+            if (formulario.alta.checked === false)
+            {
+                formulario.action = "paginas/baja.html";
+            }
+            form.submit();
+        }
+        
+        function validacion2() 
+        {
+            valor = document.getElementById("campo").value;
+            if( valor === null || valor.length === 0 )
+            {
+                alert("El campo no puede ser vacío");
+                return false;
+            }
+            return true;
+        }
+        
+        function validaNum() 
+        {
+            valor = document.getElementById("telefono").value;
+            if( isNaN(valor) ) 
+            {
+                alert("El campo tiene que ser numérico");
+                return false;
+            }
+            return true;
+        }
+        
+        function validaFecha() 
+        {
+            var dia = document.getElementById("dia").value;
+            var mes = document.getElementById("mes").value;
+            var ano = document.getElementById("ano").value;
+            fecha = new Date(ano, mes, dia);
+            if( !isNaN(fecha) ) 
+            {
+                return false;
+            }
+            return true;
+        }
+        
+        function validaCheck() 
+        {
+            elemento = document.getElementById("campoCondiciones");
+            if( !elemento.checked ) 
+            {
+                return false;
+            }
+            return true;
+        }
+        
+    </script>
+    </body>
+</html>
