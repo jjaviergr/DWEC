@@ -32,78 +32,61 @@ Estado de la entrega
             div { margin: .4em 0;}
             div label { width: 25%; float: left;}
             .boton{ display:block;margin: 1em 0;}
-
-            
         </style>
     </head>
-    <body>
+    <body>        
         
-            <form name="" method="GET">
-                <p>
-                <label>texto 1:</label>
-                <input type="text" id="t1" />
-                <label>texto 2:</label>
-                <input type="text" id="t2" />
-                <input type="submit" value="pulsar" id="btpulsar"/>
-                </p>
-            </form>
-        
-        <p>
-        <form action="pagina.php" method="post" enctype="multipart/form-data" > <br/>
+        <form action="" method="post" onsubmit="return validar()" > 
             <p>
-                Nombre:<input type="text" name="nombre" value="" size="42" maxlength="30"/> 
-                Apellidos:<input type="text" name="ape" value="" size="40" maxlength="80"/> 
-                DNI:<input type="text" name="dni" value="" size="10" maxlength="9" />
+                <label>Nombre:</label>
+                <input id="nombre" type="text" name="nombre" value="" size="42" maxlength="30"/> 
+                <label>Apellidos:</label>
+                <input id="apellidos" type="text" name="ape" value="" size="40" maxlength="80"/> 
+                <label>DNI:</label>
+                <input id="dni" type="text" name="dni" value="" size="10" maxlength="9" />
                 <br/>
-                Sexo:
-                <input type="radio" name="sexo" value="hombre" checked="checked"/> 
-                Hombre
-                <input type="radio" name="sexo" value="mujer" /> 
-                Mujer
+                <label>Sexo:</label>
+                <input id="hombre" type="radio" name="sexo" value="hombre" checked="checked"/> 
+                <label>Hombre</label>
+                <input id="mujer" type="radio" name="sexo" value="mujer" /> 
+                <label>Mujer</label>
                 <br/><br/>
-                Incluir mi foto: <input type="file" name="foto" /> 
-                <input name="publ" type="checkbox" value="publicidad" checked="checked"/> 
+                <label>Incluir mi foto: </label>
+                <input id="foto" type="file" name="foto" /> 
+                <input id="publicidad" name="publ" type="checkbox" value="publicidad" checked="checked"/> 
                 <br/><br/>
-                Enviar publicidad
+                <label>Enviar publicidad</label>
                 <input type="submit" name="enviar" value="Guardar cambios" /> <br/><br/>
-                <input type="reset" name="limpiar" value="Borrar los datos introducidos"/> <br/>
+                
+                <input id="limpiar" type="reset" name="limpiar" value="Borrar los datos introducidos"/> <br/>
             </p>
         </form>
        
         <br>
-        <p>
-            <input class="azul" type="button" value="Botón azul" /><br>
-            <input class="rojo" type="button" value="Botón rojo" /><br>
-            <input class="col" type="text" value="texto" /><br>
-            <input class="color" type="text" value="texto" /><br>
-        </p>
-        
-        <fieldset>
-            <legend>Formulario</legend>
-            <div>
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" />
-            </div>
-            <div>
-                <label for="apellidos">Apellidos</label>
-                <input type="text" id="apellidos" size="35" />
-            </div>
-            <input class="btn" type="submit" value="Darme de alta" />
-        </fieldset>
-        <br>
-        
+       
         <!--onsubmit-->
-        <form action="URL" method="post" name="formValidado" onsubmit="return validar()">
-            <p>...</p>
-        </form>
+        
         
     <script>
-        function iniciar()
+        
+        function validar()
         {
-            cadena1=document.getElementById("t1");
-            cadena2=document.getElementById("t2");
-            bt_pulsado=document.getElementById('btpulsar');
-            bt_pulsado.addEventListener("click",validacion, false);
+            var nombre = document.getElementById("nombre").value;
+            var apellidos = document.getElementById("apellidos").value;
+            var dni = document.getElementById("dni").value;
+            var hombre = document.getElementById("hombre").value;
+            var mujer = document.getElementById("mujer").value;
+            if ((formulario.hombre.checked === true) || (formulario.mujer.checked === true))
+            {
+                formulario.action = "paginas/alta.html";
+            }
+            var foto = document.getElementById("foto").value;
+            var publicidad = document.getElementById("publicidad").value;
+            
+             
+            
+           
+            form.submit();
         }
         
         function validacion()
@@ -112,19 +95,7 @@ Estado de la entrega
             variable2=cadena2.value.toString();
         }
         
-        function enviar(form)
-        {
-            if (formulario.alta.checked === true)
-            {
-                formulario.action = "paginas/alta.html";
-            }
-            if (formulario.alta.checked === false)
-            {
-                formulario.action = "paginas/baja.html";
-            }
-            form.submit();
-        }
-        
+                
         function validacion2() 
         {
             valor = document.getElementById("campo").value;
