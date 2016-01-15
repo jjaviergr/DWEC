@@ -71,17 +71,24 @@ Estado de la entrega
         
         function validar()
         {
-            var nombre = document.getElementById("nombre").value;
-            var apellidos = document.getElementById("apellidos").value;
-            var dni = document.getElementById("dni").value;
-            var hombre = document.getElementById("hombre").value;
-            var mujer = document.getElementById("mujer").value;
-            if ((formulario.hombre.checked === true) || (formulario.mujer.checked === true))
+            var v=new Array();
+            var c=new Array();
+            
+            v.push(document.getElementById("nombre").value);
+            v.push(document.getElementById("apellidos").value);
+            v.push(document.getElementById("dni").value);
+            v.push(document.getElementById("hombre").value);
+            v.push(document.getElementById("mujer").value);
+            v.push(document.getElementById("foto").value);
+            v.push(document.getElementById("publicidad").value);
+            
+            for (var i=0;i<v.length;i++)            
             {
-                formulario.action = "paginas/alta.html";
+                if (v[i].toString()!=="")            
+                   c.push(true);
             }
-            var foto = document.getElementById("foto").value;
-            var publicidad = document.getElementById("publicidad").value;
+            
+            
             
              
             
