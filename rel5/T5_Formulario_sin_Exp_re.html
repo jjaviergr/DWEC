@@ -55,9 +55,9 @@ Estado de la entrega
                 <input id="email" type="email" name="mail" />
                 
                 <label>Sexo:</label>
-                <input id="hombre" type="radio" name="sexo" value="hombre" /> 
+                <input id="hombre" type="radio"  value="hombre" /> 
                 <label>Hombre</label>
-                <input id="mujer" type="radio" name="sexo" value="mujer" /> 
+                <input id="mujer" type="radio"  value="mujer" /> 
                 <label>Mujer</label>
                 
                 <br>
@@ -78,20 +78,6 @@ Estado de la entrega
         
     <script>
         
-        var campos=["nombre","apellidos","dni","email","correo","sexo"];
-        /*
-        function validar(){
-            valor=document.getElementById("nombre").value;
-            if (valor==null || valor.length==0) 
-            {
-                alert("El campo no puede ser vacío");
-                return false;
-            }
-            return true;
-        }
-*/
-        
-       
         function valida()
         {
             var v=new Array();
@@ -99,15 +85,16 @@ Estado de la entrega
             valor=document.getElementById("nombre").value;
             if (valor===null || valor.length===0) 
             {
-                alert("El campo no puede estar vacío");
+                alert("El campo Nombre no puede estar vacío");
                 v.push(false);
             }
             else
                 v.push(true);
+            
             valor=document.getElementById("apellidos").value;
             if (valor===null || valor.length===0) 
             {
-                alert("El campo no puede estar vacío");
+                alert("El campo Apellidos no puede estar vacío");
                 v.push(false);
             }
             else
@@ -116,23 +103,24 @@ Estado de la entrega
             valor=document.getElementById("dni").value;
             if (valor===null || valor.length===0) 
             {                
-                alert("El campo no puede ser vacío");
+                alert("El campo Dni no puede ser vacío");
                 v.push(false);
             }
             else
             {
-                if (!esDNI(valor))
+                if (!verificaDNI(valor))
                 {
-                    alert("Debes introducir un DNI valido");
+                    alert("Debes introducir un DNI valido (Ej:12345678L)");
                     v.push(false);
                 }
                 else
                     v.push(true);
             }
+            //alert(document.getElementById("email").value);
             valor=document.getElementById("email").value;
             if (valor===null || valor.length===0) 
             {
-                alert("El campo no puede ser vacío");
+                alert("El campo Email no puede estar vacío");
                 v.push(false);
             }
             else
@@ -146,32 +134,61 @@ Estado de la entrega
                     v.push(true);
             }
             
-            valor=document.getElementById("sexo").value;
-            if (valor===null || valor.length===0) 
+            var valor1=document.getElementById("hombre").value;
+            var valor2=document.getElementById("mujer").value;
+            if (!(validaCheck(valor1)&&(!validaCheck(valor2)) || !validaCheck(valor1)&&validaCheck(valor2)))
             {
-                alert("El campo no puede ser vacío");
+                alert("Debes clikar en un sexo");
                 v.push(false);
             }
             else
-               if (!validaCheck(valor))
+            {
+               v.push(true);  
+            }   
+            
+                
+            valor=document.getElementById("fecha").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("Fecha no puede estar vacio");
+                v.push(false);
+            }
+            else
+               if (!valida_fecha(valor))
                 {
-                    alert("Debes validar el sexo");
+                    
                     v.push(false);
                 }
                 else
-                    v.push(true);            
+                    v.push(true); 
+                
+            var bueno=true;
+            var campos=["nombre","apellidos","dni","email","sexo","fecha"];
+            for(var i=0;i<campos.length;i++)
+            {
+                if (v[i]===false)
+                {
+                    document.write(campos[i]+" no es valido<br>");
+                    bueno=false;
+                    break;
+                }
+            }
+            
+            if (bueno)
+            {
+                form.submit();
+            }
+            
+            
+            
         }
         
                
-        function valida_si_cadena()
-        {
-            //variable1=cadena1.value.toString();
-           
-        }
         
-        function valida_nums() 
+        
+        function valida_nums(valor) 
         {
-            valor = document.getElementById("telefono").value;
+            //valor = document.getElementById("telefono").value;
             if( isNaN(valor) ) 
             {
                 alert("El campo tiene que ser numérico");
@@ -180,22 +197,23 @@ Estado de la entrega
             return true;
         }
         
-        function valida_fecha() 
+        function valida_fecha(fecha) 
         {
-            var dia = document.getElementById("dia").value;
-            var mes = document.getElementById("mes").value;
-            var ano = document.getElementById("ano").value;
-            fecha = new Date(ano, mes, dia);
-            if( !isNaN(fecha) ) 
+            var afecha=fecha.split("/");
+            fecha = new Date(afecha[2],afecha[1],afecha[0],0,0,0,0);
+            fecha=new Date(fecha);
+            //alert(afecha[2]+afecha[1]+afecha[0]);
+            if( isNaN(fecha) ) 
             {
+                alert("Debes introducir una fecha valida");
                 return false;
             }
             return true;
         }
         
-        function validaCheck() 
+        function validaCheck(elemento) 
         {
-            elemento = document.getElementById("campoCondiciones");
+            //elemento = document.getElementById("campoCondiciones");
             if( !elemento.checked ) 
             {
                 return false;
@@ -203,6 +221,91 @@ Estado de la entrega
             return true;
         }
        // window.addEventListener('load',valida,false);
+       
+       function letraDNI(dni)
+       {
+          var letra=new Array("T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E");
+
+           //alert(Number(dni)%23+"-"+letra[dni%23]);
+          return letra[dni%23];
+       }
+
+       function verificaDNI(dni)
+       {
+          var numero=0;
+          if (dni.length!==9)
+              return false;
+          else
+          {
+
+            numero=dni.slice(0,dni.length-1);
+
+            return (letraDNI(numero).toLowerCase()===dni.charAt(8).toLowerCase());
+
+          }
+       }
+            
+       function esEmail(mail)
+       {
+           var pos_punto;
+           var pos_arroba;
+           var cuenta_punto=0;
+           var cuenta_arroba=0;
+           var nombre="";
+           var dominio="";
+           var subdominio="";
+           var longitud=false;
+           var resto="";
+           
+           var array=mail.split("");
+           for (var i=0;i<array.length;i++)
+           {
+               if (array[i]==="@")
+               {
+                  
+                  cuenta_arroba++;
+                  pos_arroba=i;
+               }
+               if (array[i]===".")
+               {
+                   cuenta_punto++;
+                   pos_punto=i;
+               }
+           }
+           
+           subdominio=mail.split(".")[1];           
+           ///alert ("subdominio "+subdominio);
+           
+           resto=mail.split(".")[0];
+           
+           dominio=resto.split("@")[1];
+           //alert ("dominio "+dominio);
+           
+           
+           nombre=resto.split("@")[0];
+           //alert ("nombre "+nombre);
+           
+           if (subdominio.length<=3 && dominio.length<15 && nombre.length<20 && subdominio.length>0 && dominio.length>0 && nombre.length>0)
+           { 
+               longitud=true;
+           }
+           else
+           {
+               longitud=false;
+               alert ("La longitud del e-mail no es valida");
+           }
+           
+           if (cuenta_arroba===1 && cuenta_punto===1 && longitud===true )
+           {
+               return true;
+           }
+           else
+           {   
+              // alert ("El formato del email no es valido"+nombre.length+" "+dominio.length+" "+subdominio.length+" "+longitud+" "+cuenta_arroba+" "+cuenta_punto);
+               return false;
+           }
+           
+       }
     </script>
     </body>
 </html>
