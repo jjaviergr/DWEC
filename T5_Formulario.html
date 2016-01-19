@@ -15,7 +15,7 @@ Estado de la entrega
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Formulario</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style type="text/css">
@@ -35,30 +35,39 @@ Estado de la entrega
         </style>
     </head>
     <body>        
-        
-        <form action="" method="post" onsubmit="return validar()" > 
+        <!--<form action=”URL” method=”post” name=”formvalidado” onsubmit=”return validar()”>-->
+        <form action="" method="post" onsubmit="return valida()" > 
             <p>
                 <label>Nombre:</label>
-                <input id="nombre" type="text" name="nombre" value="" size="42" maxlength="30"/> <br>
+                <input id="nombre" type="text" name="nombre" value="" size="42" maxlength="30"/> 
+                
+                <br>
                 <label>Apellidos:</label>
-                <input id="apellidos" type="text" name="ape" value="" size="40" maxlength="80"/> <br>
+                <input id="apellidos" type="text" name="apellidos" value="" size="40" maxlength="80"/> 
+                
+                <br>
+                
                 <label>DNI:</label>
                 <input id="dni" type="text" name="dni" value="" size="10" maxlength="9" />
                 <br/>
+                
+                <label>e-mail:</label>
+                <input id="email" type="email" name="mail" />
+                
                 <label>Sexo:</label>
                 <input id="hombre" type="radio" name="sexo" value="hombre" checked="checked"/> 
                 <label>Hombre</label>
                 <input id="mujer" type="radio" name="sexo" value="mujer" /> 
-                <label>Mujer</label><br>
-                <br>
-                <label>Incluir mi foto: </label>
-                <input id="foto" type="file" name="foto" /> 
-                <br>
-                <input id="publicidad" name="publ" type="checkbox" value="publicidad" checked="checked"/>          
-                <label>Enviar publicidad</label><br>
-                <input type="submit" name="enviar" value="Guardar cambios" /> <br/>
+                <label>Mujer</label>
                 
-                <input id="limpiar" type="reset" name="limpiar" value="Borrar los datos introducidos"/> <br/>
+                <br>
+                <label>fecha</label>
+                <input id="fecha" type="datetime" name="fecha" value="" />  
+                
+                <br>                             
+                <input  class="btn" type="submit" name="enviar" value="Enviar " id="btEnviar" /> 
+                
+                <input id="limpiar" type="reset" name="limpiar" value="Borrar"/> 
             </p>
         </form>
        
@@ -69,52 +78,99 @@ Estado de la entrega
         
     <script>
         
-        function validar()
-        {
-            var v=new Array();
-            var c=new Array();
-            
-            v.push(document.getElementById("nombre").value);
-            v.push(document.getElementById("apellidos").value);
-            v.push(document.getElementById("dni").value);
-            v.push(document.getElementById("hombre").value);
-            v.push(document.getElementById("mujer").value);
-            v.push(document.getElementById("foto").value);
-            v.push(document.getElementById("publicidad").value);
-            
-            for (var i=0;i<v.length;i++)            
-            {
-                if (v[i].toString()!=="")            
-                   c.push(true);
-            }
-            
-            
-            
-             
-            
-           
-            form.submit();
-        }
-        
-        function validacion()
-        {
-            variable1=cadena1.value.toString();
-            variable2=cadena2.value.toString();
-        }
-        
-                
-        function validacion2() 
-        {
-            valor = document.getElementById("campo").value;
-            if( valor === null || valor.length === 0 )
+        var campos=["nombre","apellidos","dni","email","correo","sexo"];
+        /*
+        function validar(){
+            valor=document.getElementById("nombre").value;
+            if (valor==null || valor.length==0) 
             {
                 alert("El campo no puede ser vacío");
                 return false;
             }
             return true;
         }
+*/
         
-        function validaNum() 
+       
+        function valida()
+        {
+            var v=new Array();
+
+            valor=document.getElementById("nombre").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("El campo no puede ser vacío");
+                v.push(false);
+            }
+            valor=document.getElementById("apellidos").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("El campo no puede ser vacío");
+                v.push(false);
+            }
+            valor=document.getElementById("dni").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("El campo no puede ser vacío");
+                v.push(false);
+            }
+            valor=document.getElementById("email").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("El campo no puede ser vacío");
+                v.push(false);
+            }
+            valor=document.getElementById("correo").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("El campo no puede ser vacío");
+                v.push(false);
+            }
+            valor=document.getElementById("sexo").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("El campo no puede ser vacío");
+                v.push(false);
+            }
+            
+        }
+        
+        function valida_si_blanco()
+        {
+            
+            //alert (campos);
+            var v=new Array();
+            var c=new Array();
+            
+            for (var i=0;i<campos.length;i++)            
+               v.push(document.getElementById(campos[i]).value);
+           alert(document.getElementById("nombre").value.toString());
+            alert(v);           
+            
+            for (var i=0;i<v.length;i++)            
+            {
+                if (v[i].toString()!=="")            
+                {
+                    alert(v[i]);
+                    c.push(true);                    
+                }
+               else
+                {
+                   c.push(false);
+                   alert("campo vacio");
+                   return(false);
+                }
+            }
+            return (true);
+        }
+        
+        function valida_si_cadena()
+        {
+            //variable1=cadena1.value.toString();
+           
+        }
+        
+        function valida_nums() 
         {
             valor = document.getElementById("telefono").value;
             if( isNaN(valor) ) 
@@ -125,7 +181,7 @@ Estado de la entrega
             return true;
         }
         
-        function validaFecha() 
+        function valida_fecha() 
         {
             var dia = document.getElementById("dia").value;
             var mes = document.getElementById("mes").value;
@@ -147,7 +203,7 @@ Estado de la entrega
             }
             return true;
         }
-        
+       // window.addEventListener('load',valida,false);
     </script>
     </body>
 </html>
