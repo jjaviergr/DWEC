@@ -55,7 +55,7 @@ Estado de la entrega
                 <input id="email" type="email" name="mail" />
                 
                 <label>Sexo:</label>
-                <input id="hombre" type="radio" name="sexo" value="hombre" checked="checked"/> 
+                <input id="hombre" type="radio" name="sexo" value="hombre" /> 
                 <label>Hombre</label>
                 <input id="mujer" type="radio" name="sexo" value="mujer" /> 
                 <label>Mujer</label>
@@ -99,20 +99,35 @@ Estado de la entrega
             valor=document.getElementById("nombre").value;
             if (valor===null || valor.length===0) 
             {
-                alert("El campo no puede ser vacío");
+                alert("El campo no puede estar vacío");
                 v.push(false);
             }
+            else
+                v.push(true);
             valor=document.getElementById("apellidos").value;
             if (valor===null || valor.length===0) 
             {
+                alert("El campo no puede estar vacío");
+                v.push(false);
+            }
+            else
+                v.push(true);
+            
+            valor=document.getElementById("dni").value;
+            if (valor===null || valor.length===0) 
+            {                
                 alert("El campo no puede ser vacío");
                 v.push(false);
             }
-            valor=document.getElementById("dni").value;
-            if (valor===null || valor.length===0) 
+            else
             {
-                alert("El campo no puede ser vacío");
-                v.push(false);
+                if (!esDNI(valor))
+                {
+                    alert("Debes introducir un DNI valido");
+                    v.push(false);
+                }
+                else
+                    v.push(true);
             }
             valor=document.getElementById("email").value;
             if (valor===null || valor.length===0) 
@@ -120,50 +135,34 @@ Estado de la entrega
                 alert("El campo no puede ser vacío");
                 v.push(false);
             }
-            valor=document.getElementById("correo").value;
-            if (valor===null || valor.length===0) 
+            else
             {
-                alert("El campo no puede ser vacío");
-                v.push(false);
+                if (!esEmail(valor))
+                {
+                    alert("Debes introducir un email valido");
+                    v.push(false);
+                }
+                else
+                    v.push(true);
             }
+            
             valor=document.getElementById("sexo").value;
             if (valor===null || valor.length===0) 
             {
                 alert("El campo no puede ser vacío");
                 v.push(false);
             }
-            
+            else
+               if (!validaCheck(valor))
+                {
+                    alert("Debes validar el sexo");
+                    v.push(false);
+                }
+                else
+                    v.push(true);            
         }
         
-        function valida_si_blanco()
-        {
-            
-            //alert (campos);
-            var v=new Array();
-            var c=new Array();
-            
-            for (var i=0;i<campos.length;i++)            
-               v.push(document.getElementById(campos[i]).value);
-           alert(document.getElementById("nombre").value.toString());
-            alert(v);           
-            
-            for (var i=0;i<v.length;i++)            
-            {
-                if (v[i].toString()!=="")            
-                {
-                    alert(v[i]);
-                    c.push(true);                    
-                }
-               else
-                {
-                   c.push(false);
-                   alert("campo vacio");
-                   return(false);
-                }
-            }
-            return (true);
-        }
-        
+               
         function valida_si_cadena()
         {
             //variable1=cadena1.value.toString();
