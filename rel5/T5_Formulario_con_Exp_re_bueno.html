@@ -62,11 +62,11 @@ Estado de la entrega
                 
                 <br>
                 <label>fecha</label>
-                <input id="fecha" type="datetime" name="fecha" value="" />  
+                <input id="fecha" type="date" name="fecha" value="" />  
                 
                 <br>
                 <label>Telefono</label>
-                <input id="tel" type="tel" name="telefono" value="" /> 
+                <input id="tel" type="text" name="telefono" value="" /> 
                 
                 <br>                             
                 <input  class="btn" type="submit" name="enviar" value="Enviar " id="btEnviar" /> 
@@ -143,14 +143,15 @@ Estado de la entrega
             
             var valor1=document.getElementById("hombre").value;
             var valor2=document.getElementById("mujer").value;
-            if ((validaCheck(valor1)&&(!validaCheck(valor2)) || !validaCheck(valor1)&&validaCheck(valor2)))
+            if (validaCheck(valor1)||validaCheck(valor2))
             {
-                alert("Debes clikar en un sexo");
-                v.push(false);
+                v.push(true);  
             }
             else
             {
-               v.push(true);  
+                alert("Debes clikar en un sexo");
+                v.push(false);
+               
             }   
             
                 
@@ -176,13 +177,11 @@ Estado de la entrega
                 v.push(false);
             }
             else
-               if (!validaTelefono(valor))
-                {
-                    
-                    v.push(false);
-                }
-                else
-                    v.push(true); 
+            {
+               v.push(validaTelefono(valor));
+               ///alert(valor+" "+validaTelefono(valor));
+           }
+                
                 
             var campos=["nombre","apellidos","dni","email","sexo","fecha","telefono"];
             
@@ -254,18 +253,21 @@ Estado de la entrega
        
        function validaTelefono(valor)
        {          
-          if( !(/^\d{9}$/.test(valor)) ) 
+          if( /\+?\d{9,12}/.test(valor) ) 
           {
-             return false;
+             return true;
           }
-          return true;
+          else
+          {  alert("El telefono debe ser formato +00 000000000");}
+          return false;
        }
        
        /**/
         function valida_fecha(fecha) 
         {
-            
-            if((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
+            //alert(fecha);
+            //if((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
+            if ((/\d{4}-\d{1,2}-\d{1,2}/.test(fecha)))
             {
                 return true;
             }
