@@ -39,20 +39,21 @@ Estado de la entrega
         <form action="" method="post" onsubmit="return valida()" > 
             <p>
                 <label>Nombre:</label>
-                <input id="nombre" type="text" name="nombre" value="" size="42" maxlength="30"/> 
+                <input id="nombre" type="text" name="nombre" value="" size="42" maxlength="30" required/> 
                 
                 <br>
                 <label>Apellidos:</label>
-                <input id="apellidos" type="text" name="apellidos" value="" size="40" maxlength="80"/> 
+                <input id="apellidos" type="text" name="apellidos" value="" size="40" maxlength="80" required/> 
                 
                 <br>
                 
                 <label>DNI:</label>
-                <input id="dni" type="text" name="dni" value="" size="10" maxlength="9" />
+                <input id="dni" type="text" name="dni" value="" size="10"  required
+                       pattern="(\d{8})([A-Z]{1})"/>
                 <br/>
                 
                 <label>e-mail:</label>
-                <input id="email" type="email" name="mail" />
+                <input id="email" type="email" name="mail" required pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"/>
                 
                 <label>Sexo:</label>
                 <input id="hombre" type="radio"  value="hombre" /> 
@@ -62,11 +63,12 @@ Estado de la entrega
                 
                 <br>
                 <label>fecha</label>
-                <input id="fecha" type="datetime" name="fecha" value="" />  
+                <input id="fecha" type="date" name="fecha" value="" required/>
+                       <!--pattern="/\d{1,2}\/\d{1,2}\/\d{4}/" />  -->
                 
                 <br>
                 <label>Telefono</label>
-                <input id="tel" type="tel" name="telefono" value="" /> 
+                <input id="tel" type="text" name="telefono" value="" required pattern="/(+34)\d{11}/"/> 
                 
                 <br>                             
                 <input  class="btn" type="submit" name="enviar" value="Enviar " id="btEnviar" /> 
@@ -83,7 +85,7 @@ Estado de la entrega
         
         
     <script>
-        /**/
+        /*
         function valida()
         {
             var v=new Array();
@@ -192,7 +194,7 @@ Estado de la entrega
                    document.write(campos[i]+" no es valido<br>");
             }
         }
-        
+        */
                
         /*
         
