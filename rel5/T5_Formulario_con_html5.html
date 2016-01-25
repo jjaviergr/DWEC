@@ -71,7 +71,7 @@ Estado de la entrega
                 <!--
                 <input id="tel" type="text" name="telefono" value="" required pattern="/\+?\d{9,12}/"/> 
                 -->
-                <input id="tel" type="text" name="telefono" value="" required />
+                <input id="text" type="text" name="telefono" value="" required pattern="\+?\d{9,12}"/>
                 <br>                             
                 <input  class="btn" type="submit" name="enviar" value="Enviar " id="btEnviar" /> 
                 
@@ -90,9 +90,9 @@ Estado de la entrega
        
         function valida()
         {
-            var valor3=document.getElementById("fecha").value;
+            //var valor3=document.getElementById("fecha").value;
 
-            var f=valida_fecha(valor3);
+            //var f=valida_fecha(valor3);
             
             var valor1=document.getElementById("hombre");
             var valor2=document.getElementById("mujer");
@@ -109,10 +109,10 @@ Estado de la entrega
             }   
             
             
-            if (f && sexo)
+            /*if (f && sexo)
                 return true;
             else
-                return false;
+                return false;*/
         }
         
                
