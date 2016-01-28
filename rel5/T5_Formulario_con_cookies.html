@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!--
+Realiza una pequeña aplicación en la que exista un formulario con los distintos tipos de input vistos. 
+
+Valida cada campo para que el usuario no pueda introducir un tipo de datos diferente al requerido (onsubmit).
+
+Valida también para que no pueda dejar campos en blanco (eventos de teclado y ratón).
+
+Introduce alguna opción para que el "action" dependa de la elección del usuario.
+
+
+El archivo a subir a la plataforma debe llamarse como sigue: 
+DWEC_Nombre_Tema5_formulario.
+Estado de la entrega
+-->
+<html>
+    <head>
+        <title>Formulario</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .azul{
+            color: red;
+            border-bottom: 4px solid blue;
+            }
+            .rojo{
+                color: blue;
+                border-bottom: 4px solid red;
+            }
+            .col{ background-color: #FFFF00;}
+            .color{ padding: .2em; background-color: #FFFF00;}
+            div { margin: .4em 0;}
+            div label { width: 25%; float: left;}
+            .boton{ display:block;margin: 1em 0;}
+        </style>
+    </head>
+    <body>        
+        <!--<form action=”URL” method=”post” name=”formvalidado” onsubmit=”return validar()”>-->
+        <form action="" method="post"  > 
+            <p>
+                <label>Nombre:</label>
+                <input id="nombre" type="text" name="nombre" value="" size="42" maxlength="30" /> 
+                
+                <br>
+                <label>Apellidos:</label>
+                <input id="apellidos" type="text" name="apellidos" value="" size="40" maxlength="80" /> 
+                
+                <br>
+                
+                <label>DNI:</label>
+                <input id="dni" type="text" name="dni" value="" size="10"  />
+                <br/>
+                
+                <label>e-mail:</label>
+                <input id="email" type="email" name="mail" />
+                
+                <label>Sexo:</label>
+                <input id="hombre" type="radio"  value="hombre" /> 
+                <label>Hombre</label>
+                <input id="mujer" type="radio"  value="mujer" /> 
+                <label>Mujer</label>
+                
+                <br>
+                <label>fecha</label>
+                <input id="fecha" type="date" name="fecha" value="" />
+                       
+                
+                <br>
+                <label>Telefono</label>
+                <!--
+                <input id="tel" type="text" name="telefono" value="" required pattern="/\+?\d{9,12}/"/> 
+                -->
+                <input id="tel" type="text" name="telefono" value="" />
+                <br>                             
+                <input  class="btn" type="submit" name="enviar" value="Enviar " id="btEnviar" /> 
+                
+                <input id="limpiar" type="reset" name="limpiar" value="Borrar"/> 
+                <button onclick="setCookie('nombre','jose',30);">Guardar</button>
+                <button onclick="checkCookie();">Pruebar</button>
+                <button onclick="alert(getCookie('asd'));">Comprobar</button>
+                
+            </p>
+        </form>
+       
+        <br>
+       
+        <!--onsubmit-->
+        
+        
+    <script>
+         /* 
+        function myFunctionGuardar() {
+            fecha="31 Dec 2017 23:59:59 GMT";
+               document.cookie = "nombre"+"="+document.getElementById("nombre").value+";expires="+fecha; 
+              
+               document.cookie = "apellidos"+"="+document.getElementById("apellidos").value+";expires="+fecha; 
+              document.cookie = "dni"+"="+document.getElementById("dni").value+";expires="+fecha; 
+               document.cookie = "email"+"="+document.getElementById("email").value+";expires="+fecha; 
+               document.cookie = "hombre"+"="+document.getElementById("hombre").value+";expires="+fecha; 
+               document.cookie = "mujer"+"="+document.getElementById("mujer").value+";expires="+fecha; 
+               document.cookie = "fecha"+"="+document.getElementById("fecha").value+";expires="+fecha; 
+               document.cookie = "tel"+"="+document.getElementById("tel").value+";expires="+fecha; 
+               
+               alert (document.cookie);
+        }
+        */
+       
+       function myFunctionComprobar() 
+       {
+            alert("comprobando");
+            var cadena="";
+            cadena+=getCookie("nombre");
+            
+            cadena+=getCookie("apellidos");
+           /* cadena+=getCookie("dni");
+            cadena+=getCookie("email");
+            cadena+=getCookie("hombre");
+            cadena+=getCookie("mujer");
+            cadena+=getCookie("fecha");
+            cadena+=getCookie("tel");*/
+            
+            alert(cadena);
+            
+        }
+        
+        function setCookie(cname, cvalue, exdays) 
+        {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires="+d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+
+        function getCookie(cname) 
+        {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) 
+            {
+                var c = ca[i];
+                while (c.charAt(0)===' ') 
+                    c = c.substring(1);
+                if (c.indexOf(name) === 0) 
+                {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() 
+        {
+            var user = getCookie("username");
+            if (user !=="") 
+            {
+                alert("Welcome again " + user);
+            } else 
+            {
+                user = prompt("Please enter your name:", "");
+                if (user !== "" && user != null) 
+                {
+                    setCookie("username", user, 365);
+                }
+            }
+        }
+        
+        /*
+        function getCookie(cname)
+        {
+            var name = cname + "=";
+            alert("recuperando "+name);
+            //var name=cname;
+            var ca = document.cookie.split(';');
+            alert ("ca"+ca.length);
+            for(var i=0; i<ca.length; i++) 
+            {
+                var c = ca[i];
+                while (c.charAt(0)===' ') 
+                    c = c.substring(1);
+                alert(c);
+                if (c.indexOf(name) === 0) 
+                    return c.substring(name.length,c.length);
+            }
+            return "";
+        }
+        */
+        function valida()
+        {
+            //var valor3=document.getElementById("fecha").value;
+
+            //var f=valida_fecha(valor3);
+            
+            var valor1=document.getElementById("hombre");
+            var valor2=document.getElementById("mujer");
+           
+            var sexo=false;
+            if (!validaCheck(valor1)&&!validaCheck(valor2))
+            {
+                alert("Debes clikar en un sexo");
+               
+            }
+            else
+            {
+                sexo=true;   
+            }   
+            
+            
+            /*if (f && sexo)
+                return true;
+            else
+                return false;*/
+        }
+        
+               
+       
+        function valida_fecha(fecha) 
+        {
+            //alert(fecha);
+            //if((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
+            if ((/\d{4}-\d{1,2}-\d{1,2}/.test(fecha)))
+            {
+                return true;
+            }
+            else
+            {
+                alert("Debes introducir una fecha valida");
+                return false;
+            }
+            
+        }
+       
+        
+        function validaCheck(elemento) 
+        {
+            
+            if( elemento.checked ) 
+            {
+                return true;
+            }
+            else
+            {
+               return false;
+            }
+        }
+       // window.addEventListener('load',valida,false);
+       
+       
+       
+       
+    </script>
+    </body>
+</html>
