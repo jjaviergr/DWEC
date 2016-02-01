@@ -71,10 +71,12 @@ Estado de la entrega
 
             function myFunctionGuardar() {
                 var lista = ["nombre", "apellidos", "dni"];
-                
+                var cadena="";
                 for (var i = 0; i < lista.length; i++)
                 {
-                    setCookie(lista[i], document.getElementById(lista[i]).value, 30);
+                    cadena=document.getElementById(lista[i]).value;
+                    cadena=replace(";","\;");
+                    setCookie(lista[i], cadena, 30);
                 }
 
             }
@@ -87,17 +89,11 @@ Estado de la entrega
                 var cadena = "";
 
                 for (var i = 0; i < lista.length; i++)
-                {
-
+                {                    
                     cadena = getCookie(lista[i]);
+                    cadena=replace("\;",";");
                     alert(cadena);
                 }
-
-
-
-
-
-
             }
 
             function setCookie(cname, cvalue, exdays)
