@@ -75,7 +75,9 @@ Estado de la entrega
                 for (var i = 0; i < lista.length; i++)
                 {
                     cadena=document.getElementById(lista[i]).value;
-                    cadena=replace(";","\;");
+                    //alert ("Antes de replace : "+cadena);
+                    cadena=cadena.replace(";","\+");
+                    //alert ("Despues de replace :"+cadena);
                     setCookie(lista[i], cadena, 30);
                 }
 
@@ -91,7 +93,8 @@ Estado de la entrega
                 for (var i = 0; i < lista.length; i++)
                 {                    
                     cadena = getCookie(lista[i]);
-                    cadena=replace("\;",";");
+                    
+                    cadena=cadena.replace("\+",";");
                     alert(cadena);
                 }
             }
