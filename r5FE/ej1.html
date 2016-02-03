@@ -11,43 +11,90 @@ aleatoria).
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <button type="button" id="Forward" onclick="">Forward</button>
+        <button type="button" id="Atras" onclick="">Forward</button>
         <button type="button" id="Stop"  onclick="">Stop</button>
         <button type="button" id="Play"  onclick="">Play</button>       
-        <button type="button" id="Rewind"  onclick="">Rewind</button>
-        <button type="button" id="Eject/Load"  onclick="Eject()">Eject</button>
+        <button type="button" id="Adelante"  onclick="">Rewind</button>
+        <button type="button" id="Expulsar/Cargar"  onclick="Eject()">Eject</button>
         <button type="button"  id="vol_up" onclick="">Volume Up</button>
         <button type="button" id="vol_down" onclick="">Volume Down</button>
-        
+
+        <audio id="myAudio">
+            <source src="horse.ogg" type="audio/ogg">
+            <source src="horse.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <button onclick="enableControls()" type="button">Enable controls</button>
+        <button onclick="disableControls()" type="button">Disable controls</button>
+        <button onclick="checkControls()" type="button">Check controls status</button>
         <script>
-           function Fordward()
-           {} 
-           function Stop()
-           {} 
-           function Play()
-           {} 
-           function Rewind()
-           {} 
-           function Eject()
-           {
-               
-              
-               var nodo=document.createTextNode("Escoge un fichero para cargar");
-               
-               
-              
-               
-               form=document.createElement("form");
-               input_OK=document.createElement("input");              
-               input_OK.type="file";
-               
-               form.appendChild(input_OK);
-               
-           } 
-           function vol_up()
-           {} 
-           function vol_down()
-           {} 
+            var x = document.getElementById("myAudio");
+
+            function Fordward()
+            {}
+            function Stop()
+            {
+                x.pause();
+            }
+            function Play()
+            {
+                x.play();
+            }
+            function Rewind()
+            {}
+
+            
+             function Eject()
+             {
+                 
+             }
+             /*
+             var nodo = document.createTextNode("Escoge un fichero para cargar");
+             form = document.createElement("form");
+             input_OK = document.createElement("input");
+             input_OK.type = "file";
+             form.appendChild(input_OK);
+             /*************/
+
+            //var select = document.getElementById("selectTrack")
+            /* var path = select.options[0].getAttribute("path")
+             
+             nuevo_audio = document.createElement("audio")
+             nuevo_audio.setAttribute("id", "reproductor")
+             nuevo_audio.setAttribute("controls", "controls")
+             
+             source = document.createElement("source")
+             source.setAttribute("src", path)
+             source.setAttribute("type", "audio/mpeg")
+             source.setAttribute("id", "reproductorSource")
+             
+             nuevo_audio.appendChild(source)
+             
+             padre = document.getElementById("reproductorBox")
+             padre.appendChild(nuevo_audio)
+             
+             
+             }*/
+            function vol_up()
+            {
+                //  < button onclick = "document.getElementById('player').volume += 0.1;" > Subir Volumen < /button>
+                //  < button onclick = "document.getElementById('player').volume -= 0.1;" > Bajar Volumen < /button>
+            }
+            function vol_down()
+            {}
+
+            /************************/
+
+
+
+
+
+
+
+
+
+
+
         </script>
     </body>
 </html>
