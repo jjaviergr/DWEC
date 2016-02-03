@@ -11,14 +11,15 @@ aleatoria).
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <p id="reproduciendo"></p>
         <div>
-            <button type="button" id="Atras" onclick="">Forward</button>
+            <button type="button"  onclick="CancionA();">Canción Anterior</button>
             <button type="button" id="Stop"  onclick="Stop();">Stop</button>
             <button type="button" id="Play"  onclick="Play();">Play</button>       
-            <button type="button" id="Adelante"  onclick="">Rewind</button>
+            <button type="button" onclick="CancionS()">Canción Siguiente</button>
         </div>
         <div>
-            <input type="file" multiple id="Eject"  onclick="Eject()" name="fichero"/>
+            <input type="file" multiple id="Eject"  name="fichero"/>
         </div>
         <div>
             <button type="button"  id="vol_up" onclick="vol_up();">Volume Up</button>
@@ -57,7 +58,8 @@ aleatoria).
 
                 f.src = x.files[i].name;
                 f.play();
-                alert("Play Reproduciendo " + x.files[i].name);
+                document.getElementById("reproduciendo").innerHTML="Reproduciendo " + x.files[i].name;
+                
             }
 
             function siguiente()
@@ -68,17 +70,37 @@ aleatoria).
                     i++;
                     f.src = x.files[i].name;
                     f.play();
-                    alert("sig Reproduciendo " + x.files[i].name);
+                    document.getElementById("reproduciendo").innerHTML="Reproduciendo " + x.files[i].name;
                 }
             }
 
-            function Rewind()
-            {}
-
-
-            function Eject()
+            function CancionA()
             {
-                document.p
+                if (i+1>=0)
+                {
+                    i--;
+                    this.Play();
+                }
+                else
+                {
+                    document.getElementById("reproduciendo").innerHTML="No hay mas canciones antes que esta";
+                }
+                
+            }
+
+
+            function CancionS()
+            {                
+                if (i<x.files.length-1)
+                {
+                    i++;
+                    this.Play();
+                }
+                else
+                {
+                    document.getElementById("reproduciendo").innerHTML="No hay mas canciones despues que esta";
+                }
+                
             }
             /*
              var nodo = document.createTextNode("Escoge un fichero para cargar");
@@ -109,11 +131,17 @@ aleatoria).
              }*/
             function vol_up()
             {
-                document.getElementById('myAudio').volume += 0.1;
+               if (document.getElementById('myAudio').volume!==1.0)
+               {
+                   document.getElementById('myAudio').volume+=0.1;
+               }
             }
             function vol_down()
             {
-                document.getElementById('myAudio').volume -= 0.1;
+                if (document.getElementById('myAudio').volume!==0.0)
+                {
+                    document.getElementById('myAudio').volume-=0.1;
+                }
             }
 
             /************************/
