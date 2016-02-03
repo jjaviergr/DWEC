@@ -11,44 +11,76 @@ aleatoria).
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <button type="button" id="Atras" onclick="">Forward</button>
-        <button type="button" id="Stop"  onclick="">Stop</button>
-        <button type="button" id="Play"  onclick="">Play</button>       
-        <button type="button" id="Adelante"  onclick="">Rewind</button>
-        <button type="button" id="Expulsar/Cargar"  onclick="Eject()">Eject</button>
-        <button type="button"  id="vol_up" onclick="">Volume Up</button>
-        <button type="button" id="vol_down" onclick="">Volume Down</button>
+        <div>
+            <button type="button" id="Atras" onclick="">Forward</button>
+            <button type="button" id="Stop"  onclick="Stop();">Stop</button>
+            <button type="button" id="Play"  onclick="Play();">Play</button>       
+            <button type="button" id="Adelante"  onclick="">Rewind</button>
+        </div>
+        <div>
+            <input type="file" multiple id="Eject"  onclick="Eject()" name="fichero"/>
+        </div>
+        <div>
+            <button type="button"  id="vol_up" onclick="vol_up();">Volume Up</button>
+            <button type="button" id="vol_down" onclick="vol_down();">Volume Down</button>
+        </div>
 
-        <audio id="myAudio">
-            <source src="horse.ogg" type="audio/ogg">
-            <source src="horse.mp3" type="audio/mpeg">
+
+        <audio id = "myAudio" onended="siguiente()">
+            <!--<source id="vogg" src = "horse.ogg" type = "audio/ogg" >-->
+            <source src="" type="audio/mp3">
+            <source src="" type="audio/ogg">
+            <source src="" type="audio/mpeg">
+            <source src="" type="audio/wav">
             Your browser does not support the audio element.
         </audio>
-        <button onclick="enableControls()" type="button">Enable controls</button>
-        <button onclick="disableControls()" type="button">Disable controls</button>
-        <button onclick="checkControls()" type="button">Check controls status</button>
+
         <script>
-            var x = document.getElementById("myAudio");
+
+            var x = document.getElementById("Eject");
+            var f = document.getElementById("myAudio");
+            var i = 0;
+
 
             function Fordward()
             {}
+
             function Stop()
             {
-                x.pause();
+
+                f.pause();
+                f.src = "";
             }
+
             function Play()
-            {
-                x.play();
+            {               
+
+                f.src = x.files[i].name;
+                f.play();
+                alert("Play Reproduciendo " + x.files[i].name);
             }
+
+            function siguiente()
+            {
+                var x = document.getElementById("Eject");
+                if (i<x.files.length)
+                {
+                    i++;
+                    f.src = x.files[i].name;
+                    f.play();
+                    alert("sig Reproduciendo " + x.files[i].name);
+                }
+            }
+
             function Rewind()
             {}
 
-            
-             function Eject()
-             {
-                 
-             }
-             /*
+
+            function Eject()
+            {
+                document.p
+            }
+            /*
              var nodo = document.createTextNode("Escoge un fichero para cargar");
              form = document.createElement("form");
              input_OK = document.createElement("input");
@@ -77,11 +109,12 @@ aleatoria).
              }*/
             function vol_up()
             {
-                //  < button onclick = "document.getElementById('player').volume += 0.1;" > Subir Volumen < /button>
-                //  < button onclick = "document.getElementById('player').volume -= 0.1;" > Bajar Volumen < /button>
+                document.getElementById('myAudio').volume += 0.1;
             }
             function vol_down()
-            {}
+            {
+                document.getElementById('myAudio').volume -= 0.1;
+            }
 
             /************************/
 
