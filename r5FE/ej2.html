@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+2. Realice un formulario con las siguientes características.
+Nombre. Debe verificarse que el nombre solo dispone de letras y caracteres. Cuando se cambie de
+campo el primer carácter debe cambiarse a Mayúsculas y el resto a minúsculas.
+• Apellidos: Debe verificarse que el nombre solo dispone de letras y caracteres. Cuando se
+cambie de campo el primer carácter debe cambiarse a Mayúsculas y el resto a minúsculas.
+• Contraseña. Para ser segura debe tener:
+• Caracteres alfabéticos (al menos uno).
+• Al menos una mayúscula.
+• Al menos una minúscula.
+• Obligatoriamente al menos un dígito decimal.
+• Obligatoriamente al menos uno de estos caracteres ; (punto y coma) , (coma) .
+(punto) - (guión)
+• Ningún otro carácter distinto a los anteriores.
+• Verificación Contraseña. Sino es igual a la anterior indicarlo de alguna forma.
+• Fecha de nacimiento. Deberéis aceptarla en formato dd/mm/año.
+• Una etiqueta antes de cada campo a rellenar.
+• Botón Reiniciar.
+• Botón Enviar. Al pulsar este botón muestra los datos pedidos o lo errores cometidos.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form>
+            <label>Nombre</label>
+            <input type="text" value="Nombre" pattern="[.]"/><br>
+            <!--
+            <label>Apellidos</label>
+            
+            <input type="text" value="Apellidos" pattern=""/><br>
+            <label>Password</label>
+            <input type="password" value="pass" pattern=""/><br> -->
+            <!--<input type="text" value="pass2" pattern=""/>-->
+            <!--
+            <label>Fecha Nacimiento</label><br>
+            <input type="date" value=""/> -->
+            <br>
+            <input type="submit" value="Enviar"/>
+            <button onclick="reset();">Reiniciar</button>
+           
+        </form>
+        
+        <script>
+            var Linputs=document.getElementsByClassName("input");
+            var tipo;
+            for (var i=0;i<Linputs.length;i++)
+            {
+                tipo=Linputs[i].getOwnPropertyNames("type");
+                if ((tipo==="text")||(tipo==="password")||(tipo==="date"))
+                    tipo.value="";
+            }
+        </script>
+    </body>
+</html>
