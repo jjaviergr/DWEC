@@ -22,10 +22,10 @@ Estado de la entrega
     </head>
     <body>        
         <!--<form action=”URL” method=”post” name=”formvalidado” onsubmit=”return validar()”>-->
-        <form action="" method="post"  > 
+        <form action="" method="post" onsubmit="return valida()" > 
             <p>
-                <label>Nombre:</label>
-                <input id="nombre" type="text" name="nombre" value="" size="42" maxlength="30" /> 
+                <label> Nombre: </label>
+                <input id ="nombre" type="text" name="nombre" value="" size="42" maxlength="30" /> 
 
                 <br>
                 <label>Apellidos:</label>
@@ -37,47 +37,65 @@ Estado de la entrega
                 <input id="dni" type="text" name="dni" value="" size="10"  />
                 <br/>
 
+                <label>e-mail:</label>
+                <input id="email" type="email" name="mail" />
 
-                <!--
-                <input id="tel" type="text" name="telefono" value="" required pattern="/\+?\d{9,12}/"/> 
-                -->
+                <label>Sexo:</label>
+                <input id="hombre" type="radio"  value="hombre" /> 
+                <label>Hombre</label>
+                <input id="mujer" type="radio"  value="mujer" /> 
+                <label>Mujer</label>
 
+                <br>
+                <label>fecha</label>
+                <input id="fecha" type="date" name="fecha" value="" />  
 
-
-                <!--
-                <button onclick="setCookie('nombre','jose',30);">Guardar</button>
-                <button onclick="checkCookie();">Pruebar</button>
-                <button onclick="alert(getCookie('nombre'));">Comprobar</button>
-                -->
-                 <!--
-                <button onclick="setCookie('username', 'jose', 30);">Guardar</button>
-                  -->
-                <button onclick="myFunctionGuardar();">Guardar</button>
+                <br>
+                <label>Telefono</label>
+                <input id="telefono" type="text" name="telefono" value="" /> 
+                <input type="submit" name="Guardar" onclick="myFunctionGuardar();"/>
+                <!--<button onclick="myFunctionGuardar();">Guardar</button>-->
                 <button onclick="myFunctionComprobar();">Comprobar</button>
-                <!--
-                <button onclick="checkCookie();">Pruebar</button>
-                -->
+
             </p>
         </form>
 
         <br>
 
-        <!--onsubmit-->
+
 
 
         <script>
 
+            var lista = ["nombre", "apellidos", "dni", "email", "hombre", "mujer", "fecha", "telefono"];
 
+            function myFunctionGuardar() 
+            {
 
-            function myFunctionGuardar() {
-                var lista = ["nombre", "apellidos", "dni"];
-                var cadena="";
-                for (var i = 0; i < lista.length; i++)
+                var cadena = "";
+                alert(lista.length);
+                for (var i = 0; i <=lista.length; i++)
                 {
-                    cadena=document.getElementById(lista[i]).value;
-                    //alert ("Antes de replace : "+cadena);
-                    cadena=cadena.replace(";","\+");
+                    
+                    if ((((i>=0)&&(i<=3))) || (i>=6))
+                    {
+                        cadena = document.getElementById(lista[i]).value;
+                        alert(i+" grabando Textbox "+lista[i]);
+                        cadena = cadena.replace(";", "\\+");
                     //alert ("Despues de replace :"+cadena);
+                    } 
+                    
+                    if ((i>=4)&&(i<=5))
+                    {
+                       cadena=document.getElementById(lista[i]).checked;                       
+                       alert(i+" grabando Radio "+lista[i]);
+                    }
+                    
+                    
+                    
+                    
+                    //alert ("Antes de replace : "+cadena);
+                   
                     setCookie(lista[i], cadena, 30);
                 }
 
@@ -86,15 +104,15 @@ Estado de la entrega
 
             function myFunctionComprobar()
             {
-                var lista = ["nombre", "apellidos", "dni"];
+                //var lista = ["nombre", "apellidos", "dni"];
                 // alert("comprobando");
                 var cadena = "";
 
                 for (var i = 0; i < lista.length; i++)
-                {                    
+                {
                     cadena = getCookie(lista[i]);
-                    
-                    cadena=cadena.replace("\+",";");
+
+                    cadena = cadena.replace("\\+", ";");
                     alert(cadena);
                 }
             }
@@ -133,7 +151,103 @@ Estado de la entrega
                 }
             }
 
+            function valida()
+            {
+                var v = new Array();
 
+                valor = document.getElementById("nombre").value;
+                if (es_nulo_o_vacio(valor))
+                        //if (valor===null || valor.length===0) 
+                        {
+                            alert("El campo Nombre no puede estar vacío");
+                            v.push(false);
+                        } else
+                    v.push(true);
+
+                valor = document.getElementById("apellidos").value;
+                if (es_nulo_o_vacio(valor))
+                {
+                    alert("El campo Apellidos no puede estar vacío");
+                    v.push(false);
+                } else
+                    v.push(true);
+
+                valor = document.getElementById("dni").value;
+                if (valor === null || valor.length === 0)
+                {
+                    alert("El campo Dni no puede ser vacío");
+                    v.push(false);
+                } else
+                {
+                    if (!verificaDNI(valor))
+                    {
+                        alert("Debes introducir un DNI valido (Ej:12345678L)");
+                        v.push(false);
+                    } else
+                        v.push(true);
+                }
+                //alert(document.getElementById("email").value);
+                valor = document.getElementById("email").value;
+                if (valor === null || valor.length === 0)
+                {
+                    alert("El campo Email no puede estar vacío");
+                    v.push(false);
+                } else
+                {
+                    if (!esEmail(valor))
+                    {
+                        alert("Debes introducir un email valido");
+                        v.push(false);
+                    } else
+                        v.push(true);
+                }
+
+                var valor1 = document.getElementById("hombre").value;
+                var valor2 = document.getElementById("mujer").value;
+                if (validaCheck(valor1) || validaCheck(valor2))
+                {
+                    v.push(true);
+                } else
+                {
+                    alert("Debes clikar en un sexo");
+                    v.push(false);
+
+                }
+
+
+                valor = document.getElementById("fecha").value;
+                if (valor === null || valor.length === 0)
+                {
+                    alert("Fecha no puede estar vacio");
+                    v.push(false);
+                } else
+                if (!valida_fecha(valor))
+                {
+
+                    v.push(false);
+                } else
+                    v.push(true);
+
+                valor = document.getElementById("tel").value;
+                if (valor === null || valor.length === 0)
+                {
+                    alert("telefono no puede estar vacio");
+                    v.push(false);
+                } else
+                {
+                    v.push(validaTelefono(valor));
+                    ///alert(valor+" "+validaTelefono(valor));
+                }
+
+
+                var campos = ["nombre", "apellidos", "dni", "email", "sexo", "fecha", "telefono"];
+
+                for (var i = 0; i < campos.length; i++)
+                {
+                    if (v[i] === false)
+                        document.write(campos[i] + " no es valido<br>");
+                }
+            }
 
 
 
