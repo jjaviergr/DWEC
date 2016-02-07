@@ -19,10 +19,12 @@ and open the template in the editor.
 
                 <br>
                 <label>Apellidos:</label>
-                <input id="apellidos" type="text" name="apellidos" value="" size="40" maxlength="80" onfocus=""/> 
+                <input id="apellidos" type="text" name="apellidos" value="" size="40" maxlength="80" onfocus="validar_apellidos();"/> 
 
                 <br>
 
+                <label>Contraseña:</label>
+                <input id="pass" type="text" name="pass" value="" size="40" maxlength="80" onfocus="valida_pass();"/> 
 
 
                 <br>
@@ -31,7 +33,7 @@ and open the template in the editor.
 
 
                 <br>                             
-               <!-- <input  class="btn" type="submit" name="enviar" value="Enviar " id="btEnviar" /> -->
+                <!-- <input  class="btn" type="submit" name="enviar" value="Enviar " id="btEnviar" /> -->
 
                 <input id="limpiar" type="reset" name="limpiar" value="Borrar"/> 
 
@@ -45,21 +47,65 @@ and open the template in the editor.
 
 
         <script>
+            /*• Contraseña. Para ser segura debe tener:
+             • Caracteres alfabéticos (al menos uno).
+             • Al menos una mayúscula.
+             • Al menos una minúscula.
+             • Obligatoriamente al menos un dígito decimal.
+             • Obligatoriamente al menos uno de estos caracteres ; (punto y coma) , (coma) .
+             (punto) - (guión)
+             • Ningún otro carácter distinto a los anteriores.*/
+            function valida_pass()
+            {
+                var v = document.getElementById("pass").value;
+               //v="0AAaa;;";
+                if ((/[\w;,.-]+/i.test(v)))
+                {
+                    var tiene_d = false;
+                    for (var i = 0; i < 9; i++)
+                    {
+                        alert(i);
+                        if (v.indexOf(i.toString())!==-1)
+                            tiene_d = true;
+                    }
+                    if (tiene_d === true)
+                    {
+                        //alert("pass bueno");
+                        //formatear_nombre();
+                        return true;
+                    }
+                }
+                alert("pass malo");
+                return false;
+            }
+
+            function validar_apellidos()
+            {
+                var v = document.getElementById("nombre").value;
+                if ((/^\D{3,25}$/.test(v)))
+                {
+                    //alert("nombre bueno");
+                    formatear_nombre();
+                    return true;
+                }
+                //alert("nombre malo");
+                return false;
+            }
             /**/
             function formatear_nombre()
             {
-                var n=document.getElementById("nombre").value;
-                
-                var cadena1=n.slice(0,1).toUpperCase();
-                var cadena2=n.slice(1,n.size).toLowerCase();
-                n=cadena1.concat(cadena2);
+                var n = document.getElementById("nombre").value;
+
+                var cadena1 = n.slice(0, 1).toUpperCase();
+                var cadena2 = n.slice(1, n.size).toLowerCase();
+                n = cadena1.concat(cadena2);
                 alert(n);
-                document.getElementById("nombre").value=n;
+                document.getElementById("nombre").value = n;
             }
             function validar_nombre()
             {
-                var v=document.getElementById("nombre").value;
-                if ((/.[^\d]/.test(v)))
+                var v = document.getElementById("nombre").value;
+                if ((/^\D{3,25}$/.test(v)))
                 {
                     alert("nombre bueno");
                     formatear_nombre();
@@ -68,8 +114,8 @@ and open the template in the editor.
                 alert("nombre malo");
                 return false;
             }
-            
-            
+
+
             function valida()
             {
                 var v = new Array();
@@ -91,8 +137,8 @@ and open the template in the editor.
                     //alert("El campo Apellidos no puede estar vacío");
                     v.push(false);
                 } else
-                    if (valida_nombre(valor))
-                        v.push(true);
+                if (valida_nombre(valor))
+                    v.push(true);
 
 
 
