@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+     <body>        
+        <!--<form action=”URL” method=”post” name=”formvalidado” onsubmit=”return validar()”>-->
+        <form action="" method="post" onsubmit="return valida()" > 
+            <p>
+                <label>Nombre:</label>
+                <input id="nombre" type="text" name="nombre" value="" size="42" maxlength="30"/> 
+                
+                <br>
+                <label>Apellidos:</label>
+                <input id="apellidos" type="text" name="apellidos" value="" size="40" maxlength="80"/> 
+                
+                <br>
+                
+                
+                
+                <br>
+                <label>fecha</label>
+                <input id="fecha" type="date" name="fecha" value="" />  
+                
+                
+                <br>                             
+                <input  class="btn" type="submit" name="enviar" value="Enviar " id="btEnviar" /> 
+                
+                <input id="limpiar" type="reset" name="limpiar" value="Borrar"/> 
+                
+                
+            </p>
+        </form>
+       
+        <br>
+       
+        <!--onsubmit-->
+        
+        
+    <script>
+        /**/
+        function valida()
+        {
+            var v=new Array();
+
+            valor=document.getElementById("nombre").value;
+            if (es_nulo_o_vacio(valor))
+            //if (valor===null || valor.length===0) 
+            {
+                alert("El campo Nombre no puede estar vacío");
+                v.push(false);
+            }
+            else
+                v.push(true);
+            
+            valor=document.getElementById("apellidos").value;
+            if (es_nulo_o_vacio(valor))
+            {
+                alert("El campo Apellidos no puede estar vacío");
+                v.push(false);
+            }
+            else
+                v.push(true);
+            
+            valor=document.getElementById("dni").value;
+            if (valor===null || valor.length===0) 
+            {                
+                alert("El campo Dni no puede ser vacío");
+                v.push(false);
+            }
+            else
+            {
+                if (!verificaDNI(valor))
+                {
+                    alert("Debes introducir un DNI valido (Ej:12345678L)");
+                    v.push(false);
+                }
+                else
+                    v.push(true);
+            }
+            //alert(document.getElementById("email").value);
+            valor=document.getElementById("email").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("El campo Email no puede estar vacío");
+                v.push(false);
+            }
+            else
+            {
+                if (!esEmail(valor))
+                {
+                    alert("Debes introducir un email valido");
+                    v.push(false);
+                }
+                else
+                    v.push(true);
+            }
+            
+            var valor1=document.getElementById("hombre").value;
+            var valor2=document.getElementById("mujer").value;
+            if (validaCheck(valor1)||validaCheck(valor2))
+            {
+                v.push(true);  
+            }
+            else
+            {
+                alert("Debes clikar en un sexo");
+                v.push(false);
+               
+            }   
+            
+                
+            valor=document.getElementById("fecha").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("Fecha no puede estar vacio");
+                v.push(false);
+            }
+            else
+               if (!valida_fecha(valor))
+                {
+                    
+                    v.push(false);
+                }
+                else
+                    v.push(true); 
+                
+            valor=document.getElementById("tel").value;
+            if (valor===null || valor.length===0) 
+            {
+                alert("telefono no puede estar vacio");
+                v.push(false);
+            }
+            else
+            {
+               v.push(validaTelefono(valor));
+               ///alert(valor+" "+validaTelefono(valor));
+           }
+                
+                
+            var campos=["nombre","apellidos","dni","email","sexo","fecha","telefono"];
+            
+            for(var i=0;i<campos.length;i++)
+            {
+                if (v[i]===false)
+                   document.write(campos[i]+" no es valido<br>");
+            }
+        }
+        
+               
+        /*
+        
+        function valida_nums(valor) 
+        {
+            //valor = document.getElementById("telefono").value;
+            if( isNaN(valor) ) 
+            {
+                alert("El campo tiene que ser numérico");
+                return false;
+            }
+            return true;
+        }
+        */
+       
+        
+        
+        function validaCheck(elemento) 
+        {
+            //elemento = document.getElementById("campoCondiciones");
+            if( !elemento.checked ) 
+            {
+                return false;
+            }
+            return true;
+        }
+       // window.addEventListener('load',valida,false);
+       
+       
+       function verificaDNI(valor)
+       {
+          
+          var letras = ['T','R','W','A','G','M','Y','F','P','D','X',
+            'B','N','J','Z','S','Q','V','H','L','C','K','E','T'];
+        
+            if (!(/^\d{8}[A-Z]$/.test(valor)))
+            { 
+                return false; 
+            }
+            if(valor.charAt(8) !== letras[(valor.substring(0, 8))%23])
+            { 
+                return false; 
+            }
+            return true;
+
+       }
+            
+       function esEmail(valor)
+       {
+           
+           if((/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)/.test(valor)) ) 
+           {
+              return false;
+           }
+           return true;
+
+           
+       }
+       
+       function validaTelefono(valor)
+       {          
+          if( /\+?\d{9,12}/.test(valor) ) 
+          {
+             return true;
+          }
+          else
+          {  alert("El telefono debe ser formato +00 000000000");}
+          return false;
+       }
+       
+       /**/
+        function valida_fecha(fecha) 
+        {
+            //alert(fecha);
+            //if((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
+            if ((/\d{4}-\d{1,2}-\d{1,2}/.test(fecha)))
+            {
+                return true;
+            }
+            else
+            {
+                alert("Debes introducir una fecha valida");
+                return false;
+            }
+            
+        }
+        
+        /**/
+        function es_nulo_o_vacio(valor)
+        {
+            if (!(/.+/.test(valor)))
+               return true;
+           else
+               return false;
+               
+        }
+    </script>
+    </body>
+</html>
