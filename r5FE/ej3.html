@@ -1,8 +1,28 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Una etiqueta que esté al lado de cada campo a rellenar.
+• Con un select desplegable donde aparecerán las categorías ("Geografía", "Historia",
+"Espectáculos", "Ciencia y Tecnología","Miscelánea", "Cultura", ....)
+
+• Una campo donde se escriba el nombre de la pregunta. Debes asegurarte que sólo contenga
+caracteres del alfabeto, espacios, interrogaciones, exclamaciones, puntos, comas, puntos y
+comas. 
+
+No se pueden aceptar dígitos numéricos. Se puede empezar por carácter en
+
+mayúscula. 
+
+No puede comenzar con otra cosa que no sea un número. 
+Además después de cada punto debe haber un espacio.
+
+• Cuatro campos con el contenido de las respuestas con cuatro radio button a la derecha. La
+respuesta correcta es la seleccionada con el radio button. Al escribir en un input de tipo
+text debéis poner esa como respuesta válida.
+
+• Botón Enviar. Al enviar deberéis mostrar al final la pregunta con sus respuestas indicando la
+correcta.
+
+• Botón Borrar. 
 -->
 <html>
     <head>
@@ -11,6 +31,54 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+
+        <h3>Trivial</h3>
+        <form>
+            <fieldset>
+                <legend>Añada la pregunta:</legend>
+                <label>Pregunta de la categoria:</label>
+                <select id="pregunta"> </select>
+                <diV>
+                    <textarea rows="4" cols="50">¿Cual es la respuesta a mi pregunta?</textarea>
+                </div>
+                <div>
+                    <label>Respuesta 1</label>
+                    <input type="text"/>
+                    <input type="radio"/>
+                </div>
+                <div>
+                    <label>Respuesta 2</label>
+                    <input type="text"/>
+                    <input type="radio"/>
+                </div>
+                <div>
+                    <label>Respuesta 3</label>
+                    <input type="text"/>
+                    <input type="radio"/>
+                </div>
+                <div>
+                    <label>Respuesta 4</label>
+                    <input type="text"/>
+                    <input type="radio"/>
+                </div>
+                <div>
+                    <input type="button" value="Enviar"/>
+                    <input type="button" value="Borrar"/>
+                </div>
+            </fieldset>
+
+        </form>
+        <script>
+            var vcat = ["Geografía", "Historia", "Espectáculos", "Ciencia y Tecnología", "Miscelánea", "Cultura"];
+            var select = document.getElementById("pregunta");
+            for (var i = 0; i < vcat.length; i++)
+            {
+                cat = document.createElement("option");
+                cat.value = i;
+                cat.innerHTML = vcat[i];
+                select.appendChild(cat);
+            }
+
+        </script>
     </body>
 </html>
