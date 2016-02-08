@@ -59,22 +59,13 @@ and open the template in the editor.
             function revalidar_pass(v)
             {
                 var v2 = document.getElementById("pass").value;
-                if ((/[\w;,.-]+/i.test(v)))
+                if (v === v2)
                 {
-                    var tiene_d = false;
-                    for (var i = 0; i < 9; i++)
-                    {
-                        alert(i);
-                        if (v.indexOf(i.toString()) !== -1)
-                            tiene_d = true;
-                    }
-                    if (tiene_d === true)
-                    {
-                        return true;
-                    } else
-                        return false;
-                }
+                    return true;
+                } else
+                    return false;
             }
+
 
             function valida_pass()
             {
