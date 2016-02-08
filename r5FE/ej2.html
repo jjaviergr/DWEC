@@ -12,35 +12,36 @@ and open the template in the editor.
     </head>
     <body>        
         <!--<form action=”URL” method=”post” name=”formvalidado” onsubmit=”return validar()”>-->
-        <form action="" method="post" onsubmit="return valida()" > 
+        <form action="" method="post"  > 
             <p>
                 <label>Nombre:</label>
                 <input id="nombre" type="text" name="nombre" value="" size="42" maxlength="30" onblur="validar_nombre();"/> 
 
                 <br>
                 <label>Apellidos:</label>
-                <input id="apellidos" type="text" name="apellidos" value="" size="40" maxlength="80" onfocus="validar_apellidos();"/> 
+                <input id="apellidos" type="text" name="apellidos" value="" size="40" maxlength="80" onblur="validar_apellidos();"/> 
 
                 <br>
 
                 <label>Contraseña:</label>
-                <input id="pass" type="text" name="pass" value="" size="40" maxlength="80" onfocus="valida_pass();"/> 
-
+                <input id="pass" type="text"  value="" size="40" maxlength="80" onblur="valida_pass();"/> 
+                <label id="recontrapass"></label>
+                <input id="pass2" type="hidden"  value=""   onblur="revalidar_pass();"/> 
 
                 <br>
                 <label>fecha</label>
-                <input id="fecha" type="date" name="fecha" value="" />  
+                <input id="fecha" type="date" value="" />  
 
 
                 <br>                             
                 <!-- <input  class="btn" type="submit" name="enviar" value="Enviar " id="btEnviar" /> -->
-
+                <button onclick="valida();">Enviar</button>
                 <input id="limpiar" type="reset" name="limpiar" value="Borrar"/> 
 
 
             </p>
         </form>
-
+        <div><p id="status"></p></div>
         <br>
 
         <!--onsubmit-->
@@ -61,6 +62,7 @@ and open the template in the editor.
                 var v2 = document.getElementById("pass").value;
                 if (v === v2)
                 {
+
                     return true;
                 } else
                     return false;
@@ -76,29 +78,31 @@ and open the template in the editor.
                     var tiene_d = false;
                     for (var i = 0; i < 9; i++)
                     {
-                        alert(i);
+                        // alert(i);
                         if (v.indexOf(i.toString()) !== -1)
                             tiene_d = true;
                     }
                     if (tiene_d === true)
                     {
+                        var label = document.getElementById("recontrapass");
+                        label.innerHTML = "Inserta otra vez la contraseña";
+                        document.getElementById("pass2").type = "text";
                         if (revalidar_pass(v))
                         {
                             return true;
                         }
                     }
                 }
-                alert("pass malo");
+                // alert("pass malo");
                 return false;
             }
 
             function validar_apellidos()
             {
-                var v = document.getElementById("nombre").value;
+                var v = document.getElementById("apellidos").value;
                 if ((/^\D{3,25}$/.test(v)))
                 {
-                    //alert("nombre bueno");
-                    formatear_nombre();
+                    formatear_nombre(v, "apellidos");
                     return true;
                 }
                 //alert("nombre malo");
@@ -107,26 +111,23 @@ and open the template in the editor.
 
 
             /**/
-            function formatear_nombre()
+            function formatear_nombre(n, campo)
             {
-                var n = document.getElementById("nombre").value;
 
                 var cadena1 = n.slice(0, 1).toUpperCase();
                 var cadena2 = n.slice(1, n.size).toLowerCase();
                 n = cadena1.concat(cadena2);
-                alert(n);
-                document.getElementById("nombre").value = n;
+                // alert(n);
+                document.getElementById(campo).value = n;
             }
             function validar_nombre()
             {
                 var v = document.getElementById("nombre").value;
                 if ((/^\D{3,25}$/.test(v)))
                 {
-                    alert("nombre bueno");
-                    formatear_nombre();
+                    formatear_nombre(v, "nombre");
                     return true;
                 }
-                alert("nombre malo");
                 return false;
             }
 
@@ -135,150 +136,66 @@ and open the template in the editor.
             {
                 var v = new Array();
 
-                valor = document.getElementById("nombre").value;
-                if (es_nulo_o_vacio(valor))
-                        //if (valor===null || valor.length===0) 
-                        {
-                            //alert("El campo Nombre no puede estar vacío");
-                            v.push(false);
-                        } else
+                v.push(validar_nombre());
+                v.push(validar_apellidos());
+                v.push(valida_pass());
+                v.push(valida_fecha());
+
+                var campos = ["nombre", "apellidos", "paswword", "fecha"];
+                var p = document.getElementById("status");
+                var cadena = "";
+                for (var i = 0; i < campos.length; i++)
                 {
-                    if (valida_nombre(valor))
-                        v.push(true);
+
+                    //document.write(campos[i] + " no es valido<br>");
+                    //p.innerHTML = p.innerHTML+"<br>"+campos[i] + " " + v[i];
+                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+
                 }
-                valor = document.getElementById("apellidos").value;
-                if (es_nulo_o_vacio(valor))
-                {
-                    //alert("El campo Apellidos no puede estar vacío");
-                    v.push(false);
-                } else
-                if (valida_nombre(valor))
-                    v.push(true);
-
-
-
-
-
-                valor = document.getElementById("fecha").value;
-                if (valor === null || valor.length === 0)
-                {
-                    //alert("Fecha no puede estar vacio");
-                    v.push(false);
-                } else
-                if (!valida_fecha(valor))
-                {
-
-                    v.push(false);
-                } else
-                    v.push(true);
-
-
-
-                var campos = ["nombre", "apellidos", "fecha"];
-                /*
-                 for(var i=0;i<campos.length;i++)
-                 {
-                 if (v[i]===false)
-                 document.write(campos[i]+" no es valido<br>");
-                 }*/
+                alert(cadena);
             }
 
 
-            /*
-             
-             function valida_nums(valor) 
-             {
-             //valor = document.getElementById("telefono").value;
-             if( isNaN(valor) ) 
-             {
-             alert("El campo tiene que ser numérico");
-             return false;
-             }
-             return true;
-             }
-             */
 
 
-
-            function validaCheck(elemento)
+            function valida_fecha()
             {
-                //elemento = document.getElementById("campoCondiciones");
-                if (!elemento.checked)
-                {
-                    return false;
-                }
-                return true;
-            }
-            // window.addEventListener('load',valida,false);
-
-
-            function verificaDNI(valor)
-            {
-
-                var letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X',
-                    'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
-
-                if (!(/^\d{8}[A-Z]$/.test(valor)))
-                {
-                    return false;
-                }
-                if (valor.charAt(8) !== letras[(valor.substring(0, 8)) % 23])
-                {
-                    return false;
-                }
-                return true;
-
-            }
-
-            function esEmail(valor)
-            {
-
-                if ((/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)/.test(valor)))
-                {
-                    return false;
-                }
-                return true;
-
-
-            }
-
-            function validaTelefono(valor)
-            {
-                if (/\+?\d{9,12}/.test(valor))
-                {
-                    return true;
-                } else
-                {
-                    alert("El telefono debe ser formato +00 000000000");
-                }
-                return false;
-            }
-
-            /**/
-            function valida_fecha(fecha)
-            {
+                var fecha = document.getElementById("fecha").value;
+                //fecha="01/01/2001";
                 //alert(fecha);
                 //if((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
-                if ((/\d{4}-\d{1,2}-\d{1,2}/.test(fecha)))
+                if (navigator.userAgent.indexOf("Chrome") !== -1)
                 {
-                    return true;
+                    alert("Estas usando Chrome y la fecha deberia ser probada con Firefox");
+                    var cadena = fecha.split("-");
+                    fecha = cadena[2] + "/" + cadena[1] + "/" + cadena[0];
                 } else
                 {
-                    alert("Debes introducir una fecha valida");
+                    //if (navigator.userAgent.indexOf("Firefox") !== -1)
+                }
+                if ((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
+                {
+                    var cadena = fecha.split("-");
+                    var d = Number(cadena[0]);
+                    var m = Number(cadena[1]);
+                    var y = Number(cadena[2]);
+                    if (d < 0 || d > 31 || m < 1 || m > 12 || y < 0)
+                    {                       
+                        return false;
+                    }
+                    else
+                        return true;
+                } else
+                {
+                    //alert("falla el test");
                     return false;
                 }
 
             }
 
-            /**/
-            function es_nulo_o_vacio(valor)
-            {
-                if (!(/.+/.test(valor)))
-                    return true;
-                else
-                    return false;
 
-            }
+
+
         </script>
     </body>
 </html>
