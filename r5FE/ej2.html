@@ -55,24 +55,46 @@ and open the template in the editor.
              • Obligatoriamente al menos uno de estos caracteres ; (punto y coma) , (coma) .
              (punto) - (guión)
              • Ningún otro carácter distinto a los anteriores.*/
-            function valida_pass()
+
+            function revalidar_pass(v)
             {
-                var v = document.getElementById("pass").value;
-               //v="0AAaa;;";
+                var v2 = document.getElementById("pass").value;
                 if ((/[\w;,.-]+/i.test(v)))
                 {
                     var tiene_d = false;
                     for (var i = 0; i < 9; i++)
                     {
                         alert(i);
-                        if (v.indexOf(i.toString())!==-1)
+                        if (v.indexOf(i.toString()) !== -1)
                             tiene_d = true;
                     }
                     if (tiene_d === true)
                     {
-                        //alert("pass bueno");
-                        //formatear_nombre();
                         return true;
+                    } else
+                        return false;
+                }
+            }
+
+            function valida_pass()
+            {
+                var v = document.getElementById("pass").value;
+                //v="0AAaa;;";
+                if ((/[\w;,.-]+/i.test(v)))
+                {
+                    var tiene_d = false;
+                    for (var i = 0; i < 9; i++)
+                    {
+                        alert(i);
+                        if (v.indexOf(i.toString()) !== -1)
+                            tiene_d = true;
+                    }
+                    if (tiene_d === true)
+                    {
+                        if (revalidar_pass(v))
+                        {
+                            return true;
+                        }
                     }
                 }
                 alert("pass malo");
@@ -91,6 +113,8 @@ and open the template in the editor.
                 //alert("nombre malo");
                 return false;
             }
+
+
             /**/
             function formatear_nombre()
             {
