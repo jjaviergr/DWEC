@@ -24,6 +24,7 @@ aleatoria).
         <div>
             <button type="button"  id="vol_up" onclick="vol_up();">Volume Up</button>
             <button type="button" id="vol_down" onclick="vol_down();">Volume Down</button>
+            <button type="button" id="shuttle" onclick="shuttle();">Shuttle</button>
         </div>
 
 
@@ -43,8 +44,12 @@ aleatoria).
             var i = 0;
 
 
-            function Fordward()
-            {}
+            function shuttle()
+            {
+                 f.src =x.files[i].sort(function() {return Math.random() - 0.5});
+                 f.play();
+                 document.getElementById("reproduciendo").innerHTML="Reproduciendo " + x.files[i].name;
+            }
 
             function Stop()
             {
