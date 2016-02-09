@@ -43,12 +43,14 @@ aleatoria).
             var f = document.getElementById("myAudio");
             var i = 0;
 
+            function aleatoriza()
+            {
+                return (Math.random() - 0.5);
+            }
 
             function shuttle()
             {
-                 f.src =x.files[i].sort(function() {return Math.random() - 0.5});
-                 f.play();
-                 document.getElementById("reproduciendo").innerHTML="Reproduciendo " + x.files[i].name;
+                play(true);
             }
 
             function Stop()
@@ -56,71 +58,78 @@ aleatoria).
 
                 f.pause();
                 f.src = "";
-                document.getElementById("reproduciendo").innerHTML="Reproductor Parado";
+                document.getElementById("reproduciendo").innerHTML = "Reproductor Parado";
             }
 
-            function Play()
-            {               
+            function Play(aleatoriza)
+            {
+                var z;
+                if (aleatoriza === false)
+                {
+                    f.src = x.files[i].name;
+                    f.play();
+                    document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[i].name;
+                } else
+                {
+                    z=Math.random() - 0.5;
+                    f.src = x.files[i].name;
+                    f.play();
+                    document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[i].name;
+                }
 
-                f.src = x.files[i].name;
-                f.play();
-                document.getElementById("reproduciendo").innerHTML="Reproduciendo " + x.files[i].name;
-                
             }
 
             function siguiente()
             {
                 var x = document.getElementById("Eject");
-                if (i<x.files.length)
+                if (i < x.files.length)
                 {
                     i++;
                     f.src = x.files[i].name;
                     f.play();
-                    document.getElementById("reproduciendo").innerHTML="Reproduciendo " + x.files[i].name;
+                    document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[i].name;
                 }
             }
 
             function CancionA()
             {
-                if (i>0)
+                if (i > 0)
                 {
                     i--;
                     this.Play();
-                }
-                else
+                } else
                 {
-                    document.getElementById("reproduciendo").innerHTML="No hay mas canciones antes que esta";
+                    document.getElementById("reproduciendo").innerHTML = "No hay mas canciones antes que esta";
                 }
-                
+
             }
 
 
             function CancionS()
-            {                
-                if (i<x.files.length-1)
+            {
+                if (i < x.files.length - 1)
                 {
                     i++;
                     this.Play();
-                }
-                else
+                } else
                 {
-                    document.getElementById("reproduciendo").innerHTML="No hay mas canciones despues que esta";
+                    document.getElementById("reproduciendo").innerHTML = "No hay mas canciones despues que esta";
                 }
-                
+
             }
-           
+
             function vol_up()
             {
-               if (document.getElementById('myAudio').volume!==1.0)
-               {
-                   document.getElementById('myAudio').volume+=0.1;
-               }
+                if (document.getElementById('myAudio').volume !== 1.0)
+                {
+                    document.getElementById('myAudio').volume += 0.1;
+                }
             }
             function vol_down()
             {
-                if (document.getElementById('myAudio').volume!==0.0)
+                if (document.getElementById('myAudio').volume !== 0.0)
                 {
-                    document.getElementById('myAudio').volume-=0.1;
+                    document.getElementById('myAudio').volume -= 0.1;
                 }
             }
 
