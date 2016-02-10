@@ -42,7 +42,7 @@ aleatoria).
             var x = document.getElementById("Eject");
             var f = document.getElementById("myAudio");
             var i = 0;
-            var modo_shuttle="false";
+            var modo_shuttle = "false";
 
             function aleatoriza()
             {
@@ -51,25 +51,22 @@ aleatoria).
 
             function shuttle()
             {
-                
-                if (this.modo_shuttle==="false")
+
+                if (this.modo_shuttle === "false")
                 {
-                     this.modo_shuttle = "true";
+                    this.modo_shuttle = "true";
                     //alert(this.modo_shuttle);
-                   
+
                     Play(this.modo_shuttle);
                     document.getElementById("shuttle").innerHTML = "Shuttle activado";
-                }
-                else
-                
-                //if (this.modo_shuttle==="true")
-                {
-                     this.modo_shuttle ="false";
-                    //alert(this.modo_shuttle);
-                   
-                    document.getElementById("shuttle").innerHTML = "Shuttle";
-                }
-                
+                } else
+                        //if (this.modo_shuttle==="true")
+                        {
+                            this.modo_shuttle = "false";
+                            //alert(this.modo_shuttle);
+
+                            document.getElementById("shuttle").innerHTML = "Shuttle";
+                        }
             }
 
             function Stop()
@@ -83,21 +80,20 @@ aleatoria).
             function Play()
             {
                 var z;
-                
+
                 if (modo_shuttle === "false")
                 {
                     f.src = x.files[this.i].name;
 
                     document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[this.i].name;
                     f.play();
-                } 
-                else
+                } else
                 {
 
-                    z = Math.floor((Math.random() * (x.files.length-1)));
+                    z = Math.floor((Math.random() * (x.files.length - 1)));
                     //alert(z);
                     f.src = x.files[z].name;
-                    this.i=z;
+                    this.i = z;
                     document.getElementById("reproduciendo").innerHTML = "Modo Shuttle Reproduciendo " + x.files[z].name;
                     f.play();
                 }
@@ -106,41 +102,53 @@ aleatoria).
 
             function siguiente()
             {
-                var x = document.getElementById("Eject");
-                if (this.i < x.files.length-1)
+
+                if (modo_shuttle === "false")
                 {
-                    this.i++;
-                    f.src = x.files[this.i].name;
+                    CancionS();
+                } else
+                {
                     f.play();
-                    document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[this.i].name;
                 }
+                /*
+                 if (this.i < this.x.files.length)
+                 {
+                 this.i++;
+                 f.src = x.files[this.i].name;
+                 f.play();
+                 document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[this.i].name;
+                 }
+                 */
             }
 
             function CancionA()
             {
-                if (this.i > 0)
-                {
-                    this.this.i--;
-                    this.Play();
-                } else
+                if ((this.i < 0)||(this.i === 0))
                 {
                     document.getElementById("reproduciendo").innerHTML = "No hay mas canciones antes que esta";
+                } else
+                {
+                    if (this.i > 0)
+                    {
+                        this.i--;
+                        this.Play();
+                    }
                 }
-
             }
-
 
             function CancionS()
             {
-                if (this.i < x.files.length - 1)
-                {
-                    this.i++;
-                    this.Play();
-                } else
+                if ((this.i === x.files.length)||(this.i === x.files.length-1))
                 {
                     document.getElementById("reproduciendo").innerHTML = "No hay mas canciones despues que esta";
+                } else
+                {
+                    if (this.i < x.files.length-1)
+                    {
+                        this.i++;
+                        this.Play();
+                    }
                 }
-
             }
 
             function vol_up()
