@@ -86,17 +86,18 @@ aleatoria).
                 
                 if (modo_shuttle === "false")
                 {
-                    f.src = x.files[i].name;
+                    f.src = x.files[this.i].name;
 
-                    document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[i].name;
+                    document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[this.i].name;
                     f.play();
                 } 
                 else
                 {
 
-                    z = Math.floor((Math.random() * x.files.length));
+                    z = Math.floor((Math.random() * (x.files.length-1)));
                     //alert(z);
                     f.src = x.files[z].name;
+                    this.i=z;
                     document.getElementById("reproduciendo").innerHTML = "Modo Shuttle Reproduciendo " + x.files[z].name;
                     f.play();
                 }
@@ -106,20 +107,20 @@ aleatoria).
             function siguiente()
             {
                 var x = document.getElementById("Eject");
-                if (i < x.files.length)
+                if (this.i < x.files.length-1)
                 {
-                    i++;
-                    f.src = x.files[i].name;
+                    this.i++;
+                    f.src = x.files[this.i].name;
                     f.play();
-                    document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[i].name;
+                    document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[this.i].name;
                 }
             }
 
             function CancionA()
             {
-                if (i > 0)
+                if (this.i > 0)
                 {
-                    i--;
+                    this.this.i--;
                     this.Play();
                 } else
                 {
@@ -131,9 +132,9 @@ aleatoria).
 
             function CancionS()
             {
-                if (i < x.files.length - 1)
+                if (this.i < x.files.length - 1)
                 {
-                    i++;
+                    this.i++;
                     this.Play();
                 } else
                 {
