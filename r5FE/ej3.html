@@ -39,30 +39,30 @@ correcta.
                 <label>Pregunta de la categoria:</label>
                 <select id="pregunta"> </select>
                 <diV>
-                    <textarea rows="4" cols="50">¿Cual es la respuesta a mi pregunta?</textarea>
+                    <textarea id="preguntador" rows="4" cols="50">¿Cual es la respuesta a mi pregunta?</textarea>
                 </div>
                 <div>
                     <label>Respuesta 1</label>
                     <input type="text"/>
-                    <input type="radio"/>
+                    <input id="r1" type="radio" onclick="onclick_r1();"/>
                 </div>
                 <div>
                     <label>Respuesta 2</label>
                     <input type="text"/>
-                    <input type="radio"/>
+                    <input id="r2" type="radio" onclick="onclick_r2();"/>
                 </div>
                 <div>
                     <label>Respuesta 3</label>
                     <input type="text"/>
-                    <input type="radio"/>
+                    <input id="r3" type="radio" onclick="onclick_r3();"/>
                 </div>
                 <div>
                     <label>Respuesta 4</label>
                     <input type="text"/>
-                    <input type="radio"/>
+                    <input id="r4" type="radio" onclick="onclick_r4();"/>
                 </div>
                 <div>
-                    <input type="button" value="Enviar"/>
+                    <input type="button" value="Enviar" onclick="validar();"/>
                     <input type="button" value="Borrar"/>
                 </div>
             </fieldset>
@@ -71,12 +71,83 @@ correcta.
         <script>
             var vcat = ["Geografía", "Historia", "Espectáculos", "Ciencia y Tecnología", "Miscelánea", "Cultura"];
             var select = document.getElementById("pregunta");
+
             for (var i = 0; i < vcat.length; i++)
             {
                 cat = document.createElement("option");
                 cat.value = i;
                 cat.innerHTML = vcat[i];
                 select.appendChild(cat);
+            }
+
+            function onclick_r4()
+            {
+                var rad = new Array();
+                rad.push(document.getElementById("r1"));
+                rad.push(document.getElementById("r2"));
+                rad.push(document.getElementById("r3"));
+                //rad.push(document.getElementById("r4"));
+                ajusta_rads(rad);
+            }
+            function onclick_r3()
+            {
+                var rad = new Array();
+                rad.push(document.getElementById("r1"));
+                rad.push(document.getElementById("r2"));
+                //rad.push(document.getElementById("r3"));
+                rad.push(document.getElementById("r4"));
+                ajusta_rads(rad);
+            }
+
+            function onclick_r2()
+            {
+                var rad = new Array();
+                rad.push(document.getElementById("r1"));
+                //rad.push(document.getElementById("r2"));
+                rad.push(document.getElementById("r3"));
+                rad.push(document.getElementById("r4"));
+                ajusta_rads(rad);
+            }
+            function onclick_r1()
+            {
+                var rad = new Array();
+                //rad.push(document.getElementById("r1"));
+                rad.push(document.getElementById("r2"));
+                rad.push(document.getElementById("r3"));
+                rad.push(document.getElementById("r4"));
+                ajusta_rads(rad);
+            }
+
+            function ajusta_rads(rad)
+            {
+
+
+                for (var i = 0; i < rad.length; i++)
+                {
+                    if (rad[i].checked)
+                        rad[i].checked = false;
+
+                }
+            }
+            function validar()
+            {
+                var v = document.getElementById("preguntador").value;
+                var preguntador = false;
+//alert (v);
+                /*           sólo contenga
+                 caracteres del alfabeto, espacios, interrogaciones, exclamaciones, puntos, comas, puntos y
+                 comas. */
+
+                if (/\D+(\.(?=\s))+/i.test(v))
+                {
+                    preguntador = true;
+                    alert("correcto");
+                } 
+                else
+                {
+                    alert("patron incorrecto");
+                }
+
             }
 ///  /([\D ¿?!¡,;])?(. )?(· )?/i
 ////  /[\D ¿?!¡,;]?(^\. $)?(^· $)?/i
