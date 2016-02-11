@@ -139,7 +139,7 @@ correcta.
                  caracteres del alfabeto, espacios, interrogaciones, exclamaciones, puntos, comas, puntos y
                  comas. */
 
-                if (/\D+(\.(?=\s))+/i.test(v))
+                if (/\D+^(\.)(\.(?=\s))+/i.test(v))
                 {
                     preguntador = true;
                     alert("correcto");
