@@ -11,7 +11,8 @@ aleatoria).
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <p id="reproduciendo"></p>
+        <p id="lista_reproduccion"></p>
+
         <div>
             <button type="button"  onclick="CancionA();">Canción Anterior</button>
             <button type="button" id="Stop"  onclick="Stop();">Stop</button>
@@ -19,7 +20,9 @@ aleatoria).
             <button type="button" onclick="CancionS()">Canción Siguiente</button>
         </div>
         <div>
-            <input type="file" multiple id="Eject"  name="fichero"/>
+            <!--<label>Escoge canciones-->
+            <input type="file" multiple id="Eject"  onchange="imprime_lista();" />
+            <!--</label>-->
         </div>
         <div>
             <button type="button"  id="vol_up" onclick="vol_up();">Volume Up</button>
@@ -28,7 +31,7 @@ aleatoria).
         </div>
 
 
-        <audio id = "myAudio" onended="siguiente()">
+        <audio id = "myAudio" onended="siguiente()" >
             <!--<source id="vogg" src = "horse.ogg" type = "audio/ogg" >-->
             <source src="" type="audio/mp3">
             <source src="" type="audio/ogg">
@@ -36,13 +39,25 @@ aleatoria).
             <source src="" type="audio/wav">
             Your browser does not support the audio element.
         </audio>
-
+        <p id="reproduciendo"></p>
         <script>
 
             var x = document.getElementById("Eject");
             var f = document.getElementById("myAudio");
             var i = 0;
+            var reproduciendo = false;
             var modo_shuttle = "false";
+
+            function imprime_lista()
+            {
+                var p = document.getElementById("lista_reproduccion");
+                p.innerHTML = "<h5>Lista de reproduccion</h5>";
+                for (var i = 0; i < x.files.length; i++)
+                {
+
+                    p.innerHTML += x.files[i].name + "...";
+                }
+            }
 
             function aleatoriza()
             {
@@ -51,7 +66,6 @@ aleatoria).
 
             function shuttle()
             {
-
                 if (this.modo_shuttle === "false")
                 {
                     this.modo_shuttle = "true";
@@ -64,14 +78,12 @@ aleatoria).
                         {
                             this.modo_shuttle = "false";
                             //alert(this.modo_shuttle);
-
                             document.getElementById("shuttle").innerHTML = "Shuttle";
                         }
             }
 
             function Stop()
             {
-
                 f.pause();
                 f.src = "";
                 document.getElementById("reproduciendo").innerHTML = "Reproductor Parado";
@@ -79,22 +91,22 @@ aleatoria).
 
             function Play()
             {
+              
                 var z;
 
                 if (modo_shuttle === "false")
                 {
                     f.src = x.files[this.i].name;
 
-                    document.getElementById("reproduciendo").innerHTML = "Reproduciendo " + x.files[this.i].name;
+                    document.getElementById("reproduciendo").innerHTML = "<h5>Reproduciendo</h5> " + x.files[this.i].name;
                     f.play();
                 } else
                 {
-
                     z = Math.floor((Math.random() * (x.files.length - 1)));
                     //alert(z);
                     f.src = x.files[z].name;
                     this.i = z;
-                    document.getElementById("reproduciendo").innerHTML = "Modo Shuttle Reproduciendo " + x.files[z].name;
+                    document.getElementById("reproduciendo").innerHTML = "<h5>Reproduciendo</h5> " + x.files[z].name;
                     f.play();
                 }
 
@@ -123,7 +135,7 @@ aleatoria).
 
             function CancionA()
             {
-                if ((this.i < 0)||(this.i === 0))
+                if ((this.i < 0) || (this.i === 0))
                 {
                     document.getElementById("reproduciendo").innerHTML = "No hay mas canciones antes que esta";
                 } else
@@ -138,12 +150,12 @@ aleatoria).
 
             function CancionS()
             {
-                if ((this.i === x.files.length)||(this.i === x.files.length-1))
+                if ((this.i === x.files.length) || (this.i === x.files.length - 1))
                 {
                     document.getElementById("reproduciendo").innerHTML = "No hay mas canciones despues que esta";
                 } else
                 {
-                    if (this.i < x.files.length-1)
+                    if (this.i < x.files.length - 1)
                     {
                         this.i++;
                         this.Play();
