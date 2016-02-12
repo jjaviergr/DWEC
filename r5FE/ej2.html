@@ -72,18 +72,11 @@ and open the template in the editor.
             function valida_pass()
             {
                 var v = document.getElementById("pass").value;
-                //v="0AAaa;;";
-                if ((/[\w;,.-]+/i.test(v)))
+                
+                if ((/[\w;,.-]+\d+/i.test(v)))
                 {
-                    var tiene_d = false;
-                    for (var i = 0; i < 9; i++)
-                    {
-                        // alert(i);
-                        if (v.indexOf(i.toString()) !== -1)
-                            tiene_d = true;
-                    }
-                    if (tiene_d === true)
-                    {
+                    alert("valido");
+                    
                         var label = document.getElementById("recontrapass");
                         label.innerHTML = "Inserta otra vez la contraseña";
                         document.getElementById("pass2").type = "text";
@@ -92,8 +85,10 @@ and open the template in the editor.
                             return true;
                         }
                     }
-                }
-                // alert("pass malo");
+                    else
+                         alert("pass malo");
+                
+                
                 return false;
             }
 
