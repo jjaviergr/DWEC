@@ -63,7 +63,7 @@ correcta.
                 </div>
                 <div>
                     <input type="button" value="Enviar" onclick="validar();"/>
-                    <input type="button" value="Borrar"/>
+                    <input type="button" value="Borrar" onclick="borrar();"/>
                 </div>
             </fieldset>
 
@@ -73,13 +73,19 @@ correcta.
             var vcat = ["Geografía", "Historia", "Espectáculos", "Ciencia y Tecnología", "Miscelánea", "Cultura"];
             var select = document.getElementById("pregunta");
 
-            for (var i = 0; i < vcat.length; i++)
+            cat = document.createElement("option");
+            cat.value = 0;
+            cat.innerHTML = vcat[0];
+            cat.selected=true;
+            select.appendChild(cat);
+            for (var i = 1; i < vcat.length; i++)
             {
                 cat = document.createElement("option");
                 cat.value = i;
                 cat.innerHTML = vcat[i];
                 select.appendChild(cat);
             }
+            
 
             function onclick_r4()
             {
@@ -121,64 +127,106 @@ correcta.
 
             function ajusta_rads(rad)
             {
-
-
                 for (var i = 0; i < rad.length; i++)
                 {
                     if (rad[i].checked)
                         rad[i].checked = false;
-
                 }
             }
             function validar()
             {
                 var v = document.getElementById("preguntador").value;
-                var preguntador = false;
-//alert (v);
+                //var preguntador = false;
+                //alert (v);
                 /*           sólo contenga
                  caracteres del alfabeto, espacios, interrogaciones, exclamaciones, puntos, comas, puntos y
                  comas. */
 
-                if (/\D+^(\.)(\.(?=\s))+/i.test(v))
+                if ((/(\D+(\.(?=\s))+)/i.test(v)) || (!/\D+\.+\D+/i.test(v)))
                 {
-                    preguntador = true;
-                    alert("correcto");
+                    //preguntador = true;
+                    //alert("correcto");
                     guardar();
-                } 
-                else
+                } else
                 {
-                    alert("patron incorrecto");
+                    // alert("patron incorrecto");
+                    var z = document.getElementById("impresion");
+                    z.innerHTML = "patron incorrecto";
                 }
 
             }
-            
+
             function guardar()
             {
                 var v = document.getElementById("impresion");
-                v.innerHTML=document.getElementById("preguntador").value;
-                v.innerHTML+="<br>La respuesta correcta es :<br>";
-                //alert (document.getElementById("r1").checked);
-                if (document.getElementById("r1").checked===true)
+                
+                
+                var s=document.getElementsByTagName("option");
+                
+                for (var i = 0; i < s.length; i++)
+                {
+                    if (s[i].selected===true)
+                    {
+                        //alert(s[i].innerHTML);
+                         v.innerHTML+="<br>Categoria :"+s[i].innerHTML+"<br>";
+                    }
+                }
+                v.innerHTML+= document.getElementById("preguntador").value;
+                v.innerHTML += "<br>La respuesta correcta es :<br>";
+                var a = ["r1", "r2", "r3", "r4"];
+                var hay_respuesta = false;
+                for (var i = 0; i < a.length; i++)
+                {
+
+                    if (document.getElementById(a[i]).checked === true)
+                    {
+                        hay_respuesta = true;
+                        //break;
+                    }
+                }
+                if (!hay_respuesta)
+                {
+                    v.innerHTML = "No has escrito la respuesta a la pregunta";
+                } else
                 {
                     
-                    v.innerHTML+="1-";
-                    v.innerHTML+=document.getElementById("re1").value;
+                    if (document.getElementById("r1").checked === true)
+                    {
+                        v.innerHTML += "1-";
+                        v.innerHTML += document.getElementById("re1").value;
+                    }
+                    if (document.getElementById("r2").checked === true)
+                    {
+                        v.innerHTML += "2-";
+                        v.innerHTML += document.getElementById("re2").value;
+                    }
+                    if (document.getElementById("r3").checked === true)
+                    {
+                        v.innerHTML += "3-";
+                        v.innerHTML += document.getElementById("re3").value;
+                    }
+                    if (document.getElementById("r4").checked === true)
+                    {
+                        v.innerHTML += "4-";
+                        v.innerHTML += document.getElementById("re4").value;
+                    }
                 }
-                if (document.getElementById("r2").checked===true)
+            }
+            function borrar()
+            {
+                var a = ["r1", "r2", "r3", "r4"];
+                var an=["re1", "re2", "re3", "re4"];
+                for (var i = 0; i < a.length; i++)
                 {
-                    v.innerHTML+="2-";
-                    v.innerHTML+=document.getElementById("re2").value;
+                    document.getElementById(a[i]).checked=false;
                 }
-                if (document.getElementById("r3").checked===true)
+                for (var i = 0; i < an.length; i++)
                 {
-                    v.innerHTML+="3-";
-                    v.innerHTML+=document.getElementById("re3").value;
+                    document.getElementById(an[i]).value="";
                 }
-                if (document.getElementById("r4").checked===true)
-                {
-                    v.innerHTML+="4-";
-                    v.innerHTML+=document.getElementById("re4").value;
-                }
+                document.getElementById("preguntador").value="";
+                var v = document.getElementById("impresion");
+                v.innerHTML="";
             }
 
         </script>
