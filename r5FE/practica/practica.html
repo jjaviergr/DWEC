@@ -17,15 +17,15 @@ and open the template in the editor.
 
                 <label>Nombre y Apellidos<input type="text"/></label>
                 <label>Dirección<input type="text"/></label>
-                <label>Ciudad<select id="ciudad" onblur="carga_poblaciones();">
-                        <option id="c0"> </option>          
+                <label>Ciudad<select id="ciudad"  onmouseout="carga_poblaciones();">
+                              
                         <option id="c1">Almería</option>          
                         <option id="c2">Granada</option>          
                         <option id="c3">Málaga</option>          
                     </select></label>
                 <label>Población
 
-                    <select id="select_poblaciones" >
+                    <select id="select_poblaciones" onclick="escribe_cp();">
 
                     </select>
                     <label>Código Postal<input id="cp" type="text"/></label>
@@ -47,34 +47,67 @@ and open the template in the editor.
         </form>
         <script>
 
+            function borra_poblaciones()
+            {
+                var select = document.getElementById("select_poblaciones");
+                ;
+               // alert ("Elementos con tag option en select de poblaciones :"+select.getElementsByTagName("option").length);
+                
+                for (var i = 0; i < select.getElementsByTagName("option").length; i++)
+                {
+                    select.removeChild(select.getElementsByTagName("option")[i]);
+                }
+                if (select.getElementsByTagName("option").length>0)
+                    borra_poblaciones();
+               // else
+                //    alert ("option"+select.getElementsByTagName("option").length);
+                
+                
+            }
+            
+            function escribe_cp()
+            {
+                var caja=document.getElementById("cp");
+                var select = document.getElementById("select_poblaciones");
+                var options=select.getElementsByTagName("option");
+                //alert (options.length);
+                var i=0;
+                while(options[i].selected!==true)
+                    i++;
+               
+                var v=cargar_codigos_postales(recupera_ciudad());
+                //alert(vcp[n].split(":")[0]);
+                //caja.innerHTML=vcp[n].split(":")[0];
+                caja.value=v[options[i].value].split(":")[0];
+                //alert(event.type);
+            }
+            
             function carga_poblaciones()
             {
                 var select = document.getElementById("select_poblaciones");
-                var op;
+                borra_poblaciones();
+                var element;
                 var ciudad = recupera_ciudad();
                 //alert(recupera_ciudad());
                 var cpob = cargar_codigos_postales(ciudad);
                 // alert (cpob);
-                for (var i = 1; i < cpob.length; i++)
+                for (var i = 0; i < cpob.length; i++)
                 {
-                    op = document.createElement("option");
-                    op.value = i;
-                    op.innerHTML = cpob[i].split(":")[1];
-                    select.appendChild(op);
-                    op.addEventListener("click", escribe_cp(cpob,i), true);
+                    element = document.createElement("option");
+                    
+                    element.value = i;
+                    element.innerHTML = cpob[i].split(":")[1];
+                   
+                    //element.addEventListener("onselect", "escribe_cp();", true);
+                    select.appendChild(element);
                 }
+                //alert("Número de inserciones :"+cpob.length);
                
 
             }
 
-            function escribe_cp(vcp,n)
-            {
-                var caja=document.getElementById("cp");
-                //alert(vcp[n].split(":")[0]);
-                caja.innerHTML=vcp[n].split(":")[0];
-                caja.value=vcp[n].split(":")[0];
-                alert(event.type);
-            }
+            
+            
             function recupera_ciudad()
             {
                 var c1 = document.getElementById("c1");
@@ -1465,6 +1498,7 @@ and open the template in the editor.
                                     , "29718:ZORRILLA"
                                     , "29718:ZUBIA, LA"];
                         break;
+                    default :alert ('Error');
                 }
                 return cp;
             }
