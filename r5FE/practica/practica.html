@@ -18,7 +18,6 @@ and open the template in the editor.
                 <label>Nombre y Apellidos<input type="text"/></label>
                 <label>Dirección<input type="text"/></label>
                 <label>Ciudad<select id="ciudad"  onmouseout="carga_poblaciones();">
-                              
                         <option id="c1">Almería</option>          
                         <option id="c2">Granada</option>          
                         <option id="c3">Málaga</option>          
@@ -31,57 +30,83 @@ and open the template in the editor.
                     <label>Código Postal<input id="cp" type="text"/></label>
                     <label>Fecha<input type="text"/></label>
                     <label>Lugar de Nacimiento
-                        <select>
-                            <option ></option> 
-                            <option></option> 
-                            <option></option> 
-                        </select></label>
+                        <input type="text" id="f_nac"/></label>
                     <label>Estado Civil
                         <select>
                             <option>Soltero</option>
                             <option>Casado</option>
                             <option >Separado</option>
                             <option>Viudo</option>
-                        </select></label>
+                        </select>
+                    </label>
             </fieldset>
         </form>
         <script>
+            function valida_fecha()
+            {
+                var f_hoy = new Date();
+                var fecha = document.getElementById("f_nac").value;
+                if (fecha < f_hoy)
+                {
+                    //fecha="01/01/2001";
+                    //alert(fecha);
+                    //if((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
+                    if (navigator.userAgent.indexOf("Chrome") !== -1)
+                    {
+                        alert("Estas usando Chrome y la fecha deberia ser probada con Firefox");
+                        var cadena = fecha.split("-");
+                        fecha = cadena[2] + "/" + cadena[1] + "/" + cadena[0];
+                    } 
+                    else
+                    {
+                        //if (navigator.userAgent.indexOf("Firefox") !== -1)
+                    }
+                    if ((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
+                    {
+                        var cadena = fecha.split("-");
+                        var d = Number(cadena[0]);
+                        var m = Number(cadena[1]);
+                        var y = Number(cadena[2]);
+                        if (!(d < 0 || d > 31 || m < 1 || m > 12 || y < 0))
+                        {
+                           return true;
+                        }
+                    }                    
+                }
+                return false;
+            }
 
             function borra_poblaciones()
             {
                 var select = document.getElementById("select_poblaciones");
-                ;
-               // alert ("Elementos con tag option en select de poblaciones :"+select.getElementsByTagName("option").length);
-                
-                for (var i = 0; i < select.getElementsByTagName("option").length; i++)
+                //var options=select.getElementsByTagName("option");
+                //alert ("Elementos con tag option en select de poblaciones :"+options.length);
+
+
+                while (select.hasChildNodes())
                 {
-                    select.removeChild(select.getElementsByTagName("option")[i]);
+                    select.removeChild(select.firstChild);
                 }
-                if (select.getElementsByTagName("option").length>0)
-                    borra_poblaciones();
-               // else
-                //    alert ("option"+select.getElementsByTagName("option").length);
-                
-                
+                //alert ("option"+options.length);
             }
-            
+
             function escribe_cp()
             {
-                var caja=document.getElementById("cp");
+                var caja = document.getElementById("cp");
                 var select = document.getElementById("select_poblaciones");
-                var options=select.getElementsByTagName("option");
+                var options = select.getElementsByTagName("option");
                 //alert (options.length);
-                var i=0;
-                while(options[i].selected!==true)
+                var i = 0;
+                while (options[i].selected !== true)
                     i++;
-               
-                var v=cargar_codigos_postales(recupera_ciudad());
+
+                var v = cargar_codigos_postales(recupera_ciudad());
                 //alert(vcp[n].split(":")[0]);
                 //caja.innerHTML=vcp[n].split(":")[0];
-                caja.value=v[options[i].value].split(":")[0];
+                caja.value = v[options[i].value].split(":")[0];
                 //alert(event.type);
             }
-            
+
             function carga_poblaciones()
             {
                 var select = document.getElementById("select_poblaciones");
@@ -94,20 +119,20 @@ and open the template in the editor.
                 for (var i = 0; i < cpob.length; i++)
                 {
                     element = document.createElement("option");
-                    
+
                     element.value = i;
                     element.innerHTML = cpob[i].split(":")[1];
-                   
+
                     //element.addEventListener("onselect", "escribe_cp();", true);
                     select.appendChild(element);
                 }
                 //alert("Número de inserciones :"+cpob.length);
-               
+
 
             }
 
-            
-            
+
+
             function recupera_ciudad()
             {
                 var c1 = document.getElementById("c1");
@@ -1498,7 +1523,8 @@ and open the template in the editor.
                                     , "29718:ZORRILLA"
                                     , "29718:ZUBIA, LA"];
                         break;
-                    default :alert ('Error');
+                    default :
+                        alert('Error');
                 }
                 return cp;
             }
