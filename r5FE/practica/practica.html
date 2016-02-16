@@ -15,7 +15,7 @@ and open the template in the editor.
             <fieldset>
                 <legend>Datos Personales</legend>
 
-                <label>Nombre y Apellidos<input type="text"/></label>
+                <label>Nombre y Apellidos<input id="nombre_y_ap" type="text"/></label>
                 <label>Dirección<input type="text"/></label>
 
 
@@ -32,8 +32,8 @@ and open the template in the editor.
                 <label>Código Postal<input id="cp" type="text"/></label>
                 <label>Telefonos<input type="text"/></label>
                 <label>Correo Electronico<input type="text"/></label>
-                <label>Fecha de Nacimiento<input type="text"/></label>
-                <label>Lugar de Nacimiento<input type="text" id="f_nac"/></label>
+                <label>Fecha de Nacimiento<input type="date" id="fnac"/></label>
+                <label>Lugar de Nacimiento<input type="text" id="lnac"/></label>
                 <label>Estado Civil
                     <select id="s_estado">
                         <option>Soltero</option>
@@ -42,16 +42,180 @@ and open the template in the editor.
                         <option>Viudo</option>
                     </select>
                 </label>
+            </fieldset>            
+            <fieldset>                
+                <legend>Información Académica</legend>
+                <div>
+                    <label>Nombre de la Institución<input id="nombre_acad" type="text"/></label>
+                    <label>Titulo Obtenido<input id="titulo_obt" type="text"/></label>
+                    <label>Fecha Comienzo<input id="fi_acad" type="date"/></label>
+                    <label>Fecha Fin<input id="ff_acad" type="date"/></label>
+                    <div>
+                        <label>Comentarios</label></div>
+                    <div>
+                        <textarea rows="4" cols="50" id="coment_acad"></textarea>
+                    </div>
+                </div>
+                <button  onclick="nuevo_merito()">Nuevo Merito</button>
+                <button onclick="fvalida_info_acad()">Comprueba</button>
+            </fieldset>
+            <fieldset>
+                <legend>Experiencia Profesional</legend>
+                <div>
+                    <label>Empresa<input id="empresa" type="text"/></label>
+                    <label>Puesto<input id="puesto" type="text"/></label>
+                    <div>
+                        <label>Fecha Inicio<input id="fi_exp" type="date"/></label>
+                        <label>Fecha Fin<input id="ff_exp" type="date"/></label>
+                    </div>
+                    <div>
+                        <label>Descripcion del Puesto
+                            <input id="desc_puesto_exp" type="text"/></label></div>
+                    <div>
+                        <label>Tareas Realizadas</label></div>
+                    <div>
+                        <textarea rows="4" cols="50" id="tareas_r_exp" ></textarea>
+                    </div>                    
+                    <label>Logros Conseguidos</label>
+                    <div>
+                        <textarea rows="4" cols="50" id="logros_exp"></textarea>
+                    </div>
+                    <button  onclick="nueva_exp()">Nueva experiencia</button>
+                    <button onclick="f_validar_exp()">Comprueba</button>
+            </fieldset>
+            <fieldset>
+                <legend>Cursos Realizados</legend>
+                <div>
+                    <label>Nombre<input type="text"/></label>
+                    <label>Institución<input type="text"/></label>
+                    <div>
+                        <label>Fecha Inicio<input type="date"/></label>
+                        <label>Fecha Fin<input type="date"/></label>
+                    </div>
+                    <label>Titulo Obtenido<input type="text"/></label>
+                </div>
+                <button onclick="nuevo_curso()" >Nuevo curso</button>
+                <button onclick="f_validar_cursos()">Comprueba</button>
+            </fieldset>
+
+            <fieldset>
+                <legend>Idiomas</legend>
+                <div>
+                    <label>Idioma</label>
+                    <select id="idioma">
+                        <option>inglés</option>
+                        <option>alemán</option>
+                        <option>español</option>
+                        <option>francés</option>
+                        <option>italiano</option>
+                        <option>chino</option>
+                    </select>
+                    <label>Nivel</label>
+                    <select id="nivel_idioma">
+                        <option>básico</option>
+                        <option>avanzado</option>
+                        <option>nativo</option>
+                    </select>
+                </div>
+                <button  onclick="nuevo_idioma()">Nuevo Idioma</button>
+                <button onclick="f_validar_idm()">Comprueba</button>
+            </fieldset>
+            <fieldset>
+                <legend>Conocimientos adicionales</legend>
+                <label>Descripcion</label>
+                <div><textarea  rows="8" cols="100"></textarea></div>
+            </fieldset>
+            <fieldset>
+                <legend>Hobbies y actividades de interés particulares</legend>
+
+                <label>Descripcion</label>
+                <div><textarea rows="8" cols="100"></textarea></div>
+            </fieldset>
+            <fieldset>
+                <legend>Carta de Presentación</legend>
+                <input type="file" />
+                <div>
+                    <textarea  rows="8" cols="100"></textarea></div>
             </fieldset>
             <button onclick="valida_datos_personales()"></button>
         </form>
         <script>
 
-            function valida_fecha_nacimiento(v)
+            function f_validar_idm()
             {
-                return valida_fecha(v);
+                var v = new Array();
+                v.push(is_select_selected(document.getElementById("idioma")));
+                v.push(is_select_selected(document.getElementById("nivel_idioma")));
+                var campos = ["Idioma",
+                    "Nivel"];
+                var cadena = "";
+                for (var i = 0; i < campos.length; i++)
+                {
+                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+                }
+                alert(cadena);
             }
-            function validar_nombre_apellidos(v)
+            
+            function no_es_vacio(t)
+            {
+                if (t.length === 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+
+            function f_validar_cursos()
+            {
+                var v = new Array();
+                v.push(validar_nombres(document.getElementById("nombre_c").value));
+                v.push(validar_nombres(document.getElementById("inst_c").value));
+                var f1 = document.getElementById("fi_c").value;
+                var f2 = document.getElementById("ff_c").value;
+                //alert(f1);
+                v.push(validar_intervalo_fechas(f1, f2));
+                v.push(no_es_vacio(document.getElementById("tit_curso").value));
+
+                var campos = ["Nombre Curso",
+                    "Institución",
+                    "Fechas de Comienzo y de Fin",
+                    "Titulo Obtenido"];
+                var cadena = "";
+                for (var i = 0; i < campos.length; i++)
+                {
+                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+                }
+                alert(cadena);
+            }
+
+            function f_validar_exp()
+            {
+                var v = new Array();
+                v.push(validar_nombres(document.getElementById("empresa").value));
+                v.push(validar_nombres(document.getElementById("puesto").value));
+                var f1 = document.getElementById("fi_exp").value;
+                var f2 = document.getElementById("ff_exp").value;
+                //alert(f1);
+                v.push(validar_intervalo_fechas(f1, f2));
+                v.push(true);
+                v.push(true);
+
+
+                v.push(true);
+
+                var campos = ["Empresa",
+                    "Institución",
+                    "Fechas de Comienzo y de Fin",
+                    "Descripcion puesto", "Tareas Realizadas", "Logros Conseguidos"];
+                var cadena = "";
+                for (var i = 0; i < campos.length; i++)
+                {
+                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+                }
+                alert(cadena);
+            }
+
+            function validar_nombres(v)
             {
                 if (/\D+/.test(v))
                 {
@@ -76,28 +240,30 @@ and open the template in the editor.
 
             function validaTelefono(valor)
             {
-                if (/\+?\d{9,12}/.test(valor))
+                if (/(\+?\d{2,3})?(\d{3}-\d{6})/.test(valor) || /(\+?\d{2,3})?(\d{9})/.test(valor))
                 {
+
                     return true;
-                } else
-                {
-                    alert("El telefono debe ser formato +00 000000000");
                 }
+
                 return false;
             }
 
             function validar_correo_electronico(v)
             {
-                if ((/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)/.test(v)))
+
+                if ((/\w+[^+/%&]@\w+[^+/%&]\.\w{3}/.test(v)))
                 {
+                    //alert ('bueno');
                     return true;
                 }
+                //alert ('malo');
                 return false;
             }
 
-            function validar_estado_civil()
+            function is_select_selected(s)
             {
-                var s = document.getElementById("s_estado");
+                //var s = document.getElementById("s_estado");
                 var options = s.getElementsByTagName("option");
                 var i = 0;
 
@@ -111,20 +277,107 @@ and open the template in the editor.
                     return false;
                 }
             }
+            function validar_estado_civil()
+            {
+                var s = document.getElementById("s_estado");
+                return is_select_selected(s);
 
-            function valida_datos_personales()
+            }
+
+            function validar_intervalo_fechas(f1, f2)
+            {
+                alert(f1.length + " " + f2.length);
+                alert(f1 + " " + f2);
+                if ((f1.length !== 0) && (f2.length !== 0))
+                {
+                    alert("ok1");
+                    if (navigator.userAgent.indexOf("Chrome") !== -1)
+                    {
+                        alert("ok2");
+                        var c1 = f1.split("-");
+                        f1 = c1[2] + "/" + c1[1] + "/" + c1[0];
+                        alert(f1);
+                        var c2 = f2.split("-");
+                        f2 = c2[2] + "/" + c2[1] + "/" + c2[0];
+                        alert(f2);
+                    }
+
+                    var ff1 = new Date(c1[2], c1[1], c1[0]);
+
+                    var ff2 = new Date(c2[2], c2[1], c2[0]);
+                    //alert(ff1.toString() + " " + ff2.toString());
+
+                    if (ff1 < ff2)
+                    {
+                        //alert('buena');
+                        return true;
+                    }
+                }
+                return false;
+                /**
+                 * var fecha;
+                 //alert(fecha)
+                 if (navigator.userAgent.indexOf("Chrome") !== -1)
+                 {
+                 var cadena = fecha.split("-");
+                 fecha = cadena[2] + "/" + cadena[1] + "/" + cadena[0];
+                 }
+                 
+                 fecha = new Date(fecha);
+                 
+                 var f_hoy = new Date();
+                 
+                 
+                 if (fecha < f_hoy)
+                 {
+                 alert('buena');
+                 return true;
+                 } else
+                 {
+                 alert('mala');
+                 return false;
+                 }*/
+            }
+
+            function fvalida_info_acad()
+            {
+
+                var v = new Array();
+                v.push(validar_nombres(document.getElementById("nombre_acad")));
+                v.push(validar_nombres(document.getElementById("titulo_obt")));
+                var f1 = document.getElementById("fi_acad").value;
+                var f2 = document.getElementById("ff_acad").value;
+                v.push(validar_intervalo_fechas(f1, f2));
+
+
+                v.push(true);
+
+                var campos = ["nombre de la Institución",
+                    "Titulo Obtenido",
+                    "Fechas de Comienzo y de Fin",
+                    "Comentarios"];
+                var cadena = "";
+                for (var i = 0; i < campos.length; i++)
+                {
+                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+                }
+                alert(cadena);
+            }
+
+            function fvalida_datos_personales()
             {
                 var v = new Array();
 
-                v.push(validar_nombre_apellidos());//
-                v.push(validar_direccion());//                
-                v.push(validar_correo_electronico());
-                v.push(valida_fecha_nacimiento());//
-                v.push(validar_lugar_nacimiento());//
+                v.push(validar_nombres(document.getElementById("nombre_y_ap").value));//
+                v.push(validar_direccion());//
                 v.push(validaTelefono());//
-                v.push(validar_estado_civil());
+                v.push(validar_correo_electronico());
+                v.push(valida_fecha_nacimiento(document.getElementById("fnac").value));//
+                v.push(validar_lugar_nacimiento());//
 
-                var campos = ["nombre", "direccion", "fecha", "lugar de nacimiento", "estado civil"];
+                //v.push(validar_estado_civil());
+
+                var campos = ["nombre", "direccion", "telefono", "correo", "fecha", "lugar de nacimiento", "estado civil"];
 
                 var cadena = "";
                 for (var i = 0; i < campos.length; i++)
@@ -134,21 +387,49 @@ and open the template in the editor.
                 alert(cadena);
             }
 
-
-            function valida_fecha(fecha)
+            function comprobar_si_f_actual_menor_f_nacimiento(fecha)
             {
+                var fecha;
+                //alert(fecha)
+                if (navigator.userAgent.indexOf("Chrome") !== -1)
+                {
+                    var cadena = fecha.split("-");
+                    fecha = cadena[2] + "/" + cadena[1] + "/" + cadena[0];
+                }
+
+                fecha = new Date(fecha);
+
                 var f_hoy = new Date();
-                //var fecha = document.getElementById("f_nac").value;
+
+
                 if (fecha < f_hoy)
                 {
+                    alert('buena');
+                    return true;
+                } else
+                {
+                    alert('mala');
+                    return false;
+                }
+            }
+
+            function valida_fecha_nacimiento(cad_fecha)
+            {
+                var fecha = cad_fecha;
+
+                //var fecha = document.getElementById("f_nac").value;
+                if (comprobar_si_f_actual_menor_f_nacimiento(cad_fecha))
+                {
+                    fecha = cad_fecha;
                     //fecha="01/01/2001";
                     //alert(fecha);
                     //if((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
                     if (navigator.userAgent.indexOf("Chrome") !== -1)
                     {
-                        alert("Estas usando Chrome y la fecha deberia ser probada con Firefox");
+                        //alert("Estas usando Chrome y la fecha deberia ser probada con Firefox");
                         var cadena = fecha.split("-");
                         fecha = cadena[2] + "/" + cadena[1] + "/" + cadena[0];
+
                     } else
                     {
                         //if (navigator.userAgent.indexOf("Firefox") !== -1)
@@ -165,6 +446,7 @@ and open the template in the editor.
                         }
                     }
                 }
+                //alert('malo');
                 return false;
             }
 
@@ -317,7 +599,7 @@ and open the template in the editor.
                                     , "04826:ARANEGAS, LOS"
                                     , "04660:ARBOLEAS"
                                     , "04149:ARGAMASON, EL"
-                                    , "04888:ARMU�A DE ALMANZORA"
+                                    , "04888:ARMUÑA DE ALMANZORA"
                                     , "04619:ARNILLA"
                                     , "04850:ARROYO ACEITUNO, EL"
                                     , "04858:ARROYO ALBANCHEZ, EL"
@@ -336,7 +618,7 @@ and open the template in the editor.
                                     , "04713:BALANEGRA"
                                     , "04712:BALERMA"
                                     , "04828:BANCALEJO"
-                                    , "04715:BA�OS DE GUARDIAS VIEJAS, LOS"
+                                    , "04715:BAÑOS DE GUARDIAS VIEJAS, LOS"
                                     , "04279:BARRANCO DE LOS LOBOS"
                                     , "04810:BARRANCO DE QUILES, EL"
                                     , "04858:BARRANCO DEL INFIERNO, EL"
@@ -363,10 +645,10 @@ and open the template in the editor.
                                     , "04120:BOBAR, EL"
                                     , "04117:BOCA DE LOS FRAILES"
                                     , "04858:BORREGOS, LOS"
-                                    , "04271:BRE�A"
+                                    , "04271:BREÑA"
                                     , "04897:BREVAS, LOS"
                                     , "04618:BURJULU"
-                                    , "04738:CABA�UELAS, LAS"
+                                    , "04738:CABAÑUELAS, LAS"
                                     , "04150:CABO DE GATA, EL"
                                     , "04827:CABRERAS, LOS"
                                     , "04648:CALA PANIZO"
@@ -395,15 +677,15 @@ and open the template in the editor.
                                     , "04825:CANTAL, EL"
                                     , "04746:CANTINAS, LAS"
                                     , "04850:CANTORIA"
-                                    , "04839:CA�ADA DE CA�EPLA, LA"
-                                    , "04140:CA�ADA DE DON RODRIGO, LA"
-                                    , "04869:CA�ADA DE LAS CRUCES, LA"
-                                    , "04618:CA�ADA DE LORCA, LA"
-                                    , "04120:CA�ADA DE SAN URBANO, LA"
-                                    , "04839:CA�ADA GRANDE, LA"
-                                    , "04738:CA�ADA SEBASTIANA"
-                                    , "04811:CA�ADA, LA"
-                                    , "04149:CA�ARICO, EL"
+                                    , "04839:CAÑADA DE CAÑEPLA, LA"
+                                    , "04140:CAÑADA DE DON RODRIGO, LA"
+                                    , "04869:CAÑADA DE LAS CRUCES, LA"
+                                    , "04618:CAÑADA DE LORCA, LA"
+                                    , "04120:CAÑADA DE SAN URBANO, LA"
+                                    , "04839:CAÑADA GRANDE, LA"
+                                    , "04738:CAÑADA SEBASTIANA"
+                                    , "04811:CAÑADA, LA"
+                                    , "04149:CAÑARICO, EL"
                                     , "04811:CAPAIROLA"
                                     , "04640:CAPARROSES, LOS (PULPI)"
                                     , "04661:CARASOLES, LOS"
@@ -420,7 +702,7 @@ and open the template in the editor.
                                     , "04829:CASAS, LAS"
                                     , "04850:CASICAS, LAS"
                                     , "04760:CASTALA"
-                                    , "04278:CASTA�OS, LOS"
+                                    , "04278:CASTAÑOS, LOS"
                                     , "04660:CASTOS, LOS"
                                     , "04212:CASTRO DE FILABRES"
                                     , "04887:CELA"
@@ -489,8 +771,8 @@ and open the template in the editor.
                                     , "04271:DIOSES, LOS"
                                     , "04897:DOMENES"
                                     , "04897:DONATOS, LOS"
-                                    , "04813:DO�A JUANA"
-                                    , "04530:DO�A MARIA DE OCA�A"
+                                    , "04813:DOÑA JUANA"
+                                    , "04530:DOÑA MARIA DE OCAÑA"
                                     , "04700:EJIDO, EL"
                                     , "04211:ENCALMADOS, LOS"
                                     , "04729:ENIX"
@@ -508,7 +790,7 @@ and open the template in the editor.
                                     , "04116:FERNANPEREZ"
                                     , "04869:FINES"
                                     , "04800:FINOS, LOS"
-                                    , "04500:FI�ANA"
+                                    , "04500:FIÑANA"
                                     , "04460:FONDON"
                                     , "04271:FONTE, EL"
                                     , "04810:FRAX"
@@ -558,7 +840,7 @@ and open the template in the editor.
                                     , "04820:GINTE"
                                     , "04279:GOCHAR"
                                     , "04810:GONZALEZ, LOS"
-                                    , "04690:GO�AR"
+                                    , "04690:GOÑAR"
                                     , "04693:GOR, EL"
                                     , "04838:GRAJ"
                                     , "04117:GRILLOS, LOS"
@@ -647,16 +929,16 @@ and open the template in the editor.
                                     , "04810:MAGUAS"
                                     , "04810:MALINOS"
                                     , "04120:MAMI, EL"
-                                    , "04839:MANCHE�O"
+                                    , "04839:MANCHEÑO"
                                     , "04887:MANOLONES, LOS"
-                                    , "04270:MA�AS, LOS"
+                                    , "04270:MAÑAS, LOS"
                                     , "04729:MARCHAL DE ENIX"
                                     , "04850:MARCHAL, EL (CANTORIA)"
                                     , "04271:MARCHAL, EL (LUBRIN)"
                                     , "04867:MARCHAL, EL (MACAEL)"
                                     , "04810:MARCHAL, EL (ORIA)"
                                     , "04274:MARCHAL, EL (ULEILA DEL CAMPO)"
-                                    , "04277:MARCHALICO VI�ICAS"
+                                    , "04277:MARCHALICO VIÑICAS"
                                     , "04811:MARGEN, EL"
                                     , "04838:MARIA"
                                     , "04621:MARINAS, LAS"
@@ -710,11 +992,11 @@ and open the template in the editor.
                                     , "04100:NIJAR"
                                     , "04860:NORIA, LA (OLULA DEL RIO)"
                                     , "04716:NORIAS DE DAZA, LAS"
-                                    , "04500:NORIAS, LAS (FI�ANA)"
+                                    , "04500:NORIAS, LAS (FIÑANA)"
                                     , "04690:NORIAS, LAS (HUERCAL OVERA)"
                                     , "04213:NUDOS"
                                     , "04200:NUDOS, LOS"
-                                    , "04530:OCA�A"
+                                    , "04530:OCAÑA"
                                     , "04459:OHANES"
                                     , "04869:OLIVAR, EL"
                                     , "04211:OLIVILLOS, LOS"
@@ -745,10 +1027,10 @@ and open the template in the editor.
                                     , "04250:PECHINA"
                                     , "04691:PEDREGALES, LOS"
                                     , "04692:PEDRO GARCIA"
-                                    , "04769:PE�ARRODADA, LA"
-                                    , "04277:PE�AS NEGRAS"
-                                    , "04811:PE�ON ALTO, EL"
-                                    , "04811:PE�ON BAJO, EL"
+                                    , "04769:PEÑARRODADA, LA"
+                                    , "04277:PEÑAS NEGRAS"
+                                    , "04811:PEÑON ALTO, EL"
+                                    , "04811:PEÑON BAJO, EL"
                                     , "04277:PERALES, LOS"
                                     , "04660:PERALTAS, LOS"
                                     , "04619:PERDIGONES, LOS"
@@ -832,7 +1114,7 @@ and open the template in the editor.
                                     , "04271:RISAS, LOS"
                                     , "04115:RODALQUILAR"
                                     , "04549:ROJAS, LOS"
-                                    , "04277:RONDE�A, LA"
+                                    , "04277:RONDEÑA, LA"
                                     , "04740:ROQUETAS DE MAR"
                                     , "04740:ROQUETAS DE MAR, Urbanizacion"
                                     , "04825:ROQUEZ"
@@ -943,9 +1225,9 @@ and open the template in the editor.
                                     , "18520:ALAMEDILLA"
                                     , "18220:ALBOLOTE"
                                     , "18708:ALBONDON"
-                                    , "18518:ALBU�AN"
-                                    , "18700:ALBU�OL"
-                                    , "18659:ALBU�UELAS"
+                                    , "18518:ALBUÑAN"
+                                    , "18700:ALBUÑOL"
+                                    , "18659:ALBUÑUELAS"
                                     , "18710:ALCAZAR"
                                     , "18511:ALCUDIA DE GUADIX"
                                     , "18514:ALDEIRE"
@@ -957,7 +1239,7 @@ and open the template in the editor.
                                     , "18260:ALHONDIGUILLA"
                                     , "18538:ALICUN DE ORTEGA"
                                     , "18438:ALMEGIJAR"
-                                    , "18690:ALMU�ECAR"
+                                    , "18690:ALMUÑECAR"
                                     , "18350:ALOMARTES"
                                     , "18182:ALQUERIA DEL FARGUE"
                                     , "18518:ALQUIFE"
@@ -1001,19 +1283,19 @@ and open the template in the editor.
                                     , "18565:CAMPOTEJAR"
                                     , "18191:CANALES"
                                     , "18810:CANILES"
-                                    , "18418:CA�AR"
+                                    , "18418:CAÑAR"
                                     , "18290:CAPARACENA"
                                     , "18413:CAPILEIRA"
                                     , "18410:CARATAUNAS"
                                     , "18730:CARCHUNA"
-                                    , "18311:CARRERA DE LA VI�A"
+                                    , "18311:CARRERA DE LA VIÑA"
                                     , "18291:CASA NUEVA"
                                     , "18439:CASTARAS"
                                     , "18740:CASTELL DE FERRO"
                                     , "18818:CASTILLEJAR"
-                                    , "18750:CASTILLO DE BA�OS"
+                                    , "18750:CASTILLO DE BAÑOS"
                                     , "18329:CASTILLO TAJARJA"
-                                    , "18816:CASTRIL DE LA PE�A"
+                                    , "18816:CASTRIL DE LA PEÑA"
                                     , "18190:CENES DE LA VEGA"
                                     , "18290:CHAPARRAL, EL"
                                     , "18511:CHARCHES"
@@ -1076,12 +1358,12 @@ and open the template in the editor.
                                     , "18560:GUADAHORTUNA"
                                     , "18500:GUADIX"
                                     , "18615:GUAJAR ALTO"
-                                    , "18615:GUAJAR FARAG�IT"
+                                    , "18615:GUAJAR FARAGÑIT"
                                     , "18615:GUAJAR FONDON"
                                     , "18615:GUAJARES, LOS"
                                     , "18614:GUALCHOS"
                                     , "18160:GUEJAR SIERRA"
-                                    , "18212:G�EVEJAR"
+                                    , "18212:GÑEVEJAR"
                                     , "18569:GUMIEL"
                                     , "18710:HAZA DEL LINO (POLOPOS)"
                                     , "18750:HAZA DEL TRIGO"
@@ -1178,14 +1460,14 @@ and open the template in the editor.
                                     , "18530:PEDRO MARTINEZ"
                                     , "18330:PEDRO RUIZ"
                                     , "18210:PELIGROS"
-                                    , "18328:PE�UELAS"
+                                    , "18328:PEÑUELAS"
                                     , "18517:PEZA, LA"
                                     , "18494:PICENA"
                                     , "18125:PILAS DE ALGAIDA"
                                     , "18658:PINOS DEL VALLE"
                                     , "18191:PINOS GENIL"
                                     , "18240:PINOS PUENTE"
-                                    , "18568:PI�AR"
+                                    , "18568:PIÑAR"
                                     , "18414:PITRES"
                                     , "18613:PLAYA GRANADA"
                                     , "18516:POLICAR"
@@ -1210,7 +1492,7 @@ and open the template in the editor.
                                     , "18711:RUBITE"
                                     , "18310:SALAR"
                                     , "18658:SALERES"
-                                    , "18680:SALOBRE�A"
+                                    , "18680:SALOBREÑA"
                                     , "18129:SANTA CRUZ DEL COMERCIO"
                                     , "18320:SANTAFE"
                                     , "18330:SIERRA ELVIRA"
@@ -1290,7 +1572,7 @@ and open the template in the editor.
                                     , "29195:ALQUERIA (COMARES)"
                                     , "29650:ALQUERIA, LA (MIJAS)"
                                     , "29200:ANTEQUERA"
-                                    , "29720:ARA�A, LA"
+                                    , "29720:ARAÑA, LA"
                                     , "29753:ARCHEZ"
                                     , "29300:ARCHIDONA"
                                     , "29314:ARCHIDONA, Estacion"
@@ -1310,7 +1592,7 @@ and open the template in the editor.
                                     , "29688:ATALAYA ISDABE"
                                     , "29311:ATALAYA, LA"
                                     , "29693:BAHIA DORADA"
-                                    , "29710:BA�OS DE VILO"
+                                    , "29710:BAÑOS DE VILO"
                                     , "29150:BARRANCO DE ZAFRA"
                                     , "29150:BARRANCO DEL SOL"
                                     , "29510:BARRIADA BELLAVISTA (ALORA ESTACION)"
@@ -1347,9 +1629,9 @@ and open the template in the editor.
                                     , "29688:CANCELADA"
                                     , "29716:CANILLAS DE ACEITUNO"
                                     , "29755:CANILLAS DE ALBAIDA"
-                                    , "29391:CA�ADA DEL REAL TESORO, LA"
-                                    , "29340:CA�ETE LA REAL"
-                                    , "29395:CA�ETE LA REAL, Estacion"
+                                    , "29391:CAÑADA DEL REAL TESORO, LA"
+                                    , "29340:CAÑETE LA REAL"
+                                    , "29395:CAÑETE LA REAL, Estacion"
                                     , "29630:CAPELLANIA, LA"
                                     , "29716:CAPITOS, LOS"
                                     , "29593:CARACUEL"
@@ -1367,14 +1649,14 @@ and open the template in the editor.
                                     , "29690:CASARES"
                                     , "29193:CASETA DE OBRAS PUBLICAS"
                                     , "29713:CASILLAS, LAS (LOS ROMANES)"
-                                    , "29590:CASTA�ETA, LA"
+                                    , "29590:CASTAÑETA, LA"
                                     , "29713:CASTILLEJOS, LOS"
                                     , "29692:CASTILLO DE LA DUQUESA"
                                     , "29569:CERRALBA"
                                     , "29649:CERROS DEL AGUILA (MIJAS), Urbanizacion"
                                     , "29195:CHAMIZAS"
                                     , "29649:CHAPARRAL (MIJAS)"
-                                    , "29160:CHAPERA MADRO�AL"
+                                    , "29160:CHAPERA MADROÑAL"
                                     , "29120:CHICHARRA, LA"
                                     , "29790:CHILCHES"
                                     , "29552:CHORRO, EL"
@@ -1435,7 +1717,7 @@ and open the template in the editor.
                                     , "29327:HUERTAS DE TORRO"
                                     , "29314:HUERTAS DEL RIO"
                                     , "29327:HUERTAS Y MONTES"
-                                    , "29590:HUERTECILLA DE MA�AS"
+                                    , "29590:HUERTECILLA DE MAÑAS"
                                     , "29793:HUIT"
                                     , "29531:HUMILLADERO"
                                     , "29440:IGUALEJA"
@@ -1461,11 +1743,11 @@ and open the template in the editor.
                                     , "29716:LOMAS CHOZAS"
                                     , "29500:LOMAS, LAS (ALORA)"
                                     , "29791:MACHARAVIAYA"
-                                    , "29678:MADRO�AL, EL"
+                                    , "29678:MADROÑAL, EL"
                                     , "29612:MAIRENA, LA, Urbanizacion"
                                     , "29170:MAJADA DEL MORO"
                                     , "29000:MALAGA (VER CALLEJERO)"
-                                    , "29569:MALAGUE�OS, LOS"
+                                    , "29569:MALAGUEÑOS, LOS"
                                     , "29691:MANILVA"
                                     , "29591:MAQUEDA"
                                     , "29000:MARBELLA (VER CALLEJERO)"
@@ -1511,9 +1793,9 @@ and open the template in the editor.
                                     , "29311:PARRILLA, LA"
                                     , "29719:PASADA DE GRANADILLO"
                                     , "29712:PAULAS, LOS"
-                                    , "29650:PE�ABLANQUILLA (MIJAS), Urbanizacion"
-                                    , "29130:PE�ON, EL"
-                                    , "29793:PE�ONCILLO, EL"
+                                    , "29650:PEÑABLANQUILLA (MIJAS), Urbanizacion"
+                                    , "29130:PEÑON, EL"
+                                    , "29793:PEÑONCILLO, EL"
                                     , "29580:PERAL"
                                     , "29710:PERIANA"
                                     , "29130:PIAMONTE"
@@ -1604,7 +1886,7 @@ and open the template in the editor.
                                     , "29315:VILLANUEVA DE TAPIA"
                                     , "29312:VILLANUEVA DEL ROSARIO"
                                     , "29313:VILLANUEVA DEL TRABUCO"
-                                    , "29712:VI�UELA"
+                                    , "29712:VIÑUELA"
                                     , "29410:YUNQUERA"
                                     , "29569:ZALEA"
                                     , "29120:ZANGANO, EL"
