@@ -104,8 +104,12 @@ function checkCookie()
 }
 
 
-/************/
 
+/**
+ * Dice si una estructura tipo coleccion esta vacia
+ * @param {type} t
+ * @returns {Boolean}
+ */
 function no_es_vacio(t)
 {
     if (t.length === 0)
@@ -115,6 +119,11 @@ function no_es_vacio(t)
     return true;
 }
 
+/**
+ * Devuelve si se ha seleccionado algún option de un select.
+ * @param {type} s
+ * @returns {Boolean}
+ */
 function is_select_selected(s)
 {
     //var s = document.getElementById("s_estado");
@@ -130,4 +139,24 @@ function is_select_selected(s)
         i++;
         return false;
     }
+}
+
+/**
+ * Lee el contenido del fichero de texto suministrado por un 
+ * input type='file'. La salida puede ser un texbox o texarea
+ * 
+ * @param {type} files
+ * @returns {undefined}
+ */
+function processFiles(files) {
+    var file = files[0];
+
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+
+        var output = document.getElementById("contenido_fichero");
+        output.value = e.target.result;
+    };
+    reader.readAsText(file);
 }

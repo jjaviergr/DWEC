@@ -8,13 +8,16 @@ and open the template in the editor.
     <head>
         <title>TODO supply a title</title>
         <script src="js/libreria.js"></script>
-        <script src="js/datos.js"></script>
-        <script src="js/clases.js"></script>
+        <script src="js/datos.js"></script>        
+        <script src="js/info_acad.js"></script>
+        <script src="js/exp_pro.js"></script>
+        <script src="js/cursos_re.js"></script>
+        <script src="js/idiomas.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" lang="es-es">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <form onload="">
+        <form >
             <fieldset>
                 <legend>Datos Personales</legend>
 
@@ -59,13 +62,12 @@ and open the template in the editor.
                     <div>
                         <textarea rows="4" cols="50" id="coment_acad"></textarea>
                     </div>
-                </div>
-                <input type="text" id="acumula_info_cad"/>
-                <button  onclick="cur.nuevo_merito()">Nuevo Merito</button>
-                <button onclick="fvalida_info_acad()">Comprueba</button>
+                </div>                
+                <button type="button" onclick="nuevo_merito()">Nuevo Merito</button>
+                <button type="button" onclick="fvalida_info_acad()">Comprueba</button>
             </fieldset>
-            <fieldset>
-                <legend>Experiencia Profesional</legend>
+            <fieldset id="exp_prof">
+                <legend >Experiencia Profesional</legend>
                 <div>
                     <label>Empresa<input id="empresa" type="text"/></label>
                     <label>Puesto<input id="puesto" type="text"/></label>
@@ -85,45 +87,36 @@ and open the template in the editor.
                     <div>
                         <textarea rows="4" cols="50" id="logros_exp"></textarea>
                     </div>
-                    <button  onclick="nueva_exp();">Nueva experiencia</button>
-                    <button onclick="f_validar_exp();">Comprueba</button>
+                    <button type="button" onclick="nueva_exp_prof();">Nueva experiencia</button>
+                    <button type="button" onclick="f_validar_exp();">Comprueba</button>
             </fieldset>
-            <fieldset>
+            <fieldset id="cr">
                 <legend>Cursos Realizados</legend>
                 <div>
-                    <label>Nombre<input type="text"/></label>
-                    <label>Institución<input type="text"/></label>
+                    <label>Nombre<input id="nombre_curso" type="text"/></label>
+                    <label>Institución<input id="inst_curso" type="text"/></label>
                     <div>
-                        <label>Fecha Inicio<input type="date"/></label>
-                        <label>Fecha Fin<input type="date"/></label>
+                        <label>Fecha Inicio<input id="fi_curso" type="date"/></label>
+                        <label>Fecha Fin<input id="ff_curso" type="date"/></label>
                     </div>
-                    <label>Titulo Obtenido<input type="text"/></label>
+                    <label>Titulo Obtenido<input id="to_curso" type="text"/></label>
                 </div>
-                <button onclick="nuevo_curso();" >Nuevo curso</button>
-                <button onclick="f_validar_cursos();">Comprueba</button>
+                <button type="button" onclick="nuevo_curso();" >Nuevo curso</button>
+                <button type="button" onclick="f_validar_cursos();">Comprueba</button>
             </fieldset>
 
-            <fieldset>
-                <legend>Idiomas</legend>
+            <fieldset id="fidimoas" >
+                <legend id="s_idiomas" >Idiomas</legend>
                 <div>
                     <label>Idioma</label>
-                    <select id="idioma">
-                        <option>inglés</option>
-                        <option>alemán</option>
-                        <option>español</option>
-                        <option>francés</option>
-                        <option>italiano</option>
-                        <option>chino</option>
+                    <select id="idioma" >                       
                     </select>
                     <label>Nivel</label>
-                    <select id="nivel_idioma">
-                        <option>básico</option>
-                        <option>avanzado</option>
-                        <option>nativo</option>
+                    <select  id="nivel_idioma">                        
                     </select>
                 </div>
-                <button  onclick="nuevo_idioma();">Nuevo Idioma</button>
-                <button onclick="f_validar_idm();">Comprueba</button>
+                <button type="button" onclick="nuevo_idioma();">Nuevo Idioma</button>
+                <button type="button" onclick="f_validar_idm();">Comprueba</button>
             </fieldset>
             <fieldset>
                 <legend>Conocimientos adicionales</legend>
@@ -142,129 +135,10 @@ and open the template in the editor.
                 <div>
                     <textarea  id="contenido_fichero" rows="8" cols="100"></textarea></div>
             </fieldset>
-            <button onclick="valida_datos_personales()"  ></button>
+            <button type="button" onclick="valida_datos_personales()"  ></button>
         </form>
         <script>
-            /*
-             * 
-             <fieldset> 
-             <!-sdfgsfgsdfgsg-->
-             <legend>Información Académica</legend>
-             <div>
-             <label>Nombre de la Institución<input id="nombre_acad" type="text"/></label>
-             <label>Titulo Obtenido<input id="titulo_obt" type="text"/></label>
-             <label>Fecha Comienzo<input id="fi_acad" type="date"/></label>
-             <label>Fecha Fin<input id="ff_acad" type="date"/></label>
-             <div>
-             <label>Comentarios</label></div>
-             <div>
-             <textarea rows="4" cols="50" id="coment_acad"></textarea>
-             </div>
-             </div>
-             <button  onclick="nuevo_merito()">Nuevo Merito</button>
-             <button onclick="fvalida_info_acad()">Comprueba</button>
-             </fieldset>
-             */
 
-            //alert (cursos);
-            var cur = function cursos()
-            {
-
-                cursos.desc_campos = ["Nombre de la Intitución", "Titulo Obtenido",
-                    "Fecha Comienzo", "Fecha Fin", "Comentarios"];
-                cursos.lista_campos = ["nombre_acad", "titulo_obt", "fi_acad", "ff_acad", "coment_acad"];
-
-
-            };
-
-
-            cur.nuevo_merito = function nuevo_merito()
-            {
-                //alert(cursos.cursos);
-                //alert(cur.cursos.length);
-                var cad = "";
-                cad += document.getElementById("nombre_acad").value + ";";
-                cad += document.getElementById("titulo_obt").value + ";";
-                cad += document.getElementById("fi_acad").value + ";";
-                cad += document.getElementById("ff_acad").value + ";";
-                cad += document.getElementById("coment_acad").value + "<br>";
-                var info = document.getElementById("acumula_info_cad").value+cad;
-                
-                
-                document.getElementById("acumula_info_cad").value=info;
-
-                alert(document.getElementById("acumula_info_cad").value);
-                //limpiar_info_acad();
-                //imprime_cursos();
-            }
-
-/*
-            var c = "";
-
-            function limpiar_info_acad()
-            {
-                document.getElementById("nombre_acad").value = "";
-                document.getElementById("titulo_obt").value = "";
-                document.getElementById("fi_acad").value = "";
-                document.getElementById("ff_acad").value = "";
-                document.getElementById("coment_acad").value = "";
-            }
-
-            function nuevo_merito()
-            {
-                cur.nuevo_merito();
-
-
-            }
-
-
-
-            function imprime_cursos()
-            {
-                var cadena = "";
-                var campos = ["Nombre de la Intitución", "Titulo Obtenido",
-                    "Fecha Comienzo", "Fecha Fin", "Comentarios"];
-                alert(cursos.length);
-                for (var i = 0; i < cursos.length; i++)
-                {
-                    c = cursos[i];
-                    cs = c.split(";");
-
-                    for (var j = 0; j < cs.length; j++)
-                    {
-                        cadena += campos[j] + "=" + cs[j];
-                    }
-
-
-                }
-                alert(cadena);
-            }
-*/
-            function processFiles(files) {
-                var file = files[0];
-
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-
-                    var output = document.getElementById("contenido_fichero");
-                    output.value = e.target.result;
-                };
-                reader.readAsText(file);
-            }
-
-            function abrir_f_lectura()
-            {
-                alert('lanzando');
-                if (document.getElementById("fichero").files.length > 0)
-                {
-                    var file = document.getElementById("fichero").files[0];
-                    var archivo = fopen(file, 0);
-                    var file_length = flength(file);
-                    var content = fread(file, file_length);
-                    document.getElementById("contenido_fichero").value = content;
-                }
-            }
             function f_validar_idm()
             {
                 var v = new Array();
@@ -415,29 +289,6 @@ and open the template in the editor.
                     }
                 }
                 return false;
-                /**
-                 * var fecha;
-                 //alert(fecha)
-                 if (navigator.userAgent.indexOf("Chrome") !== -1)
-                 {
-                 var cadena = fecha.split("-");
-                 fecha = cadena[2] + "/" + cadena[1] + "/" + cadena[0];
-                 }
-                 
-                 fecha = new Date(fecha);
-                 
-                 var f_hoy = new Date();
-                 
-                 
-                 if (fecha < f_hoy)
-                 {
-                 alert('buena');
-                 return true;
-                 } else
-                 {
-                 alert('mala');
-                 return false;
-                 }*/
             }
 
             function fvalida_info_acad()
@@ -623,8 +474,9 @@ and open the template in the editor.
                 }
 
             }
-
-
+            
+           carga_idiomas();
+           carga_niveles();
         </script>
     </body>
 </html>
