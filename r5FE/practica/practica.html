@@ -182,11 +182,23 @@ and open the template in the editor.
                 cad += "<br><b>Datos personales :</b>" + "\n";
                 cad += imprime_array(fvalida_datos_personales()) + "\n";
                 cad += "<br><b>Información academica :</b>" + "\n";
-                cad += imprime_array(fvalida_info_acad()) + "\n";
+                if (!document.getElementById("check_estudios").checked)
+                {
+                    cad += imprime_array(fvalida_info_acad()) + "\n";
+                } else
+                    cad += "Sin estudios";
+
                 cad += "<br><b>Experiencia Profesional :</b>" + "\n";
-                cad += imprime_array(f_validar_exp()) + "\n";
+                if (!document.getElementById("check_exp").checked)
+                    cad += imprime_array(f_validar_exp()) + "\n";
+                else
+                    cad += "Sin experiencia profesional";
+
                 cad += "<br><b>Cursos Realizados :</b>" + "\n";
-                cad += imprime_array(f_validar_cursos()) + "\n";
+                if (!document.getElementById("ch_cursos").checked)
+                    cad += imprime_array(f_validar_cursos()) + "\n";
+                else
+                    cad += "Sin cursos";
                 cad += "<br><b>Idiomas :</b>" + "\n";
 
 
@@ -472,9 +484,9 @@ and open the template in the editor.
                     for (var i = 0; i < Aidiomas.length; i++)
                     {
                         r.push(Aidiomas[i] + " - " + AnivelI[i] + ";");
-                        
-                    }
 
+                    }
+                    r.sort();
                     return(r);
                 }
                 return false;
@@ -552,7 +564,8 @@ and open the template in the editor.
                 }
                 //alert ("option"+options.length);
             }
-
+            
+            carga_poblaciones();
             carga_idiomas();
             carga_niveles();
         </script>
