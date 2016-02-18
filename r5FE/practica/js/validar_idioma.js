@@ -2,6 +2,27 @@ var Aidiomas = new Array();
 var AnivelI = new Array();
 var g_idiomas = ["inglés", "alemán", "español", "francés", "italiano", "chino"];
 var g_niveles = ["básico", "avanzado", "nativo"];
+
+function validar(idiomas, nivel)
+{
+    if (isArray(idiomas)&&isArray(nivel))
+    {
+        if (idiomas.length===nivel.length)
+        {
+            for(var i=0;i<nivel.length;i++)
+            {
+               if (nivel[i]==="nativo")
+               {
+                   return 10; //Hay 1 nativo
+               }
+            }            
+            return 1;          
+        }
+    }
+    else
+       return 0;    
+}
+
 function carga_idiomas()
 {
     var r = document.getElementById("fidimoas");

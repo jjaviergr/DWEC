@@ -1,4 +1,13 @@
 /**
+ * Devuelve true o false según si un objeto es Array o no.
+ * @param {type} x
+ * @returns {Boolean}
+ */
+function isArray(x) {
+    return x.constructor.toString().indexOf("Array") > -1;
+}
+
+/**
  *  Esto es un función que graba una lista de formularios en cookies.
  *  Los nombres de cookie van en 'lista' y coinciden con las 'id' de los form
  * @param {type} lista
@@ -118,11 +127,10 @@ function Arr_no_es_vacio(t)
  */
 function is_select_selected(s)
 {
-    if (s.selectedIndex!==-1)
+    if (s.selectedIndex !== -1)
         return true;
     else
-        
-    return false;
+        return false;
 }
 
 /**
