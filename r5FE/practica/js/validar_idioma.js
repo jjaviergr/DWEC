@@ -101,16 +101,17 @@ function limpiar_idiomas()
 function imprimir_idiomas()
 {
     var Vcad = [];
-    alert(Aidiomas.length);
+    //alert(Aidiomas.length);
     for (var i = 0; i < Aidiomas.length; i++)
     {
         Vcad.push( "Idioma :" + Aidiomas[i] + " Nivel :" + AnivelI[i]);
     }
-//    alert("antes "+Vcad[0]);
+    alert("antes "+Vcad[0]);
 //    Vcad=quitar_duplicados(Vcad);
     
     
-    alert(Vcad.join());
+    //alert(Vcad.join());
+    return(Vcad.join());
 }
 
 //function quitar_duplicados(vector)
@@ -135,3 +136,5 @@ function imprimir_idiomas()
 //    alert("a es "+v.length+" a es "+v[0]);
 //    return(a);
 //}
+
+

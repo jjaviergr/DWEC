@@ -118,19 +118,11 @@ function Arr_no_es_vacio(t)
  */
 function is_select_selected(s)
 {
-    //var s = document.getElementById("s_estado");
-    var options = s.getElementsByTagName("option");
-    var i = 0;
-
-    while ((options[i].selected !== true) && (i < options.length))
-    {
-        if (options[i].selected === true)
-        {
-            return true;
-        }
-        i++;
-        return false;
-    }
+    if (s.selectedIndex!==-1)
+        return true;
+    else
+        
+    return false;
 }
 
 /**

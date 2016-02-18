@@ -12,9 +12,13 @@ and open the template in the editor.
         <script src="js/info_acad.js"></script>
         <script src="js/exp_pro.js"></script>
         <script src="js/cursos_re.js"></script>
-        <script src="js/idiomas.js"></script>
+        
         <script src="js/checks.js"></script>
         <script src="js/valida_datos_personales.js"></script>
+        <script src="js/validar_info_acad.js"></script>
+        <script src="js/validar_exp.js"></script>
+        <script src="js/validar_cursos.js"></script>
+        <script src="js/validar_idioma.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" lang="es-es">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -24,8 +28,7 @@ and open the template in the editor.
                 <legend>Datos Personales</legend>
 
                 <label>Nombre y Apellidos<input id="nombre_y_ap" type="text"/></label>
-                <label>Dirección<input type="text"/></label>
-
+                <label>Dirección<input type="text" id="direccion" /></label>
 
                 <label>Ciudad<select id="ciudad"  onmouseout="carga_poblaciones();">
                         <option id="c1">Almería</option>          
@@ -38,14 +41,14 @@ and open the template in the editor.
 
                     </select></label>
                 <label>Código Postal<input id="cp" type="text"/></label>
-                <label>Telefonos<input type="text"/></label>
-                <label>Correo Electronico<input type="text"/></label>
+                <label>Telefonos<input type="text" id="telefono" /></label>
+                <label>Correo Electronico<input type="text" id="correo"/></label>
                 <label>Fecha de Nacimiento<input type="date" id="fnac"/></label>
                 <label>Lugar de Nacimiento<input type="text" id="lnac"/></label>
                 <div>
                     <label>Estado Civil
                         <select id="s_estado">
-                            <option>Soltero</option>
+                            <option selected>Soltero</option>
                             <option>Casado</option>
                             <option>Separado</option>
                             <option>Viudo</option>
@@ -100,7 +103,7 @@ and open the template in the editor.
                     <button type="button" onclick="f_validar_exp();">Comprueba</button>
                 </div>
             </fieldset>
-            <p id="error_info_acad"></p>
+            <p id="error_exp_prof"></p>
             <fieldset id="cr">
                 <legend>Cursos Realizados</legend>
                 <div>
@@ -146,40 +149,176 @@ and open the template in the editor.
                 <legend>Carta de Presentación</legend>
                 <input id="fichero" type="file" onchange="processFiles(this.files);"/>
                 <div>
-                    <textarea  id="contenido_fichero" rows="8" cols="100"></textarea></div>
+                    <textarea  disabled id="contenido_fichero" rows="8" cols="100"></textarea></div>
             </fieldset>
             <p id="error_carta_presentacion"></p>
-            <button type="button" onclick="valida_datos_personales()"  ></button>
+            <button type="button" onclick="Comprobar_Fichero();"  >Comprobar</button>
+            <div>
+                <button type="button" onclick="Comprobar_General();"  >Comprobar Todo</button>
+                <button type="submit"  >Enviar</button>
+            </div>
         </form>
         <script>
+
+            function Comprobar_Fichero()
+            {
+                var hay_fichero;
+                var f=document.getElementById("fichero");
+                if (f.files.length>=1)
+                {
+                    hay_fichero=true;
+                }
+                else
+                {
+                    hay_fichero=false;
+                }
+                if (!hay_fichero)
+                {
+                    document.getElementById("error_carta_presentacion").innerHTML="No has seleccionado fichero de carta de presentación";
+                }
+                
+                
+            }
+
+            function f_validar_cursos()
+            {
+                var v = new Array();
+                v.push(validar_nombre_curso(document.getElementById("nombre_curso").value));
+                v.push(validar_institucion(document.getElementById("inst_curso").value));
+                var f1 = document.getElementById("fi_curso").value;
+                var f2 = document.getElementById("ff_curso").value;
+                //alert(f1);
+                v.push(validar_intervalo_fechas(f1, f2));
+                v.push(validar_titulo(document.getElementById("to_curso").value));
+
+                var campos = ["Nombre Curso",
+                    "Institución",
+                    "Fechas de Comienzo y de Fin",
+                    "Titulo Obtenido"];
+                var cadena = "";
+                var otracadena = "";
+                for (var i = 0; i < campos.length; i++)
+                {
+                    if (!v[i])
+                    {
+                        otracadena += campos[i] + " no es correcto<br>";
+                    }
+                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+                }
+                // alert(cadena);
+                document.getElementById("error_cursos_r").innerHTML = otracadena;
+            }
+
+            function f_validar_exp()
+            {
+                var v = new Array();
+
+                v.push(validar_nombre_exp(document.getElementById("empresa").value));
+                v.push(validar_puesto_exp(document.getElementById("puesto").value));
+                var f1 = document.getElementById("fi_exp").value;
+                var f2 = document.getElementById("ff_exp").value;
+                //alert(f1);
+                v.push(validar_intervalo_fechas(f1, f2));
+                v.push(validar_descripcion_puesto(document.getElementById("desc_puesto_exp").value));
+                v.push(validar_tareas_real(document.getElementById("tareas_r_exp").value));
+                v.push(validar_logros(document.getElementById("logros_exp").value));
+
+                var campos = ["Empresa",
+                    "Puesto",
+                    "Fechas de Comienzo y de Fin",
+                    "Descripcion puesto",
+                    "Tareas Realizadas",
+                    "Logros Conseguidos"];
+                var cadena = "";
+                var otracadena = "";
+                for (var i = 0; i < campos.length; i++)
+                {
+                    if (!v[i])
+                    {
+                        otracadena += campos[i] + " no es correcto<br>";
+                    }
+                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+                }
+                //alert(cadena);
+                document.getElementById("error_exp_prof").innerHTML = otracadena;
+            }
+
+            function fvalida_info_acad()
+            {
+
+                var v = new Array();
+                //alert(document.getElementById("nombre_acad").value);
+                v.push(validar_nombre_institucion(document.getElementById("nombre_acad").value));
+                v.push(validar_titulo(document.getElementById("titulo_obt").value));
+                var f1 = document.getElementById("fi_acad").value;
+                var f2 = document.getElementById("ff_acad").value;
+                v.push(validar_intervalo_fechas(f1, f2));
+                v.push(validar_comentarios(document.getElementById("coment_acad").value));
+
+
+                v.push(true);
+
+                var campos = ["Nombre de la Institución",
+                    "Titulo Obtenido",
+                    "Fechas de Comienzo y de Fin",
+                    "Comentarios"];
+                var cadena = "";
+                var otracadena = "";
+
+                for (var i = 0; i < campos.length; i++)
+                {
+                    if (!v[i])
+                    {
+                        otracadena += campos[i] + " no es correcto<br>";
+                    }
+                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+                }
+                //alert(cadena);
+                document.getElementById("error_info_acad").innerHTML = otracadena;
+
+            }
 
             function fvalida_datos_personales()
             {
                 var v = new Array();
 
                 v.push(validar_nombres(document.getElementById("nombre_y_ap").value));//
-                alert (1);
-                v.push(validar_direccion());//
-                alert (2);
-                v.push(validaTelefono());//
-                alert (3);
-                v.push(validar_correo_electronico());
-                alert (4);
+                //alert (1);
+                v.push(validar_direccion(document.getElementById("direccion").value));//
+                //ciudad poblcaiom cp
+                v.push(validar_ciudad(document.getElementById("ciudad").value));
+                v.push(validar_poblacion(document.getElementById("select_poblaciones")));
+                v.push(validar_cp(document.getElementById("cp").value));
+                //alert (2);
+                v.push(validaTelefono(document.getElementById("telefono").value));//
+                //alert (3);
+                v.push(validar_correo_electronico(document.getElementById("correo").value));
+                //alert (4);
                 v.push(valida_fecha_nacimiento(document.getElementById("fnac").value));//
-                alert (5);
-                v.push(validar_lugar_nacimiento());//
-                alert (6);
-                v.push(validar_estado_civil());
-                alert (7);
+                //alert (5);
+                v.push(validar_lugar_nacimiento(document.getElementById("lnac").value));//
+                //alert (6);
+                v.push(validar_estado_civil(document.getElementById("s_estado")));
+                //alert (7);
 
-                var campos = ["nombre", "direccion", "telefono", "correo", "fecha", "lugar de nacimiento", "estado civil"];
+                var campos = ["nombre", "direccion", "ciudad", "poblacion", "cp", "telefono", "correo", "fecha", "lugar de nacimiento", "estado civil"];
 
                 var cadena = "";
+                var otracadena = "";
+
+
                 for (var i = 0; i < campos.length; i++)
                 {
-                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+                    if (v[i] === false)
+                    {
+                        otracadena += campos[i] + " no es correcto<br>";
+                    }
+                    cadena = cadena + campos[i] + " " + v[i] + "\n";
                 }
-                alert(cadena);
+                //alert(cadena);
+                //document.getElementById("error_dt").innerHTML = "sssssssssssssssssss";
+                document.getElementById("error_dt").innerHTML = otracadena;
+                //document.getElementById("error_dt").innerHTML = cadena;
             }
 
             function f_validar_idm()
@@ -196,89 +335,6 @@ and open the template in the editor.
                 }
                 alert(cadena);
             }
-
-
-            function f_validar_cursos()
-            {
-                var v = new Array();
-                v.push(validar_nombres(document.getElementById("nombre_c").value));
-                v.push(validar_nombres(document.getElementById("inst_c").value));
-                var f1 = document.getElementById("fi_c").value;
-                var f2 = document.getElementById("ff_c").value;
-                //alert(f1);
-                v.push(validar_intervalo_fechas(f1, f2));
-                v.push(no_es_vacio(document.getElementById("tit_curso").value));
-
-                var campos = ["Nombre Curso",
-                    "Institución",
-                    "Fechas de Comienzo y de Fin",
-                    "Titulo Obtenido"];
-                var cadena = "";
-                for (var i = 0; i < campos.length; i++)
-                {
-                    cadena = cadena + "\n" + campos[i] + " " + v[i];
-                }
-                alert(cadena);
-            }
-
-            function f_validar_exp()
-            {
-                var v = new Array();
-                v.push(validar_nombres(document.getElementById("empresa").value));
-                v.push(validar_nombres(document.getElementById("puesto").value));
-                var f1 = document.getElementById("fi_exp").value;
-                var f2 = document.getElementById("ff_exp").value;
-                //alert(f1);
-                v.push(validar_intervalo_fechas(f1, f2));
-                v.push(true);
-                v.push(true);
-
-
-                v.push(true);
-
-                var campos = ["Empresa",
-                    "Institución",
-                    "Fechas de Comienzo y de Fin",
-                    "Descripcion puesto", "Tareas Realizadas", "Logros Conseguidos"];
-                var cadena = "";
-                for (var i = 0; i < campos.length; i++)
-                {
-                    cadena = cadena + "\n" + campos[i] + " " + v[i];
-                }
-                alert(cadena);
-            }
-
-
-
-            function fvalida_info_acad()
-            {
-
-                var v = new Array();
-                v.push(validar_nombres(document.getElementById("nombre_acad")));
-                v.push(validar_nombres(document.getElementById("titulo_obt")));
-                var f1 = document.getElementById("fi_acad").value;
-                var f2 = document.getElementById("ff_acad").value;
-                v.push(validar_intervalo_fechas(f1, f2));
-
-
-                v.push(true);
-
-                var campos = ["nombre de la Institución",
-                    "Titulo Obtenido",
-                    "Fechas de Comienzo y de Fin",
-                    "Comentarios"];
-                var cadena = "";
-                for (var i = 0; i < campos.length; i++)
-                {
-                    cadena = cadena + "\n" + campos[i] + " " + v[i];
-                }
-                alert(cadena);
-            }
-
-
-
-
-
 
             function escribe_cp()
             {
@@ -337,6 +393,20 @@ and open the template in the editor.
                     return c3.innerHTML;
                 }
 
+            }
+
+            function borra_poblaciones()
+            {
+                var select = document.getElementById("select_poblaciones");
+                //var options=select.getElementsByTagName("option");
+                //alert ("Elementos con tag option en select de poblaciones :"+options.length);
+
+
+                while (select.hasChildNodes())
+                {
+                    select.removeChild(select.firstChild);
+                }
+                //alert ("option"+options.length);
             }
 
             carga_idiomas();
