@@ -1,11 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-
 /**
  *  Esto es un función que graba una lista de formularios en cookies.
  *  Los nombres de cookie van en 'lista' y coinciden con las 'id' de los form
@@ -110,7 +102,7 @@ function checkCookie()
  * @param {type} t
  * @returns {Boolean}
  */
-function no_es_vacio(t)
+function Arr_no_es_vacio(t)
 {
     if (t.length === 0)
     {
@@ -159,4 +151,22 @@ function processFiles(files) {
         output.value = e.target.result;
     };
     reader.readAsText(file);
+}
+
+function comprueba_si_no_digitos(s)
+{
+    if (/\D+/.test(s))
+    {
+        return true;
+    }
+    return false;
+}
+
+function comprueba_si_no_vacio(s)
+{
+    if (/\w+/.test(s))
+    {
+        return true;
+    }
+    return false;
 }

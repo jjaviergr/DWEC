@@ -13,6 +13,8 @@ and open the template in the editor.
         <script src="js/exp_pro.js"></script>
         <script src="js/cursos_re.js"></script>
         <script src="js/idiomas.js"></script>
+        <script src="js/checks.js"></script>
+        <script src="js/valida_datos_personales.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" lang="es-es">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -40,19 +42,24 @@ and open the template in the editor.
                 <label>Correo Electronico<input type="text"/></label>
                 <label>Fecha de Nacimiento<input type="date" id="fnac"/></label>
                 <label>Lugar de Nacimiento<input type="text" id="lnac"/></label>
-                <label>Estado Civil
-                    <select id="s_estado">
-                        <option>Soltero</option>
-                        <option>Casado</option>
-                        <option>Separado</option>
-                        <option>Viudo</option>
-                    </select>
-                </label>
-            </fieldset>            
-            <fieldset> 
+                <div>
+                    <label>Estado Civil
+                        <select id="s_estado">
+                            <option>Soltero</option>
+                            <option>Casado</option>
+                            <option>Separado</option>
+                            <option>Viudo</option>
+                        </select>
+                    </label>
+                </div>
+            </fieldset>  
+            <button type="button" onclick="fvalida_datos_personales();">Comprueba</button>
+            <p id="error_dt"></p>
+            <fieldset id="finfo_acad"> 
                 <!-sdfgsfgsdfgsg-->
                 <legend>Información Académica</legend>
                 <div>
+                    <label>Sin estudios<input id="check_estudios" type="checkbox" onclick="click_check_studios()"/></label>
                     <label>Nombre de la Institución<input id="nombre_acad" type="text"/></label>
                     <label>Titulo Obtenido<input id="titulo_obt" type="text"/></label>
                     <label>Fecha Comienzo<input id="fi_acad" type="date"/></label>
@@ -66,9 +73,11 @@ and open the template in the editor.
                 <button type="button" onclick="nuevo_merito()">Nuevo Merito</button>
                 <button type="button" onclick="fvalida_info_acad()">Comprueba</button>
             </fieldset>
+            <p id="error_info_acad"></p>
             <fieldset id="exp_prof">
                 <legend >Experiencia Profesional</legend>
                 <div>
+                    <label>Sin experiencia profesional<input id="check_exp" type="checkbox" onclick="click_check_exp_prof();"/></label>
                     <label>Empresa<input id="empresa" type="text"/></label>
                     <label>Puesto<input id="puesto" type="text"/></label>
                     <div>
@@ -89,10 +98,13 @@ and open the template in the editor.
                     </div>
                     <button type="button" onclick="nueva_exp_prof();">Nueva experiencia</button>
                     <button type="button" onclick="f_validar_exp();">Comprueba</button>
+                </div>
             </fieldset>
+            <p id="error_info_acad"></p>
             <fieldset id="cr">
                 <legend>Cursos Realizados</legend>
                 <div>
+                    <label>Ningun curso<input type="checkbox" id="ch_cursos" onclick="click_check_cursos_realizados();"/></label>
                     <label>Nombre<input id="nombre_curso" type="text"/></label>
                     <label>Institución<input id="inst_curso" type="text"/></label>
                     <div>
@@ -104,7 +116,7 @@ and open the template in the editor.
                 <button type="button" onclick="nuevo_curso();" >Nuevo curso</button>
                 <button type="button" onclick="f_validar_cursos();">Comprueba</button>
             </fieldset>
-
+            <p id="error_cursos_r"></p>
             <fieldset id="fidimoas" >
                 <legend id="s_idiomas" >Idiomas</legend>
                 <div>
@@ -118,6 +130,7 @@ and open the template in the editor.
                 <button type="button" onclick="nuevo_idioma();">Nuevo Idioma</button>
                 <button type="button" onclick="f_validar_idm();">Comprueba</button>
             </fieldset>
+            <p id="error_idiomas"></p>
             <fieldset>
                 <legend>Conocimientos adicionales</legend>
                 <label>Descripcion</label>
@@ -135,9 +148,39 @@ and open the template in the editor.
                 <div>
                     <textarea  id="contenido_fichero" rows="8" cols="100"></textarea></div>
             </fieldset>
+            <p id="error_carta_presentacion"></p>
             <button type="button" onclick="valida_datos_personales()"  ></button>
         </form>
         <script>
+
+            function fvalida_datos_personales()
+            {
+                var v = new Array();
+
+                v.push(validar_nombres(document.getElementById("nombre_y_ap").value));//
+                alert (1);
+                v.push(validar_direccion());//
+                alert (2);
+                v.push(validaTelefono());//
+                alert (3);
+                v.push(validar_correo_electronico());
+                alert (4);
+                v.push(valida_fecha_nacimiento(document.getElementById("fnac").value));//
+                alert (5);
+                v.push(validar_lugar_nacimiento());//
+                alert (6);
+                v.push(validar_estado_civil());
+                alert (7);
+
+                var campos = ["nombre", "direccion", "telefono", "correo", "fecha", "lugar de nacimiento", "estado civil"];
+
+                var cadena = "";
+                for (var i = 0; i < campos.length; i++)
+                {
+                    cadena = cadena + "\n" + campos[i] + " " + v[i];
+                }
+                alert(cadena);
+            }
 
             function f_validar_idm()
             {
@@ -205,91 +248,7 @@ and open the template in the editor.
                 alert(cadena);
             }
 
-            function validar_nombres(v)
-            {
-                if (/\D+/.test(v))
-                {
-                    return true;
-                }
-                return false;
-            }
 
-            function validar_direccion(v)
-            {
-                if (/\w+/.test(v))
-                {
-                    return true;
-                }
-                return false;
-            }
-
-            function validar_lugar_nacimiento(v)
-            {
-                return valida_fecha(v);
-            }
-
-            function validaTelefono(valor)
-            {
-                if (/(\+?\d{2,3})?(\d{3}-\d{6})/.test(valor) || /(\+?\d{2,3})?(\d{9})/.test(valor))
-                {
-
-                    return true;
-                }
-
-                return false;
-            }
-
-            function validar_correo_electronico(v)
-            {
-
-                if ((/\w+[^+/%&]@\w+[^+/%&]\.\w{3}/.test(v)))
-                {
-                    //alert ('bueno');
-                    return true;
-                }
-                //alert ('malo');
-                return false;
-            }
-
-
-            function validar_estado_civil()
-            {
-                var s = document.getElementById("s_estado");
-                return is_select_selected(s);
-
-            }
-
-            function validar_intervalo_fechas(f1, f2)
-            {
-                alert(f1.length + " " + f2.length);
-                alert(f1 + " " + f2);
-                if ((f1.length !== 0) && (f2.length !== 0))
-                {
-                    alert("ok1");
-                    if (navigator.userAgent.indexOf("Chrome") !== -1)
-                    {
-                        alert("ok2");
-                        var c1 = f1.split("-");
-                        f1 = c1[2] + "/" + c1[1] + "/" + c1[0];
-                        alert(f1);
-                        var c2 = f2.split("-");
-                        f2 = c2[2] + "/" + c2[1] + "/" + c2[0];
-                        alert(f2);
-                    }
-
-                    var ff1 = new Date(c1[2], c1[1], c1[0]);
-
-                    var ff2 = new Date(c2[2], c2[1], c2[0]);
-                    //alert(ff1.toString() + " " + ff2.toString());
-
-                    if (ff1 < ff2)
-                    {
-                        //alert('buena');
-                        return true;
-                    }
-                }
-                return false;
-            }
 
             function fvalida_info_acad()
             {
@@ -316,105 +275,10 @@ and open the template in the editor.
                 alert(cadena);
             }
 
-            function fvalida_datos_personales()
-            {
-                var v = new Array();
-
-                v.push(validar_nombres(document.getElementById("nombre_y_ap").value));//
-                v.push(validar_direccion());//
-                v.push(validaTelefono());//
-                v.push(validar_correo_electronico());
-                v.push(valida_fecha_nacimiento(document.getElementById("fnac").value));//
-                v.push(validar_lugar_nacimiento());//
-
-                //v.push(validar_estado_civil());
-
-                var campos = ["nombre", "direccion", "telefono", "correo", "fecha", "lugar de nacimiento", "estado civil"];
-
-                var cadena = "";
-                for (var i = 0; i < campos.length; i++)
-                {
-                    cadena = cadena + "\n" + campos[i] + " " + v[i];
-                }
-                alert(cadena);
-            }
-
-            function comprobar_si_f_actual_menor_f_nacimiento(fecha)
-            {
-                var fecha;
-                //alert(fecha)
-                if (navigator.userAgent.indexOf("Chrome") !== -1)
-                {
-                    var cadena = fecha.split("-");
-                    fecha = cadena[2] + "/" + cadena[1] + "/" + cadena[0];
-                }
-
-                fecha = new Date(fecha);
-
-                var f_hoy = new Date();
 
 
-                if (fecha < f_hoy)
-                {
-                    alert('buena');
-                    return true;
-                } else
-                {
-                    alert('mala');
-                    return false;
-                }
-            }
-
-            function valida_fecha_nacimiento(cad_fecha)
-            {
-                var fecha = cad_fecha;
-
-                //var fecha = document.getElementById("f_nac").value;
-                if (comprobar_si_f_actual_menor_f_nacimiento(cad_fecha))
-                {
-                    fecha = cad_fecha;
-                    //fecha="01/01/2001";
-                    //alert(fecha);
-                    //if((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
-                    if (navigator.userAgent.indexOf("Chrome") !== -1)
-                    {
-                        //alert("Estas usando Chrome y la fecha deberia ser probada con Firefox");
-                        var cadena = fecha.split("-");
-                        fecha = cadena[2] + "/" + cadena[1] + "/" + cadena[0];
-
-                    } else
-                    {
-                        //if (navigator.userAgent.indexOf("Firefox") !== -1)
-                    }
-                    if ((/\d{1,2}\/\d{1,2}\/\d{4}/.test(fecha)))
-                    {
-                        var cadena = fecha.split("-");
-                        var d = Number(cadena[0]);
-                        var m = Number(cadena[1]);
-                        var y = Number(cadena[2]);
-                        if (!(d < 0 || d > 31 || m < 1 || m > 12 || y < 0))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                //alert('malo');
-                return false;
-            }
-
-            function borra_poblaciones()
-            {
-                var select = document.getElementById("select_poblaciones");
-                //var options=select.getElementsByTagName("option");
-                //alert ("Elementos con tag option en select de poblaciones :"+options.length);
 
 
-                while (select.hasChildNodes())
-                {
-                    select.removeChild(select.firstChild);
-                }
-                //alert ("option"+options.length);
-            }
 
             function escribe_cp()
             {
@@ -474,9 +338,9 @@ and open the template in the editor.
                 }
 
             }
-            
-           carga_idiomas();
-           carga_niveles();
+
+            carga_idiomas();
+            carga_niveles();
         </script>
     </body>
 </html>
