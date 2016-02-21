@@ -127,7 +127,7 @@ function imprimir_idiomas()
     {
         Vcad.push( "Idioma :" + Aidiomas[i] + " Nivel :" + AnivelI[i]);
     }
-    alert("antes "+Vcad[0]);
+//    alert("antes "+Vcad[0]);
 //    Vcad=quitar_duplicados(Vcad);
     
     

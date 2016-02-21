@@ -30,7 +30,7 @@ and open the template in the editor.
                 <label>Nombre y Apellidos<input id="nombre_y_ap" type="text"/></label>
                 <label>Dirección<input type="text" id="direccion" /></label>
 
-                <label>Ciudad<select id="ciudad"  onmouseout="carga_poblaciones();">
+                <label>Ciudad<select id="ciudad"  required>
                         <option id="c1">Almería</option>          
                         <option id="c2">Granada</option>          
                         <option id="c3">Málaga</option>          
@@ -40,14 +40,14 @@ and open the template in the editor.
                     <select id="select_poblaciones" onclick="escribe_cp();">
 
                     </select></label>
-                <label>Código Postal<input id="cp" type="text"/></label>
-                <label>Telefonos<input type="text" id="telefono" /></label>
-                <label>Correo Electronico<input type="text" id="correo"/></label>
-                <label>Fecha de Nacimiento<input type="date" id="fnac"/></label>
-                <label>Lugar de Nacimiento<input type="text" id="lnac"/></label>
+                <label>Código Postal<input id="cp" type="text" required/></label>
+                <label>Telefonos<input type="text" id="telefono" required /></label>
+                <label>Correo Electronico<input type="text" id="correo" required/></label>
+                <label>Fecha de Nacimiento<input type="date" id="fnac" required/></label>
+                <label>Lugar de Nacimiento<input type="text" id="lnac" required/></label>
                 <div>
                     <label>Estado Civil
-                        <select id="s_estado">
+                        <select id="s_estado" required>
                             <option selected>Soltero</option>
                             <option>Casado</option>
                             <option>Separado</option>
@@ -155,10 +155,96 @@ and open the template in the editor.
             <button type="button" onclick="f_valida_Fichero();"  >Comprobar</button>
             <div>
                 <button type="button" onclick="Comprobar_General();"  >Comprobar Todo</button>
-                <button type="submit"  >Enviar</button>
+                <button type="button"  onclick="enviar();">Enviar</button>
+                <p id="error_al_enviar"></p>
             </div>
         </form>
         <script>
+            function enviar()
+            {
+
+                var cad = "";
+                cad += "<br><b>Datos personales :</b>" + "\n";
+                var dt = fvalida_datos_personales();
+                if (dt)
+                {
+                    cad += imprime_array(dt) + "\n";
+
+                } else
+                {
+                    cad += "Sin datos personales";
+                    document.getElementById("error_al_enviar").innerHTML = "Error.Hay un error con los datos personales";
+                    return(null);
+                }
+                cad += "<br><b>Información academica :</b>" + "\n";
+                if ((!document.getElementById("check_estudios").checked) && (fvalida_info_acad().length>0))
+                {
+                    cad += imprime_array(fvalida_info_acad()) + "\n";
+                } 
+                else
+                {
+                    Ainfo_acad=[];
+                    cad += "Sin estudios";
+                }
+
+                cad += "<br><b>Experiencia Profesional :</b>" + "\n";
+                if ((!document.getElementById("check_exp").checked) && (f_validar_exp().length>0))
+                    cad += imprime_array(f_validar_exp()) + "\n";
+                else
+                    cad += "Sin experiencia profesional";
+
+                cad += "<br><b>Cursos Realizados :</b>" + "\n";
+                if ((!document.getElementById("ch_cursos").checked) && (f_validar_cursos()))
+                {
+                    cad += imprime_array(f_validar_cursos()) + "\n";
+                } else
+                {
+                    cad += "Sin cursos";
+                }
+
+                cad += "<br><b>Idiomas :</b>" + "\n";
+
+                var val = f_validar_idm();
+                if (val)
+                    cad += imprime_array(val) + "\n";
+                else
+                {
+                    Aidiomas = [];
+                    AnivelI = [];
+                    document.getElementById("error_al_enviar").innerHTML = "Error.Se requiere ser nativo de algun idioma";
+                    return null;
+                }
+                cad += "<br><b>Conocimientos adicionales:</b>" + "\n";
+                if (document.getElementById("conoc_add").value !== "")
+                    cad += document.getElementById("conoc_add").value + "\n";
+                else
+                    cad += "Sin conocimientos adicionales";
+
+                cad += "<br><b>Hobbies y actividades de interés particulares:</b>" + "\n";
+
+                if (document.getElementById("hobbies").value !== "")
+                    cad += document.getElementById("hobbies").value + "\n";
+                else
+                    cad += "Sin hobbies ni actividades";
+                cad += "<br><b>Carta de Presentación:</b>" + "\n";
+
+                var co = f_valida_Fichero();
+                if (f_valida_Fichero().length>0)
+                    cad += imprime_array(co) + "\n";
+                else
+                {
+                    document.getElementById("error_carta_presentacion").innerHTML = "No has seleccionado fichero de carta de presentación";
+                    document.getElementById("error_al_enviar").innerHTML = "Error.Tienes que añadir una carta de presentación";
+                    return null;
+                }
+
+                var myWindow = window.open("", "myWindow", "width=600, height=600");
+                myWindow.document.write("<p>" + cad + "</p>");
+                //myWindow.opener.document.write("<p>This is the source window!</p>");
+
+                //alert(cad);
+
+            }
 
 
             function imprime_array(a)
@@ -180,7 +266,13 @@ and open the template in the editor.
 
                 var cad = "";
                 cad += "<br><b>Datos personales :</b>" + "\n";
-                cad += imprime_array(fvalida_datos_personales()) + "\n";
+                var dt = fvalida_datos_personales();
+                if (dt)
+                {
+                    cad += imprime_array(dt) + "\n";
+                    //  return(null);
+                } else
+                    cad += "Sin datos personales";
                 cad += "<br><b>Información academica :</b>" + "\n";
                 if (!document.getElementById("check_estudios").checked)
                 {
@@ -198,7 +290,11 @@ and open the template in the editor.
                 if (!document.getElementById("ch_cursos").checked)
                     cad += imprime_array(f_validar_cursos()) + "\n";
                 else
+                {
                     cad += "Sin cursos";
+                    //    return(null);
+                }
+
                 cad += "<br><b>Idiomas :</b>" + "\n";
 
 
@@ -208,10 +304,15 @@ and open the template in the editor.
                 cad += "<br><b>Hobbies y actividades de interés particulares:</b>" + "\n";
                 cad += document.getElementById("hobbies").value + "\n";
                 cad += "<br><b>Carta de Presentación:</b>" + "\n";
-                cad += imprime_array(f_valida_Fichero()) + "\n";
+                
+                var co = f_valida_Fichero();
+                if (f_valida_Fichero())
+                    cad += imprime_array(co) + "\n";
+                // else
+                //    return null;
 
-                var myWindow = window.open("", "myWindow", "width=600, height=600");
-                myWindow.document.write("<p>" + cad + "</p>");
+                // var myWindow = window.open("", "myWindow", "width=600, height=600");
+                // myWindow.document.write("<p>" + cad + "</p>");
                 //myWindow.opener.document.write("<p>This is the source window!</p>");
 
                 //alert(cad);
@@ -222,10 +323,11 @@ and open the template in the editor.
             {
                 var hay_fichero;
                 var f = document.getElementById("fichero");
-                if (f.files.length >= 1)
+                if (f.files.length === 1)
                 {
                     hay_fichero = true;
-                } else
+                } 
+                else
                 {
                     hay_fichero = false;
                 }
@@ -236,8 +338,7 @@ and open the template in the editor.
 
                 r = [];
                 if (hay_fichero)
-                {
-                    r.push(true);
+                {                    
                     r.push("Nombre de fichero :" + f.files[0].name);
                     r.push("Contenido:\n" + document.getElementById("contenido_fichero").value);
 
@@ -250,43 +351,44 @@ and open the template in the editor.
             {
                 var d = [];
                 var v = [];
+                if (!document.getElementById("ch_cursos").checked) {
+                    d.push(document.getElementById("nombre_curso").value);
+                    d.push(document.getElementById("inst_curso").value);
+                    d.push(document.getElementById("fi_curso").value);
+                    d.push(document.getElementById("ff_curso").value);
+                    d.push(document.getElementById("to_curso").value);
 
-                d.push(document.getElementById("nombre_curso").value);
-                d.push(document.getElementById("inst_curso").value);
-                d.push(document.getElementById("fi_curso").value);
-                d.push(document.getElementById("ff_curso").value);
-                d.push(document.getElementById("to_curso").value);
+                    v.push(validar_nombre_curso(d[0]));
+                    v.push(validar_institucion(d[1]));
+                    var f1 = d[2];
+                    var f2 = d[3];
+                    //alert(f1);
+                    v.push(validar_intervalo_fechas(f1, f2));
+                    v.push(validar_titulo(d[4]));
 
-                v.push(validar_nombre_curso(d[0]));
-                v.push(validar_institucion(d[1]));
-                var f1 = d[2];
-                var f2 = d[3];
-                //alert(f1);
-                v.push(validar_intervalo_fechas(f1, f2));
-                v.push(validar_titulo(d[4]));
-
-                var campos = ["Nombre Curso",
-                    "Institución",
-                    "Fechas de Comienzo y de Fin",
-                    "Titulo Obtenido"];
-                var cadena = "";
-                var otracadena = "";
-                for (var i = 0; i < campos.length; i++)
-                {
-                    if (!v[i])
+                    var campos = ["Nombre Curso",
+                        "Institución",
+                        "Fechas de Comienzo y de Fin",
+                        "Titulo Obtenido"];
+                    var cadena = "";
+                    var otracadena = "";
+                    for (var i = 0; i < campos.length; i++)
                     {
-                        otracadena += campos[i] + " no es correcto<br>";
+                        if (!v[i])
+                        {
+                            otracadena += campos[i] + " no es correcto<br>";
+                        }
+                        cadena = cadena + "\n" + campos[i] + " " + v[i];
                     }
-                    cadena = cadena + "\n" + campos[i] + " " + v[i];
-                }
-                // alert(cadena);
-                document.getElementById("error_cursos_r").innerHTML = otracadena;
+                    // alert(cadena);
+                    document.getElementById("error_cursos_r").innerHTML = otracadena;
 
 
-                if (otracadena.length === 0)
-                {
+                    if (otracadena.length === 0)
+                    {
 
-                    return d;
+                        return d;
+                    }
                 }
                 return false;
             }
@@ -295,48 +397,49 @@ and open the template in the editor.
             {
                 var d = [];
                 var v = [];
+                if (!document.getElementById("check_exp").checked) {
+                    d.push(document.getElementById("empresa").value);
+                    d.push(document.getElementById("puesto").value);
+                    d.push(document.getElementById("fi_exp").value);
+                    d.push(document.getElementById("ff_exp").value);
+                    d.push(document.getElementById("desc_puesto_exp").value);
+                    d.push(document.getElementById("tareas_r_exp").value);
+                    d.push(document.getElementById("logros_exp").value);
 
-                d.push(document.getElementById("empresa").value);
-                d.push(document.getElementById("puesto").value);
-                d.push(document.getElementById("fi_exp").value);
-                d.push(document.getElementById("ff_exp").value);
-                d.push(document.getElementById("desc_puesto_exp").value);
-                d.push(document.getElementById("tareas_r_exp").value);
-                d.push(document.getElementById("logros_exp").value);
+                    v.push(validar_nombre_exp(d[0]));
+                    v.push(validar_puesto_exp(d[1]));
+                    var f1 = d[2];
+                    var f2 = d[3];
+                    //alert(f1);
+                    v.push(validar_intervalo_fechas(f1, f2));
+                    v.push(validar_descripcion_puesto(d[4]));
+                    v.push(validar_tareas_real(d[5]));
+                    v.push(validar_logros(d[6]));
 
-                v.push(validar_nombre_exp(d[0]));
-                v.push(validar_puesto_exp(d[1]));
-                var f1 = d[2];
-                var f2 = d[3];
-                //alert(f1);
-                v.push(validar_intervalo_fechas(f1, f2));
-                v.push(validar_descripcion_puesto(d[4]));
-                v.push(validar_tareas_real(d[5]));
-                v.push(validar_logros(d[6]));
-
-                var campos = ["Empresa",
-                    "Puesto",
-                    "Fechas de Comienzo y de Fin",
-                    "Descripcion puesto",
-                    "Tareas Realizadas",
-                    "Logros Conseguidos"];
-                var cadena = "";
-                var otracadena = "";
-                for (var i = 0; i < campos.length; i++)
-                {
-                    if (!v[i])
+                    var campos = ["Empresa",
+                        "Puesto",
+                        "Fechas de Comienzo y de Fin",
+                        "Descripcion puesto",
+                        "Tareas Realizadas",
+                        "Logros Conseguidos"];
+                    var cadena = "";
+                    var otracadena = "";
+                    for (var i = 0; i < campos.length; i++)
                     {
-                        otracadena += campos[i] + " no es correcto<br>";
+                        if (!v[i])
+                        {
+                            otracadena += campos[i] + " no es correcto<br>";
+                        }
+                        cadena = cadena + "\n" + campos[i] + " " + v[i];
                     }
-                    cadena = cadena + "\n" + campos[i] + " " + v[i];
-                }
-                //alert(cadena);
-                document.getElementById("error_exp_prof").innerHTML = otracadena;
-                var r = [];
-                if (otracadena.length === 0)
-                {
+                    //alert(cadena);
+                    document.getElementById("error_exp_prof").innerHTML = otracadena;
+                    var r = [];
+                    if (otracadena.length === 0)
+                    {
 
-                    r.push(d);
+                        r.push(d);
+                    }
                 }
                 return r;
             }
@@ -345,48 +448,50 @@ and open the template in the editor.
             {
                 var d = [];
                 var v = [];
-
-                d.push(document.getElementById("nombre_acad").value);
-                d.push(document.getElementById("titulo_obt").value);
-                d.push(document.getElementById("fi_acad").value);
-                d.push(document.getElementById("ff_acad").value);
-                d.push(document.getElementById("coment_acad").value);
-
-                //alert(document.getElementById("nombre_acad").value);
-                v.push(validar_nombre_institucion(d[0]));
-                v.push(validar_titulo(d[1]));
-                var f1 = d[2];
-                var f2 = d[3];
-                v.push(validar_intervalo_fechas(f1, f2));
-                v.push(validar_comentarios(d[4]));
-
-
-
-
-                var campos = ["Nombre de la Institución",
-                    "Titulo Obtenido",
-                    "Fechas de Comienzo y de Fin",
-                    "Comentarios"];
-                var cadena = "";
-                var otracadena = "";
-
-                for (var i = 0; i < campos.length; i++)
+                if (!document.getElementById("check_estudios").checked)
                 {
-                    if (!v[i])
+                    d.push(document.getElementById("nombre_acad").value);
+                    d.push(document.getElementById("titulo_obt").value);
+                    d.push(document.getElementById("fi_acad").value);
+                    d.push(document.getElementById("ff_acad").value);
+                    d.push(document.getElementById("coment_acad").value);
+
+                    //alert(document.getElementById("nombre_acad").value);
+                    v.push(validar_nombre_institucion(d[0]));
+                    v.push(validar_titulo(d[1]));
+                    var f1 = d[2];
+                    var f2 = d[3];
+                    v.push(validar_intervalo_fechas(f1, f2));
+                    v.push(validar_comentarios(d[4]));
+
+
+
+
+                    var campos = ["Nombre de la Institución",
+                        "Titulo Obtenido",
+                        "Fechas de Comienzo y de Fin",
+                        "Comentarios"];
+                    var cadena = "";
+                    var otracadena = "";
+
+                    for (var i = 0; i < campos.length; i++)
                     {
-                        otracadena += campos[i] + " no es correcto<br>";
+                        if (!v[i])
+                        {
+                            otracadena += campos[i] + " no es correcto<br>";
+                        }
+                        cadena = cadena + "\n" + campos[i] + " " + v[i];
                     }
-                    cadena = cadena + "\n" + campos[i] + " " + v[i];
-                }
-                //alert(cadena);
-                document.getElementById("error_info_acad").innerHTML = otracadena;
+                    //alert(cadena);
+                    document.getElementById("error_info_acad").innerHTML = otracadena;
 
-                var r = [];
-                if (otracadena.length === 0)
-                {
+                    var r = [];
+                    if (otracadena.length === 0)
+                    {
 
-                    r.push(d);
+                        r.push(d);
 
+                    }
                 }
                 //imprime_array(d);
                 return r;
@@ -446,7 +551,7 @@ and open the template in the editor.
                 }
 
                 document.getElementById("error_dt").innerHTML = otracadena;
-                var r = [];
+
 
                 if (otracadena.length === 0)
                 {
@@ -564,7 +669,7 @@ and open the template in the editor.
                 }
                 //alert ("option"+options.length);
             }
-            
+
             carga_poblaciones();
             carga_idiomas();
             carga_niveles();
