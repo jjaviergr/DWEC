@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+A partir de la página web proporcionada en el enlace anterior y utilizando las funciones DOM, mostrar por
+pantalla la siguiente información:
+
+1. Número de enlaces de la página
+2. Dirección a la que enlaza el penúltimo enlace
+3. Numero de enlaces que enlazan a http://prueba
+4. Número de enlaces del tercer párrafo
+
+El archivo a enviar a la plataforma debe llamarse como sigue:
+DWEC_Nombre_Tema6_Tarea1_Mostrar
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <script> 
+            var myWindow = window.open("", "myWindow", "width=600, height=600");
+            var enlaces=myWindow.document.getElementsByTagName("A");
+            var numero_enlaces=enlaces.count();
+            
+            myWindow.document.write("<p>" + cad + "</p>");
+        </script>
+    </body>
+</html>
