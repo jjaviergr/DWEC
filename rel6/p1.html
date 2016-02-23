@@ -1,30 +1,80 @@
 <!DOCTYPE html>
 <!--
-A partir de la pÃ¡gina web proporcionada en el enlace anterior y utilizando las funciones DOM, mostrar por
-pantalla la siguiente informaciÃ³n:
+A partir de la página web proporcionada en el enlace anterior y utilizando las funciones DOM, mostrar por
+pantalla la siguiente información:
 
-1. NÃºmero de enlaces de la pÃ¡gina
-2. DirecciÃ³n a la que enlaza el penÃºltimo enlace
+1. Número de enlaces de la página
+2. Dirección a la que enlaza el penúltimo enlace
 3. Numero de enlaces que enlazan a http://prueba
-4. NÃºmero de enlaces del tercer pÃ¡rrafo
+4. Número de enlaces del tercer párrafo
 
 El archivo a enviar a la plataforma debe llamarse como sigue:
 DWEC_Nombre_Tema6_Tarea1_Mostrar
 -->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Ejercicio 11 - DOM básico</title>
+
+<script type="text/javascript">
+window.onload = function() {
+	// Numero de enlaces de la pagina
+
+	// Direccion del penultimo enlace
+
+	// Numero de enlaces que apuntan a http://prueba
+
+	// Numero de enlaces del tercer párrafo
+
+}
+</script>
+</head>
+
+<body>
+<p>Lorem ipsum dolor sit amet, <a href="http://prueba">consectetuer adipiscing elit</a>. Sed mattis enim vitae orci. Phasellus libero. Maecenas nisl arcu, consequat congue, commodo nec, commodo ultricies, turpis. Quisque sapien nunc, posuere vitae, rutrum et, luctus at, pede. Pellentesque massa ante, ornare id, aliquam vitae, ultrices porttitor, pede. Nullam sit amet nisl elementum elit convallis malesuada. Phasellus magna sem, semper quis, faucibus ut, rhoncus non, mi. <a href="http://prueba2">Fusce porta</a>. Duis pellentesque, felis eu adipiscing ullamcorper, odio urna consequat arcu, at posuere ante quam non dolor. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis scelerisque. Donec lacus neque, vehicula in, eleifend vitae, venenatis ac, felis. Donec arcu. Nam sed tortor nec ipsum aliquam ullamcorper. Duis accumsan metus eu urna. Aenean vitae enim. Integer lacus. Vestibulum venenatis erat eu odio. Praesent id metus.</p>
+
+<p>Aenean at nisl. Maecenas egestas dapibus odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin consequat auctor diam. <a href="http://prueba">Ut bibendum blandit est</a>. Curabitur vestibulum. Nunc malesuada porttitor sapien. Aenean a lacus et metus venenatis porta. Suspendisse cursus, sem non dapibus tincidunt, lorem magna porttitor felis, id sodales dolor dolor sed urna. Sed rutrum nulla vitae tellus. Sed quis eros nec lectus tempor lacinia. Aliquam nec lectus nec neque aliquet dictum. Etiam <a href="http://prueba3">consequat sem quis massa</a>. Donec aliquam euismod diam. In magna massa, mattis id, pellentesque sit amet, porta sit amet, lectus. Curabitur posuere. Aliquam in elit. Fusce condimentum, arcu in scelerisque lobortis, ante arcu scelerisque mi, at cursus mi risus sed tellus.</p>
+
+<p>Donec sagittis, nibh nec ullamcorper tristique, pede velit feugiat massa, at sollicitudin justo tellus vitae justo. Vestibulum aliquet, nulla sit amet imperdiet suscipit, nunc erat laoreet est, a <a href="http://prueba">aliquam leo odio sed sem</a>. Quisque eget eros vehicula diam euismod tristique. Ut dui. Donec in metus sed risus laoreet sollicitudin. Proin et nisi non arcu sodales hendrerit. In sem. Cras id augue eu lorem dictum interdum. Donec pretium. Proin <a href="http://prueba4">egestas</a> adipiscing ligula. Duis iaculis laoreet turpis. Mauris mollis est sit amet diam. Curabitur hendrerit, eros quis malesuada tristique, ipsum odio euismod tortor, a vestibulum nisl mi at odio. <a href="http://prueba5">Sed non lectus non est pellentesque</a> auctor.</p>
+</body>
+
         <script> 
-            var myWindow = window.open("", "myWindow", "width=600, height=600");
-            var enlaces=myWindow.document.getElementsByTagName("A");
-            var numero_enlaces=enlaces.count();
+            //var myWindow = window.open("file:///C:/Users/Usuario/Documents/NetBeansProjects2/DWEC/rel6/Tema7_Tarea1.html", "myWindow", "width=600, height=600");
+            //var enlaces=myWindow.document.getElementsByTagName("A");
+            var enlaces=document.getElementsByTagName("A");
+            //Total de enlaces        
+            var numero_total_enlaces=enlaces.length;
+            //Direccion penultimo enlace
+            //alert(numero_total_enlaces);
+            var penul_enlace=enlaces[numero_total_enlaces-1];
+            var dir=penul_enlace.href;
+            //Numero de enlaces que enlazan a 'http://prueba'+
             
-            myWindow.document.write("<p>" + cad + "</p>");
+            var contador=0;
+            for(var i=0;i<numero_total_enlaces;i++)
+            {
+                if (enlaces[i].href==="http://prueba/")
+                    contador++;
+            }
+            alert(contador);
+            
+            //Numero de enlaces del 3º parrado
+            var parrafos=document.getElementsByTagName("P");
+            var enlaces_tercero=parrafos[2];
+            
+            var numero_enlaces_tercero=enlaces_tercero.getElementsByTagName('A').length;
+            
+            var cad="Total de enlaces : ";
+            cad+=numero_total_enlaces+"\n";
+            cad+="Dirección penultimo enlace: ";
+            cad+=dir+"\n";
+            cad+="Número de enlaces que enlazan a 'http://prueba': ";
+            cad+=contador+"\n"
+            cad+="Número de enlaces del 3º parrafo: ";
+            cad+=numero_enlaces_tercero;
+            alert(cad);          
+            
+//            myWindow.document.write("<p>" + cad + "</p>");
         </script>
-    </body>
-</html>
+</html>  
