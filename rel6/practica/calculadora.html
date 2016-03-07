@@ -11,188 +11,333 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div style="width: 16.5em;height: 16.5em;border: 0.1em solid;padding: 0.1em 0.1em 0.1em 0.1em">
-            <input type="text" style="width: 19em;height: 2em; padding: 0.1em 0.1em 0.1em 0.1em" />
-            <div id="papi" style="width: 16.2em;height: 14em;border: 0.1em solid;">
-                <div id="menosdos"></div>
-
-                <div id="menos1"></div>
-
-                <div id="uno"></div>
-
-                <div id="dos"></div>
-
-                <div id="tres"></div> 
-                <div id="cuatro" style="position: absolute; top: 12em; width: 35em; height: 4em;">
-                    <!--=-->
-                </div> 
-                <div id="ultimo" >
-                    <!--0,+-->
-                </div>  
-
-                <!--                <input type="button" onclick="boton_pulsado()" value="pulsame">-->
-
+        <div style="width: 12.15em;height: 14.9em;border: 0.1em solid;padding: 0.1em;">
+            <div id="barrera" style="width: 11.8em;height: 2.7em; padding: 0.1em;margin: 0.05em;float: top;border: 0.1em solid;" >
+                <input id="lmantisa" type="text" maxlength="12" size="12" style="border:0;float: right;"/>
+                <input id="mantisa" type="text" maxlength="12"  size="12" style="border:0;float: right;"/>
             </div>
+            <div id="papi" style="width: 12.08em;height: 11.7em;border: 0.1em solid;float: bottom;"></div> 
         </div>
         <script>
+            var hecho = 0;
+            var operacion;
+            var n_inserciones = 0;
+            inicializa_mantisa('mantisa');
 
-            undiv = document.createElement("DIV");
-            boton = document.createElement("input");
-            boton.style = " width:6.8em; height:2em;margin: 0.4em;  "
-            boton.type = "button";
-            boton.value = "0";
-            undiv.appendChild(boton);
-            padre = document.getElementById("ultimo");
-            padre.appendChild(undiv);
+            document.getElementById("papi").addEventListener("click", function (event) {
+                // display the current click count inside the clicked div
 
 
-            boton = document.createElement("input");
-            boton.style = " width:3em; height:2em;margin: 0.4em;"
-            boton.type = "button";
-            boton.value = ",";
-            undiv.appendChild(boton);
-            padre = document.getElementById("ultimo");
-            padre.appendChild(undiv);
+                var caracter = event.target.value;
+                if ((caracter >= 0) && (caracter <= 9)) {
+                    insertar_en_mantisa(caracter);
+
+                } else
+                {
+                    operacion = caracter;
+                    switch (caracter)
+                    {
+                        case 'MC':
+                            break;
+                        case 'MR':
+                            break;
+                        case 'MS':
+                            break;
+                        case 'M+':
+                            break;
+                        case 'M-':
+                            break;
+                        case '<=':
+                            break;
+                        case 'CE':
+                            break;
+                        case 'C':
+                            document.getElementById("lmantisa").value = "";
+                            document.getElementById("mantisa").value = "";
+                            break;
+                        case '+/-':
+                            break;
+                        case '/':
+                            break;
+                        case '*':
+                            break;
+                        case '-':
+                            break;
+                        case '+':
+
+                            var lcad = document.getElementById("lmantisa").value;
+                            var cad = document.getElementById("mantisa").value;
+                            var ultimo = cad.charAt(cad.length - 1);
+                            var lultimo = lcad.charAt(lcad.length - 1);
+                            //alert(cad.charAt(cad.length - 1));
+                            if ((ultimo === "1") || (ultimo === "2") || (ultimo === "3") || (ultimo === "4") || (ultimo === "5") || (ultimo === "6") || (ultimo === "7") || (ultimo === "8") || (ultimo === "9") || (ultimo === "0"))
+                            {
+                                //if ((lcad.length >= 0) && (lcad <= 4))
+                                copia_mantisa_l_mantisa();//copio los numeros
+                                if (ultimo !== "+") //meto el operando
+                                    document.getElementById("lmantisa").value = document.getElementById("lmantisa").value + "+";
+
+                                opera();
+                            } else
+                            {
+                                if ((ultimo === '-') || (ultimo === '*') || (ultimo === '/'))
+                                {
+
+                                    // alert("no es +");
+                                    copia_mantisa_l_mantisa();
+                                    cad = cad.substring(0, cad.length - 2);
+                                    cad = cad.concat("+");
+                                    document.getElementById("lmantisa").value = cad;
+                                }
+                            }
+                            break;
+                        case 'R':
+                            break;
+                        case '%':
+                            break;
+                        case '1/x':
+                            break;
+                        case '=':
+                            break;
+                        case ',':
+                            break;
+
+                    }
+                }
 
 
-            boton = document.createElement("input");
-            boton.style = " width:3em; height:2em;margin: 0.4em;"
-            boton.type = "button";
-            boton.value = "+";
-            undiv.appendChild(boton);
-            padre = document.getElementById("ultimo");
-            padre.appendChild(undiv);
+                //cad = cad + event.target.value;
+                //max 40 caracteres
+                // document.getElementById("mantisa").value = "";
+                //event.target.innerHTML = "click count: " + event.target.id;
 
+            }, false);
 
-
+            padre = document.getElementById("papi");
+//******************************************************
             var v = new Array("MC", "MR", "MS", "M+", "M-");
             undiv = document.createElement("DIV");
             for (var i = 0; i < v.length; i++)
             {
                 boton = document.createElement("input");
-                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.style = " width:2.5em; height:2em;margin: 0.2em;"
                 boton.type = "button";
                 boton.value = v[i];
                 undiv.appendChild(boton);
             }
-            padre = document.getElementById("menosdos");
+
             padre.appendChild(undiv);
 
-            //menos1
+            //****************************************************
             var v = new Array("<=", "CE", "C", "+/-", "R");
             undiv = document.createElement("DIV");
             for (var i = 0; i < v.length; i++)
             {
                 boton = document.createElement("input");
-                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.style = " width:2.5em; height:2em;margin: 0.2em;"
                 boton.type = "button";
                 boton.value = v[i];
                 undiv.appendChild(boton);
             }
-            padre = document.getElementById("menos1");
+
             padre.appendChild(undiv);
 
-
+            //****************************************************
             undiv = document.createElement("DIV");
             //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
             for (i = 7; i < 10; i++)
             {
                 boton = document.createElement("input");
-                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.style = " width:2.5em; height:2em;margin: 0.2em;"
                 boton.type = "button";
                 boton.value = i;
                 undiv.appendChild(boton);
             }
             boton = document.createElement("input");
-            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.style = " width:2.5em; height:2em;margin: 0.2em;"
             boton.type = "button";
             boton.value = "/";
             undiv.appendChild(boton);
 
             boton = document.createElement("input");
-            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.style = " width:2.5em; height:2em;margin: 0.2em;"
             boton.type = "button";
             boton.value = "%";
             undiv.appendChild(boton);
 
-            padre = document.getElementById("uno");
             padre.appendChild(undiv);
-
+            //****************************************************
 
             dosdiv = document.createElement("DIV");
             for (i = 4; i < 7; i++)
             {
                 boton = document.createElement("input");
-                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.style = "width:2.5em; height:2em;margin: 0.2em;"
                 boton.type = "button";
                 boton.value = i;
                 dosdiv.appendChild(boton);
             }
             boton = document.createElement("input");
-            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.style = "width:2.5em; height:2em;margin: 0.2em;"
             boton.type = "button";
             boton.value = "*";
             dosdiv.appendChild(boton);
 
             boton = document.createElement("input");
-            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.style = "width:2.5em; height:2em;margin: 0.2em;"
             boton.type = "button";
             boton.value = "1/x";
             dosdiv.appendChild(boton);
 
-            padre = document.getElementById("dos");
             padre.appendChild(dosdiv);
-
+//*******************************************************************************
             tresdiv = document.createElement("DIV");
             //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
             for (i = 1; i < 4; i++)
             {
                 boton = document.createElement("input");
-                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.style = "width:2.5em; height:2em;margin: 0.2em;"
                 boton.type = "button";
                 boton.value = i;
 
                 tresdiv.appendChild(boton);
             }
             boton = document.createElement("input");
-            boton.style = " width:3em; height:2em;margin: 0.4em;float:up;"
+            boton.style = "width:2.5em; height:2em;margin: 0.2em;"
             boton.type = "button";
             boton.value = "-";
             tresdiv.appendChild(boton);
 
-
-
-
-
-            padre = document.getElementById("tres");
-            padre.appendChild(tresdiv);
-
+//*****************************style="position: absolute; top: 12em; width: 35em; height: 4em;"
             boton = document.createElement("input");
-            boton.style = " width:3em; height:4.8em;margin: 0.4em; margin-left: 206px;float:rigth;"
+            boton.style = " position: absolute; top: 13.65em; left:-2.7em; width:2.5em; height:4.4em;margin: 0.4em; margin-left: 206px;float:rigth;"
             boton.type = "button";
             boton.value = "=";
             //boton.setAttribute('onclick',"boton_pulsado()");
             tresdiv.appendChild(boton);
-            padre = document.getElementById("cuatro");
-            padre.appendChild(boton);
 
+            padre.appendChild(tresdiv);
+//*********************************************************************
+            undiv = document.createElement("DIV");
+            boton = document.createElement("input");
+            boton.style = " width:5.4em; height:2em;margin: 0.2em;"
+            boton.type = "button";
+            boton.value = "0";
+            undiv.appendChild(boton);
+////**********************************+
+            var v = new Array(",", "+");
+            for (var i = 0; i < v.length; i++)
+            {
+                boton = document.createElement("input");
+                boton.style = "width:2.5em; height:2em;margin: 0.2em;"
+                boton.type = "button";
+                boton.value = v[i];
+                undiv.appendChild(boton);
+            }
+
+            padre.appendChild(undiv);
+//*********************************************************************
             var botones = document.getElementsByTagName('input');
-
             for (var i = 0; i < botones.length; i++)
             {
-                botones[i].setAttribute('onclick', "boton_pulsado()");
+                //   botones[i].setAttribute('onclick', "boton_pulsado()");
             }
 
             function boton_pulsado()
             {
                 var evento = window.event;
-                evento.
-                if (evento.type="click")
-                   alert("hola_click");
+
+                if (evento.type === "click")
+                    alert(evento.Target + " " + evento.currenTarget + " " + evento.relatedTarget);
             }
-            function numero()
+
+            function opera()
             {
-                alert('Gracias por pinchar');
+                var op1 = document.getElementById("mantisa").value;
+                var op2 = document.getElementById("lmantisa").value;
+                //alert("op1 :" + op1);
+                //alert("op2 :" + op2);
+                // alert("length :" + (op2.trim()).length);
+                if ((op2.trim()).length === 4)//mejor contar operandos
+                {
+                    var operacion = op2.substring(op2.length - 4, op2.length - 1);
+
+                    //alert("entradas :" + operacion);
+                    var resultado = eval(operacion);
+                    //alert("resultado :" + resultado);
+                    insertar_en_mantisa(resultado);
+                } else
+                {
+
+                    copia_mantisa_l_mantisa();
+
+                    if ((op2.trim()).length > 4)
+                    {
+                        var operacion = op2.substring(op2.length - 2, op2.length - 1);
+                        operacion = op2.concat(op1.charAt(op1.length - 1));
+                        alert("entrada :" + operacion);
+                        var resultado = eval(operacion);
+                        //alert("resultado :" + resultado);
+                        insertar_en_mantisa(resultado);
+                    }
+                }
+
+            }
+            function copia_mantisa_l_mantisa()
+            {
+                var mantisa = document.getElementById("mantisa").value;
+                var lmantisa = document.getElementById("lmantisa").value;
+                mantisa = trim_alternativo(mantisa);
+                lmantisa = trim_alternativo(lmantisa);
+
+                lmantisa = lmantisa.concat(mantisa);
+
+                var n_blancos = eval(26 - 2 * lmantisa.length);
+                //var lon_lmantisa = lmantisa.length;
+                //alert("lmantisa.length:" + lon_lmantisa);
+                //alert("n_blancos :" + n_blancos);
+                var cad = "";
+
+                for (var i = 0; i < n_blancos; i++)
+                {
+                    cad += " ";
+                }
+                document.getElementById("lmantisa").value = cad.concat(lmantisa);
+                inicializa_mantisa('mantisa');
+            }
+
+            function trim_alternativo(cadena)
+            {
+                var resultado = "";
+                for (var i = 0; i < cadena.length; i++)
+                {
+                    if (cadena.charAt(i) !== " ")
+                    {
+                        resultado = resultado.concat(cadena.charAt(i));
+                    }
+                }
+                return(resultado);
+            }
+            function inicializa_mantisa(nombre)
+            {
+                var var_cadena = "";
+                var l = 26;
+                for (var i = 0; i < l; i++)
+                    var_cadena = var_cadena.concat(" ");
+                document.getElementById(nombre).value = var_cadena;
+            }
+
+            function insertar_en_mantisa(caracter)
+            {
+                if (n_inserciones < 11)
+                {
+                    var cad = document.getElementById("mantisa").value.toString();
+                    cad = cad.substring(2, cad.length);
+                    cad = cad.concat(caracter);
+                    //alert(cad);
+                    document.getElementById("mantisa").value = cad;
+                    n_inserciones++;
+                }
             }
         </script>
     </body>
