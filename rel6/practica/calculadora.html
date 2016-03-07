@@ -11,61 +11,173 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div style="width: 14em;height: 16.5em;border: 0.1em solid;padding: 0.1em 0.1em 0.1em 0.1em">
-             <input type="text" style="width: 16em;height: 2em; padding: 0.1em 0.1em 0.1em 0.1em" />
-            <div style="width: 13.8em;height: 14em;border: 0.1em solid;">
-                <div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">MC</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">MR</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">MS</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">M+</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">M-&nbsp;</div>
-                </div>
+        <div style="width: 16.5em;height: 16.5em;border: 0.1em solid;padding: 0.1em 0.1em 0.1em 0.1em">
+            <input type="text" style="width: 19em;height: 2em; padding: 0.1em 0.1em 0.1em 0.1em" />
+            <div id="papi" style="width: 16.2em;height: 14em;border: 0.1em solid;">
+                <div id="menosdos"></div>
 
-                <div >
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;<=&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;CE</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;C&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;+/-&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;R&nbsp&nbsp;</div>
-                </div>
+                <div id="menos1"></div>
 
-                <div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;7&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;8&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;9&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;</div>
+                <div id="uno"></div>
 
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;%&nbsp;</div>
-                </div>
+                <div id="dos"></div>
 
-                <div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;4&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;5&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;6&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">1/x</div>
-                </div>
-
-                <div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;1&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;2&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;3&nbsp;&nbsp;</div>
-                    <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</div>
+                <div id="tres"></div> 
+               
+                 <div id="ultimo" style="float:left;">
+                     <!--0,+-->
+                 </div>  
+                 <div id="cuatro" style="overflow: auto;float:rigth;">
+                    <!--=-->
                 </div> 
-                <div style="float:right; margin: 0.1em 0.1em 0em 0em;border: 0.1em solid; height: 2.4em;padding-top: 1.2em;padding-bottom: 0em;padding-left: 0.1em;padding-right: 0.1em;">&nbsp;=&nbsp;</div>
+                
 
-
-                <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;" onclick="numero();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;&nbsp;,&nbsp;&nbsp;&nbsp;</div>
-                <div style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;">&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;</div>
             </div>
         </div>
         <script>
-           function numero()
-           {
-               
-           }
+
+            undiv = document.createElement("DIV");
+            boton = document.createElement("input");
+            boton.style = " width:6.8em; height:2em;margin: 0.4em;  "
+            boton.type = "button";
+            boton.value = "0";
+            undiv.appendChild(boton);
+            padre = document.getElementById("ultimo");
+            padre.appendChild(undiv);
+
+
+            boton = document.createElement("input");
+            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.type = "button";
+            boton.value = ",";
+            undiv.appendChild(boton);
+            padre = document.getElementById("ultimo");
+            padre.appendChild(undiv);
+
+
+            boton = document.createElement("input");
+            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.type = "button";
+            boton.value = "+";
+            undiv.appendChild(boton);
+            padre = document.getElementById("ultimo");
+            padre.appendChild(undiv);
+
+
+
+            var v = new Array("MC", "MR", "MS", "M+", "M-");
+            undiv = document.createElement("DIV");
+            for (var i = 0; i < v.length; i++)
+            {
+                boton = document.createElement("input");
+                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.type = "button";
+                boton.value = v[i];
+                undiv.appendChild(boton);
+            }
+            padre = document.getElementById("menosdos");
+            padre.appendChild(undiv);
+
+            //menos1
+            var v = new Array("<=", "CE", "C", "+/-", "R");
+            undiv = document.createElement("DIV");
+            for (var i = 0; i < v.length; i++)
+            {
+                boton = document.createElement("input");
+                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.type = "button";
+                boton.value = v[i];
+                undiv.appendChild(boton);
+            }
+            padre = document.getElementById("menos1");
+            padre.appendChild(undiv);
+
+
+            undiv = document.createElement("DIV");
+            //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
+            for (i = 7; i < 10; i++)
+            {
+                boton = document.createElement("input");
+                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.type = "button";
+                boton.value = i;
+                undiv.appendChild(boton);
+            }
+            boton = document.createElement("input");
+            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.type = "button";
+            boton.value = "/";
+            undiv.appendChild(boton);
+
+            boton = document.createElement("input");
+            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.type = "button";
+            boton.value = "%";
+            undiv.appendChild(boton);
+
+            padre = document.getElementById("uno");
+            padre.appendChild(undiv);
+
+
+            dosdiv = document.createElement("DIV");
+            for (i = 4; i < 7; i++)
+            {
+                boton = document.createElement("input");
+                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.type = "button";
+                boton.value = i;
+                dosdiv.appendChild(boton);
+            }
+            boton = document.createElement("input");
+            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.type = "button";
+            boton.value = "*";
+            dosdiv.appendChild(boton);
+
+            boton = document.createElement("input");
+            boton.style = " width:3em; height:2em;margin: 0.4em;"
+            boton.type = "button";
+            boton.value = "1/x";
+            dosdiv.appendChild(boton);
+
+            padre = document.getElementById("dos");
+            padre.appendChild(dosdiv);
+
+            tresdiv = document.createElement("DIV");
+            //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
+            for (i = 1; i < 4; i++)
+            {
+                boton = document.createElement("input");
+                boton.style = " width:3em; height:2em;margin: 0.4em;"
+                boton.type = "button";
+                boton.value = i;
+                tresdiv.appendChild(boton);
+            }
+            boton = document.createElement("input");
+            boton.style = " width:3em; height:2em;margin: 0.4em;float:up;"
+            boton.type = "button";
+            boton.value = "-";
+            tresdiv.appendChild(boton);
+
+
+
+
+
+            padre = document.getElementById("tres");
+            padre.appendChild(tresdiv);
+
+            boton = document.createElement("input");
+            boton.style = " width:3em; height:4.8em;margin: 0.4em; margin-left: 206px;float:rigth;"
+            boton.type = "button";
+            boton.value = "=";
+            tresdiv.appendChild(boton);
+            padre = document.getElementById("cuatro");
+            padre.appendChild(boton);
+
+            function numero()
+            {
+                alert('Gracias por pinchar');
+            }
         </script>
     </body>
 </html>
