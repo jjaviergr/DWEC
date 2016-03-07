@@ -23,14 +23,14 @@ and open the template in the editor.
                 <div id="dos"></div>
 
                 <div id="tres"></div> 
-               
-                 <div id="ultimo" style="float:left;">
-                     <!--0,+-->
-                 </div>  
-                 <div id="cuatro" style="overflow: auto;float:rigth;">
+                <div id="cuatro" style="position: absolute; top: 12em; width: 35em; height: 4em;">
                     <!--=-->
                 </div> 
-                
+                <div id="ultimo" >
+                    <!--0,+-->
+                </div>  
+
+                <!--                <input type="button" onclick="boton_pulsado()" value="pulsame">-->
 
             </div>
         </div>
@@ -151,6 +151,7 @@ and open the template in the editor.
                 boton.style = " width:3em; height:2em;margin: 0.4em;"
                 boton.type = "button";
                 boton.value = i;
+
                 tresdiv.appendChild(boton);
             }
             boton = document.createElement("input");
@@ -170,10 +171,25 @@ and open the template in the editor.
             boton.style = " width:3em; height:4.8em;margin: 0.4em; margin-left: 206px;float:rigth;"
             boton.type = "button";
             boton.value = "=";
+            //boton.setAttribute('onclick',"boton_pulsado()");
             tresdiv.appendChild(boton);
             padre = document.getElementById("cuatro");
             padre.appendChild(boton);
 
+            var botones = document.getElementsByTagName('input');
+
+            for (var i = 0; i < botones.length; i++)
+            {
+                botones[i].setAttribute('onclick', "boton_pulsado()");
+            }
+
+            function boton_pulsado()
+            {
+                var evento = window.event;
+                evento.
+                if (evento.type="click")
+                   alert("hola_click");
+            }
             function numero()
             {
                 alert('Gracias por pinchar');
