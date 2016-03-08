@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<!--
+Se propone realizar una calculadora. El funcionamiento de la misma será el siguiente.
+
+Dispondrá de números del 0 al 9 y de los signos +, -,*,/,=. 
+Para contener cada uno de estos números y signos usaremos una etiqueta div (un div para cada uno). 
+Existirá otra etiqueta div para mostrar el resultado. 
+El funcionamiento de la calculadora será el mismo que el de la calculadora de 
+Windows. Al pulsar en la etiqueta div que contenga cada número, el div de 
+resultado añadirá el valor a la izquierda del que existía antes, y así 
+sucesivamente, hasta pulsar un signo. 
+Cuando pulsemos el signo se mostrará en la pantalla de resultado. En el 
+siguiente paso volveremos a introducir otro número como antes, hasta que 
+pulsemos la tecla igual.
+Al haber pulsado el igual se mostrará el resultado en el div de resultado.
+Se deberá incluir un div que nos permite inicializar la calculadora.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div style="width: 12em;height: 18em;border: 0.1em solid;padding: 0.1em;">
+            <div id="barrera" style="width: 11.6em;height: 3em; padding: 0.1em;margin: 0.05em;float: top;border: 0.1em solid;" >
+                <div id="lmantisa" style="border:0;float: right;"></div>
+                <div id="mantisa" style="border:0;float: right;"/></div>
+        </div>
+        <div id="papi" style="width: 11.9em;height: 14.5em;border: 0.1em solid;float: bottom;">
+
+        </div> 
+    </div>
+    <script>
+
+        document.getElementById("papi").addEventListener("click", function (event)
+        {
+            // display the current click count inside the clicked div
+            var caracter = event.target.innerHTML;
+
+            //alert(caracter);
+
+            if (calc.es_numero(caracter)) //si es numero inserto
+            {
+                alert('si es numero inserto ');
+                calc.insertar_en_mantisa(caracter);
+            } else
+            {
+                var mantis = document.getElementById("mantisa").innerHTML;
+                alert("ultimo es operando :" + calc.ultimo_es_operando(mantis));
+                if ((calc.es_operando(caracter)) && (!calc.ultimo_es_operando(mantis))) //si es operador y no habia ninguno antes inserto
+                {
+                    alert('si es operador y no habia ninguno antes inserto');
+                    calc.insertar_en_mantisa(caracter);
+                } else
+                {
+                    if ((calc.es_operando(caracter)) && (calc.ultimo_es_operando(mantis))) // si es operador y habia operador reemplazo
+                    {
+                        alert('si es operador y habia operador reemplazo');
+                        if (calc.extrae_ultimo('mantisa') !== caracter)
+                        {
+                            calc.reemplaza_ultimo('mantisa', caracter);
+                        }
+                    } else
+                    {
+                        if (!(calc.es_operando(caracter)) && (caracter === '='))
+                        {
+
+                            var resultado = eval(mantis);
+                            calc.reemplazar_mantisa('mantisa', resultado);
+                        }
+                    }
+                }
+            }
+
+        }, false);
+
+        function calc()
+        {
+        }
+
+        calc.n_inserciones = 0; //propiedad estatica
+
+        calc.pintacalculadora = function ()
+        {
+            padre = document.getElementById("papi");
+            //****************************************************
+            undiv = document.createElement("div");
+            //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
+            for (i = 7; i < 10; i++)
+            {
+                boton = document.createElement("div");
+                boton.style = " padding:0.85em;margin: 0.2em;border: solid;float: left;";
+                var nodoT = document.createTextNode(i);
+                boton.appendChild(nodoT);
+                undiv.appendChild(boton);
+            }
+
+            boton = document.createElement("div");
+            boton.style = "padding:0.85em;margin: 0.2em;border: solid;float: left;";
+
+            var nodoT = document.createTextNode("/");
+            boton.appendChild(nodoT);
+            undiv.appendChild(boton);
+            padre.appendChild(undiv);
+            //****************************************************
+            dosdiv = document.createElement("div");
+            for (i = 4; i < 7; i++)
+            {
+                boton = document.createElement("div");
+                boton.style = "padding:0.85em;margin: 0.2em;border: solid;float: left;";
+                var nodoT = document.createTextNode(i);
+                boton.appendChild(nodoT);
+                dosdiv.appendChild(boton);
+            }
+
+            boton = document.createElement("div");
+            boton.style = "padding:0.85em;margin: 0.2em;border: solid;float: left;";
+            var nodoT = document.createTextNode("*");
+            boton.appendChild(nodoT);
+            dosdiv.appendChild(boton);
+            padre.appendChild(dosdiv);
+//*******************************************************************************
+            tresdiv = document.createElement("DIV");
+            //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
+            for (i = 1; i < 4; i++)
+            {
+                boton = document.createElement("div");
+                boton.style = "padding:0.85em;margin: 0.2em;border: solid;float: left;";
+                var nodoT = document.createTextNode(i);
+                boton.appendChild(nodoT);
+                tresdiv.appendChild(boton);
+            }
+
+            boton = document.createElement("div");
+            boton.style = "padding:0.85em;margin: 0.2em;border: solid;float: left;";
+            var nodoT = document.createTextNode("-");
+            boton.appendChild(nodoT);
+            tresdiv.appendChild(boton);
+//*****************************style="position: absolute; top: 12em; width: 35em; height: 4em;"
+            boton = document.createElement("div");
+            boton.style = "padding:0.85em;margin: 0.2em;border: solid;float: left;";
+            var nodoT = document.createTextNode("=");
+            boton.appendChild(nodoT);
+            tresdiv.appendChild(boton);
+            padre.appendChild(tresdiv);
+//*********************************************************************
+            boton = document.createElement("div");
+            boton.style = "padding:0.85em;margin: 0.2em;border: solid;float: left;";
+            var nodoT = document.createTextNode("0");
+            boton.appendChild(nodoT);
+            tresdiv.appendChild(boton);
+////**********************************+
+            boton = document.createElement("div");
+            boton.style = "padding:0.85em;margin: 0.2em;border: solid;float: left;";
+            var nodoT = document.createTextNode("+");
+            boton.appendChild(nodoT);
+            tresdiv.appendChild(boton);
+            padre.appendChild(tresdiv);
+//*********************************************************************
+            /*var botones = document.getElementsByName('boton');
+             alert(botones.length);
+             for (var i = 0; i < botones.length; i++)
+             {
+             botones[i].style = "";
+             }*/
+        }
+
+        /**
+         * Inserta un digito en una mantisa. Debe ser número 
+         * @param {type} ultimo
+         * @returns {String|reverse_string.r|Boolean}
+         */
+        calc.insertar_en_mantisa = function (caracter)
+        {
+            var m = document.getElementById('mantisa').innnerHTML;
+           // alert("Longitud antes de insercion :" + m.length);
+            if (calc.n_inserciones < 11)
+            {
+
+             //   alert("antes :" + m.length);
+                m = m.substr(1, m.length - 1);
+                m = m.concat(caracter);
+               // alert("despues :" + m.length);
+
+                var NodoT = document.createTextNode(m);
+                //alert(cad);
+                document.getElementById("mantisa").appendChild(NodoT);
+                calc.n_inserciones++;
+            }
+        }
+
+        /**
+         * Inicializa una mantisa de id 'nombre'
+         * @param {type} caracter
+         * @returns {reverse_string.r|Boolean|String}
+         */
+        calc.inicializa_mantisa = function (nombre)
+        {
+          //  alert('inicializando ' + nombre);
+            var var_cadena = "";
+            var l = 26;
+            for (var i = 0; i < l; i++)
+                var_cadena = var_cadena.concat(" ");
+            document.getElementById(nombre).innnerHTML = var_cadena;
+            //alert('inicializando' + var_cadena.length);
+        }
+
+        /**
+         * Devuelve true si le introduces un numero de 1 digito.
+         * @param {type} s
+         * @returns {reverse_string.r|String}
+         */
+        calc.es_numero = function (ultimo)
+        {
+            if ((ultimo === "1") || (ultimo === "2") || (ultimo === "3") || (ultimo === "4") || (ultimo === "5") || (ultimo === "6") || (ultimo === "7") || (ultimo === "8") || (ultimo === "9") || (ultimo === "0"))
+            {
+                return (true);
+            }
+            return(false);
+        }
+
+        /**
+         * Devuelve true si el ultimo digito de mantis es un operando.
+         * @returns {undefined}
+         */
+        calc.es_operando = function (c)
+        {
+
+            var es = false;
+            if ((c === '+') || (c === '-') || (c === '/') || (c === '*'))
+            {
+                es = true;
+            }
+            return es;
+        }
+
+        /**
+         * cuenta cuantos operandos tiene una cadena
+         * @param {type} m
+         * @returns {reverse_string.r|String|Array|u}
+         */
+        calc.cuenta_operandos = function (cadena)
+        {
+            var cadena = String(cadena);
+            var contador = 0;
+            for (var i = 0; i < cadena.length; i++)
+            {
+                if ((cadena.charAt(i) === '+') || (cadena.charAt(i) === '-') || (cadena.charAt(i) === '/') || (cadena.charAt(i) === '*'))
+                {
+                    contador++;
+                }
+            }
+            return contador;
+        }
+
+        /**
+         * Devuelve true si el ultimo digito de mantis es un operando.
+         * @returns {undefined}
+         */
+        calc.ultimo_es_operando = function (mantis)
+        {
+            // alert("matis es :"+mantis);
+            // alert(mantis.length);
+            mantis = String(mantis);
+            mantis = calc.trim_alternativo(mantis);
+            //alert(mantis.length);
+            var ultimo = mantis.charAt(mantis.length - 1);
+            var es = false;
+            if ((ultimo === '+') || (ultimo === '-') || (ultimo === '/') || (ultimo === '*'))
+            {
+                es = true;
+            }
+            return es;
+        }
+
+        calc.extrae_ultimo = function (m)
+        {
+
+            m = String(m).trim();
+
+            return m.charAt(m.length - 1);
+        }
+
+        calc.reemplaza_ultimo = function (m, c)
+        {
+            var m = document.getElementById(m).innerHTML;
+            var nueva = m.substr(0, m.length - 2);
+            nueva = nueva.concat(c);
+            return (nueva);
+
+        }
+
+        calc.reemplazar_mantisa = function (nombre_mantisa, v)
+        {
+            calc.inicializa_mantisa(nombre_mantisa);
+            calc.insertar_en_mantisa(v);
+        }
+
+        /**
+         * Función trim normal.
+         * @param {type} cadena
+         * @returns {String|trim_alternativo.resultado}
+         */
+        calc.trim_alternativo = function trim_alternativo(cadena)
+        {
+            var resultado = "";
+            for (var i = 0; i < cadena.length; i++)
+            {
+                if (cadena.charAt(i) !== " ")
+                {
+                    resultado = resultado.concat(cadena.charAt(i));
+                }
+            }
+            return(resultado);
+        }
+
+
+        calc.pintacalculadora();
+        calc.inicializa_mantisa('mantisa');
+
+
+    </script>
+</body>
+</html>

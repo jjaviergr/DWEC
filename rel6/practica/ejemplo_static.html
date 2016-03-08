@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script type="text/javascript">
+
+            function TaxiRenault(tipoMotor, numeroPasajeros, carga, velocidad) {
+                this.tipoMotor = tipoMotor;
+                this.numeroPasajeros = numeroPasajeros;
+                this.carga = carga;
+                this.velocidad = velocidad;
+            }
+
+            TaxiRenault.fabricante = 'Renault, S.A.'; //Propiedad estática
+            TaxiRenault.mostrarMensaje = function () {
+                alert('Soy un taxi Renault');
+            } //Método estático
+
+            function ejemploObjetos() {
+                var taxi1 = new TaxiRenault(1, 4, 300, 90);
+                alert('La velocidad del taxi 1 es ' + taxi1.velocidad);
+                TaxiRenault.mostrarMensaje(); //Invocamos el nombre del tipo de objeto
+                alert('La propiedad estática fabricante vale ' + TaxiRenault.fabricante);
+                alert('Si intentamos obtener la propiedad fabricante para una instancia obtenemos: ' + taxi1.fabricante); //undefined
+                taxi1.mostrarMensaje(); //ERROR las instancias no tienen acceso a los métodos estáticos
+            }
+            
+           TaxiRenault.mostrarMensaje(); 
+        </script>
+    </body>
+</html>
