@@ -52,8 +52,8 @@ and open the template in the editor.
                         case 'CE':
                             break;
                         case 'C':
-                            document.getElementById("lmantisa").value = "";
-                            document.getElementById("mantisa").value = "";
+                            inicializa_mantisa("lmantisa");
+                            inicializa_mantisa("mantisa");
                             break;
                         case '+/-':
                             break;
@@ -72,17 +72,21 @@ and open the template in the editor.
                             //alert(cad.charAt(cad.length - 1));
                             if ((ultimo === "1") || (ultimo === "2") || (ultimo === "3") || (ultimo === "4") || (ultimo === "5") || (ultimo === "6") || (ultimo === "7") || (ultimo === "8") || (ultimo === "9") || (ultimo === "0"))
                             {
-                                //if ((lcad.length >= 0) && (lcad <= 4))
-                                copia_mantisa_l_mantisa();//copio los numeros
-                                if (ultimo !== "+") //meto el operando
-                                    document.getElementById("lmantisa").value = document.getElementById("lmantisa").value + "+";
-
-                                opera();
+                                if (cuenta_operandos(cad) > 2)
+                                {
+                                    reemplaza_mantisa(nuevo);
+                                } else
+                                {
+                                    //if ((lcad.length >= 0) && (lcad <= 4))
+                                    copia_mantisa_l_mantisa();//copio los numeros
+                                    if (ultimo !== "+") //meto el operando
+                                        document.getElementById("lmantisa").value = document.getElementById("lmantisa").value + "+";
+                                    opera();
+                                }
                             } else
                             {
-                                if ((ultimo === '-') || (ultimo === '*') || (ultimo === '/'))
+                                if ((ultimo !== '+') && (ultimo_es_operando(ultimo)))
                                 {
-
                                     // alert("no es +");
                                     copia_mantisa_l_mantisa();
                                     cad = cad.substring(0, cad.length - 2);
@@ -258,7 +262,7 @@ and open the template in the editor.
                 //alert("op1 :" + op1);
                 //alert("op2 :" + op2);
                 // alert("length :" + (op2.trim()).length);
-                if ((op2.trim()).length === 4)//mejor contar operandos
+                if (cuenta_operandos(op2) === 2)
                 {
                     var operacion = op2.substring(op2.length - 4, op2.length - 1);
 
@@ -269,19 +273,37 @@ and open the template in the editor.
                 } else
                 {
 
-                    copia_mantisa_l_mantisa();
-
-                    if ((op2.trim()).length > 4)
+                    //copia_mantisa_l_mantisa();
+                    alert("numero de operandos es :" + cuenta_operandos(op2));
+                    alert("ultimo es operando :" + !ultimo_es_operando(lmantisa));
+                    if (!ultimo_es_operando(lmantisa))
                     {
                         var operacion = op2.substring(op2.length - 2, op2.length - 1);
-                        operacion = op2.concat(op1.charAt(op1.length - 1));
-                        alert("entrada :" + operacion);
+
+                        // operacion = op2.concat(op1.charAt(op1.length - 1));
+
+                        // alert("lmantisa es :"+operacion);
+
+                        alert("operacion es :" + operacion);
+
                         var resultado = eval(operacion);
                         //alert("resultado :" + resultado);
                         insertar_en_mantisa(resultado);
                     }
                 }
 
+            }
+
+            function ultimo_es_operando(mantis)
+            {
+                mantis = String(mantis);
+                var ultimo = mantis.charAt(mantis.length);
+                var es = false;
+                if ((ultimo === '+') || (ultimo === '-') || (ultimo === '/') || (ultimo === '*'))
+                {
+                    es = true;
+                }
+                return es;
             }
             function copia_mantisa_l_mantisa()
             {
@@ -338,6 +360,28 @@ and open the template in the editor.
                     document.getElementById("mantisa").value = cad;
                     n_inserciones++;
                 }
+            }
+
+            function cuenta_operandos(cadena)
+            {
+                var contador = 0;
+                for (var i = 0; i < cadena.length; i++)
+                {
+                    if ((cadena.charAt(i) === '+') || (cadena.charAt(i) === '-') || (cadena.charAt(i) === '/') || (cadena.charAt(i) === '*'))
+                    {
+                        contador++;
+                    }
+                }
+                return contador;
+            }
+
+            function es_numero(ultimo)
+            {
+                if ((ultimo === "1") || (ultimo === "2") || (ultimo === "3") || (ultimo === "4") || (ultimo === "5") || (ultimo === "6") || (ultimo === "7") || (ultimo === "8") || (ultimo === "9") || (ultimo === "0"))
+                {
+                    return (true);
+                }
+                return(false);
             }
         </script>
     </body>
