@@ -24,8 +24,8 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
     <body>
         <div style="width: 12em;height: 18em;border: 0.1em solid;padding: 0.1em;">
             <div id="barrera"  style="width: 11.6em;height: 3em; padding: 0.1em;margin: 0.05em;float: top;border: 0.1em solid;" >
-                <div id="mantisa" align="right" style="border:1px solid red;width: 11.4em;height: 1.0em;" ></div>
-                <div id="resultado" align="right" style="text-align: rigth;width: 11.4em;height: 1.0em;border:0.1em  ;float: right;"></div>
+                <div id="mantisa" align="right" style="width: 11.4em;height: 1.0em;" ></div>
+                <div id="resultado" align="right" style="width: 11.4em;height: 1.0em;"></div>
             </div>
             <div id="papi" style="width: 11.9em;height: 14.5em;border: 0.1em solid;float: bottom;">
 
@@ -42,21 +42,21 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
 
                 if (calc.es_numero(caracter)) //si es numero inserto
                 {
-                    alert('si es numero inserto ');
+                    //alert('si es numero inserto ');
                     calc.insertar_en_mantisa(caracter);
                 } else
                 {
                     var mantis = document.getElementById("mantisa").innerHTML;
-                    alert("ultimo es operando :" + calc.ultimo_es_operando(mantis));
+                    //alert("ultimo es operando :" + calc.ultimo_es_operando(mantis));
                     if ((calc.es_operando(caracter)) && (!calc.ultimo_es_operando(mantis))) //si es operador y no habia ninguno antes inserto
                     {
-                        alert('si es operador y no habia ninguno antes inserto');
+                        //alert('si es operador y no habia ninguno antes inserto');
                         calc.insertar_en_mantisa(caracter);
                     } else
                     {
                         if ((calc.es_operando(caracter)) && (calc.ultimo_es_operando(mantis))) // si es operador y habia operador reemplazo
                         {
-                            alert('si es operador y habia operador reemplazo');
+                            //alert('si es operador y habia operador reemplazo');
                             if (calc.extrae_ultimo('mantisa') !== caracter)
                             {
                                 calc.reemplaza_ultimo('mantisa', caracter);
@@ -65,12 +65,21 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                         {
                             if (!(calc.es_operando(caracter)) && (caracter === '='))
                             {
-                                alert('si no es operador y es el =');
-                                if (!calc.es_operando(calc.ultimo(mantis)))
+                                //alert('si no es operador y es el =');
+                                if (!calc.es_operando(calc.extrae_ultimo(mantis)))
                                 {
-                                    //alert(mantis);
+                                    alert(mantis);
                                     var resultado = eval(mantis);
                                     calc.reemplazar_mantisa('resultado', resultado);
+                                }
+                            } else
+                            {
+                                if (!(calc.es_operando(caracter)) && (caracter === 'C'))
+                                {
+                                    //alert('C');
+                                    calc.inicializa_mantisa('resultado');
+                                    calc.inicializa_lmantisa('mantisa');
+                                    calc.n_inserciones=0;
                                 }
                             }
                         }
@@ -147,7 +156,7 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                 var nodoT = document.createTextNode("=");
                 boton.appendChild(nodoT);
                 tresdiv.appendChild(boton);
-                padre.appendChild(tresdiv);
+
                 //*********************************************************************
                 boton = document.createElement("div");
                 boton.style = "padding:0.85em;margin: 0.2em;border: solid;float: left;";
@@ -160,15 +169,16 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                 var nodoT = document.createTextNode("+");
                 boton.appendChild(nodoT);
                 tresdiv.appendChild(boton);
-                padre.appendChild(tresdiv);
+
                 //*********************************************************************
-                /*var botones = document.getElementsByName('boton');
-                 alert(botones.length);
-                 for (var i = 0; i < botones.length; i++)
-                 {
-                 botones[i].style = "";
-                 }*/
-            }
+                boton = document.createElement("div");
+                boton.style = "padding:0.707em;margin: 0.2em;border: solid;float: left;";
+                var nodoT = document.createTextNode("C");
+                boton.appendChild(nodoT);
+                tresdiv.appendChild(boton);
+
+                padre.appendChild(tresdiv);
+            };
 
             /**
              * Inserta un digito en una mantisa.  
@@ -177,6 +187,7 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
              */
             calc.insertar_en_mantisa = function (caracter)
             {
+                //alert(caracter);
                 var m = document.getElementById("mantisa").innerHTML;
 
                 if (calc.n_inserciones < 11)
@@ -194,16 +205,15 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                         }
                     } else
                     {
-
-                        m = m.concat(caracter);
-
+                        m = caracter;
                         //alert(cad);
                         document.getElementById("mantisa").innerHTML = m;
+                        document.getElementById("resultado").innerHTML = m;
                         calc.n_inserciones++;
                     }
 
                 }
-            }
+            };
 
             /**
              * Inicializa una mantisa de id 'nombre'
@@ -213,13 +223,29 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
             calc.inicializa_mantisa = function (nombre)
             {
                 //  alert('inicializando ' + nombre);
-                var var_cadena = "";
+                var var_cadena = "0";
 
-                var NodoT = document.createTextNode(var_cadena);
-                document.getElementById(nombre).appendChild(NodoT);
+
+                document.getElementById(nombre).innerHTML = var_cadena;
 
                 //alert('inicializando' + var_cadena.length);
-            }
+            };
+
+            /**
+             * Inicializa una mantisa de id 'nombre'
+             * @param {type} caracter
+             * @returns {reverse_string.r|Boolean|String}
+             */
+            calc.inicializa_lmantisa = function (nombre)
+            {
+                //  alert('inicializando ' + nombre);
+                var var_cadena = "";
+
+
+                document.getElementById(nombre).innerHTML = var_cadena;
+
+                //alert('inicializando' + var_cadena.length);
+            };
 
             /**
              * Devuelve true si le introduces un numero de 1 digito.
@@ -233,7 +259,7 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                     return (true);
                 }
                 return(false);
-            }
+            };
 
             /**
              * Devuelve true si el ultimo digito de mantis es un operando.
@@ -248,7 +274,7 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                     es = true;
                 }
                 return es;
-            }
+            };
 
             /**
              * cuenta cuantos operandos tiene una cadena
@@ -267,7 +293,7 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                     }
                 }
                 return contador;
-            }
+            };
 
             /**
              * Devuelve true si el ultimo digito de mantis es un operando.
@@ -287,7 +313,7 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                     es = true;
                 }
                 return es;
-            }
+            };
 
             calc.extrae_ultimo = function (m)
             {
@@ -304,16 +330,13 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                 nueva = nueva.concat(c);
                 return (nueva);
 
-            }
+            };
 
             calc.reemplazar_mantisa = function (nombre_mantisa, v)
             {
-                alert('nombre mantisa reemplazar mantisa :' + nombre_mantisa);
-                calc.inicializa_mantisa(nombre_mantisa);
-                //var m=document.getElementById('mantisa').innnerHTML;
-                //alert('mantisa tras inicialización :'+m);
+                document.getElementById('mantisa').innerHTML="";
                 calc.insertar_en_resultado(v);
-            }
+            };
 
             /**
              * Inserta 1 digito u operador en div resultado.
@@ -321,15 +344,9 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
              */
             calc.insertar_en_resultado = function (caracter)
             {
-                var l = document.getElementById('resultado');
-                var NodoT = document.createTextNode(caracter);
-                /*var longitud = caracter.length;
-                 l = l.substr(longitud, l.length - 1);
-                 l = l.concat(caracter);
-                 alert(l);*/
-                l.appendChild(NodoT);
-                //document.getElementById('resultado').innnerHTML = l;
-            }
+                document.getElementById('resultado').innerHTML=caracter;
+                
+            };
 
             /**
              * Función trim normal.
@@ -347,7 +364,7 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                     }
                 }
                 return(resultado);
-            }
+            };
 
             /**
              * Devuelve un string del reves.
@@ -362,11 +379,11 @@ Se deberá incluir un div que nos permite inicializar la calculadora.
                     r = r.concat(s.charAt(s.length - i));
                 }
                 return (r);
-            }
+            };
 
 
             calc.pintacalculadora();
-            calc.inicializa_mantisa('mantisa');
+            calc.inicializa_lmantisa('mantisa');
             calc.inicializa_mantisa('resultado');
 
 
