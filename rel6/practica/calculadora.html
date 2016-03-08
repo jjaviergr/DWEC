@@ -19,10 +19,12 @@ and open the template in the editor.
             <div id="papi" style="width: 12.08em;height: 11.7em;border: 0.1em solid;float: bottom;"></div> 
         </div>
         <script>
+            calc.pinta_calculadora();
+
             var hecho = 0;
             var operacion;
             var n_inserciones = 0;
-            inicializa_mantisa('mantisa');
+            calc.inicializa_mantisa('mantisa');
 
             document.getElementById("papi").addEventListener("click", function (event) {
                 // display the current click count inside the clicked div
@@ -34,29 +36,20 @@ and open the template in the editor.
 
                 } else
                 {
+
                     operacion = caracter;
                     switch (caracter)
                     {
-                        case 'MC':
-                            break;
-                        case 'MR':
-                            break;
-                        case 'MS':
-                            break;
-                        case 'M+':
-                            break;
-                        case 'M-':
-                            break;
+
                         case '<=':
                             break;
-                        case 'CE':
-                            break;
+
                         case 'C':
-                            inicializa_mantisa("lmantisa");
-                            inicializa_mantisa("mantisa");
+
+                            calc.inicializa_mantisa("lmantisa");
+                            calc.inicializa_mantisa("mantisa");
                             break;
-                        case '+/-':
-                            break;
+
                         case '/':
                             break;
                         case '*':
@@ -65,35 +58,107 @@ and open the template in the editor.
                             break;
                         case '+':
 
-                            var lcad = document.getElementById("lmantisa").value;
-                            var cad = document.getElementById("mantisa").value;
-                            var ultimo = cad.charAt(cad.length - 1);
-                            var lultimo = lcad.charAt(lcad.length - 1);
+                            var l = document.getElementById("lmantisa").value;
+                            var m = document.getElementById("mantisa").value;
+                            alert(ultimo('l'));
+                            /*
+                             var lultimo = ultimo(l);
+                             var ultimo = ultimo(m);
+                             
+                             if (mantisa_esta_vacia(l))
+                             {
+                             copia_mantisa_l_mantisa();
+                             inserta_emlmantisa('+');
+                             }*/
+                            /*
+                             if (ultimo_es_operando(lultimo))//si es operando
+                             {
+                             alert("ultimo de m es operando y solo hay 1");
+                             //   si hay 1 copiar nº y operando a lmantisa - no hago nada si pulso el + otra vez
+                             if (cuenta_operandos(lmantisa) === 1)
+                             {
+                             insertar_en_mantisa(caracter);
+                             insertar_en_lmantisa(caracter);
+                             insertar_en_lmantisa('+');
+                             }
+                             if (cuenta_operandos(lmantisa) === 2)
+                             {//   si hay 2+ evaluar op1 de lmantisa + `op2 de mantisa , grabar en mantisa el resultado y pongo un + en lmantisa
+                             alert("m tiene mas de 2 operandos");
+                             var op1 = ultimo(cad);
+                             var op2 = ultimo(lcad);
+                             var resultado = eval(op1 + '+' + op2);
+                             insertar_en_mantisa(resultado);
+                             insertar_en_lmantisa('+');
+                             }
+                             
+                             //   si hay +2 y no hay numero no hacer nada.
+                             } else// sino //es numero
+                             {
+                             //    si lmantisa_vacio copiar a mantisa
+                             if (mantisa_esta_vacia(cad))
+                             {
+                             alert("m vacia");
+                             insertar_en_mantisa(caracter);
+                             //insertar_en_lmantisa(caracter);
+                             //insertar_en_lmantisa('+');
+                             } else
+                             {
+                             if (esnumero(ultimo(mantisa)))
+                             {
+                             alert("m no vacia y ultimo es numero");
+                             
+                             }
+                             //lmantisa  1+ caracter 1;
+                             
+                             /*
+                             var op1 = ultimo(lmantisa);
+                             var op2 = ultimo(mantisa);
+                             var resultado = eval(op1 + '+' + op2);
+                             reemplazar_mantisa(resultado);*/
+
+                            //                    }
+                            //    si ultimo_mantisa_operando reemplazar mantisa con nuevo valor
+                            /*                    if (ultimo_es_operando(lcad))
+                             {
+                             alert("l ult es operando");
+                             reemplazar_mantisa(caracter);
+                             }
+                             }*/
+
+
+
+
+
+
                             //alert(cad.charAt(cad.length - 1));
-                            if ((ultimo === "1") || (ultimo === "2") || (ultimo === "3") || (ultimo === "4") || (ultimo === "5") || (ultimo === "6") || (ultimo === "7") || (ultimo === "8") || (ultimo === "9") || (ultimo === "0"))
-                            {
-                                if (cuenta_operandos(cad) > 2)
-                                {
-                                    reemplaza_mantisa(nuevo);
-                                } else
-                                {
-                                    //if ((lcad.length >= 0) && (lcad <= 4))
-                                    copia_mantisa_l_mantisa();//copio los numeros
-                                    if (ultimo !== "+") //meto el operando
-                                        document.getElementById("lmantisa").value = document.getElementById("lmantisa").value + "+";
-                                    opera();
-                                }
-                            } else
-                            {
-                                if ((ultimo !== '+') && (ultimo_es_operando(ultimo)))
-                                {
-                                    // alert("no es +");
-                                    copia_mantisa_l_mantisa();
-                                    cad = cad.substring(0, cad.length - 2);
-                                    cad = cad.concat("+");
-                                    document.getElementById("lmantisa").value = cad;
-                                }
-                            }
+                            /*
+                             if (es_numero(ultimo))
+                             {
+                             if (cuenta_operandos(cad) > 2)
+                             {
+                             reemplaza_mantisa(nuevo);
+                             } 
+                             else
+                             {
+                             //if ((lcad.length >= 0) && (lcad <= 4))
+                             copia_mantisa_l_mantisa();//copio los numeros
+                             if (ultimo !== "+") //meto el operando
+                             document.getElementById("lmantisa").value = document.getElementById("lmantisa").value + "+";
+                             opera();
+                             }
+                             } 
+                             else
+                             {
+                             if ((ultimo !== '+') && (ultimo_es_operando(ultimo)))
+                             {
+                             // alert("no es +");
+                             copia_mantisa_l_mantisa();
+                             cad = cad.substring(0, cad.length - 2);
+                             cad = cad.concat("+");
+                             document.getElementById("lmantisa").value = cad;
+                             }
+                             }
+                             */
                             break;
                         case 'R':
                             break;
@@ -117,137 +182,399 @@ and open the template in the editor.
 
             }, false);
 
-            padre = document.getElementById("papi");
+
+
+//nombreObjeto.métodoEstático1 = function (par1, par2, …) { … }
+
+            function calc()
+            {
+
+
+                /**
+                 * Evalua y escribe en mantisa. Pendiente de revision.
+                 * @returns {undefined}
+                 */
+                this.opera = function opera()
+                {
+                    var op1 = document.getElementById("mantisa").value;
+                    var op2 = document.getElementById("lmantisa").value;
+                    //alert("op1 :" + op1);
+                    //alert("op2 :" + op2);
+                    // alert("length :" + (op2.trim()).length);
+                    if (cuenta_operandos(op2) === 2)
+                    {
+                        var operacion = op2.substring(op2.length - 4, op2.length - 1);
+
+                        //alert("entradas :" + operacion);
+                        var resultado = eval(operacion);
+                        //alert("resultado :" + resultado);
+                        insertar_en_mantisa(resultado);
+                    } else
+                    {
+
+                        //copia_mantisa_l_mantisa();
+                        alert("numero de operandos es :" + cuenta_operandos(op2));
+                        alert("ultimo es operando :" + !ultimo_es_operando(lmantisa));
+                        if (!ultimo_es_operando(lmantisa))
+                        {
+                            var operacion = op2.substring(op2.length - 2, op2.length - 1);
+
+                            // operacion = op2.concat(op1.charAt(op1.length - 1));
+
+                            // alert("lmantisa es :"+operacion);
+
+                            alert("operacion es :" + operacion);
+
+                            var resultado = eval(operacion);
+                            //alert("resultado :" + resultado);
+                            insertar_en_mantisa(resultado);
+                        }
+                    }
+
+                }
+
+                /**
+                 * Devuelve true si el ultimo digito de mantis es un operando.
+                 * @returns {undefined}
+                 */
+                this.ultimo_es_operando = function ultimo_es_operando(mantis)
+                {
+                    mantis = String(mantis);
+                    var ultimo = mantis.charAt(mantis.length);
+                    var es = false;
+                    if ((ultimo === '+') || (ultimo === '-') || (ultimo === '/') || (ultimo === '*'))
+                    {
+                        es = true;
+                    }
+                    return es;
+                }
+
+                /*
+                 * concatene el contenido de mantisa a lmantisa
+                 * @param {type} nombre
+                 * @returns {reverse_string.r|Boolean|String}
+                 */
+                this.copia_mantisa_l_mantisa = function copia_mantisa_l_mantisa()
+                {
+                    var mantisa = document.getElementById("mantisa").value;
+                    var lmantisa = document.getElementById("lmantisa").value;
+                    mantisa = trim_alternativo(mantisa);
+                    lmantisa = trim_alternativo(lmantisa);
+
+                    lmantisa = lmantisa.concat(mantisa);
+
+                    var n_blancos = eval(26 - 2 * lmantisa.length);
+                    //var lon_lmantisa = lmantisa.length;
+                    //alert("lmantisa.length:" + lon_lmantisa);
+                    //alert("n_blancos :" + n_blancos);
+                    var cad = "";
+
+                    for (var i = 0; i < n_blancos; i++)
+                    {
+                        cad += " ";
+                    }
+                    document.getElementById("lmantisa").value = cad.concat(lmantisa);
+                    inicializa_mantisa('mantisa');
+                }
+
+                /**
+                 * Función trim normal.
+                 * @param {type} cadena
+                 * @returns {String|trim_alternativo.resultado}
+                 */
+                this.trim_alternativo = function trim_alternativo(cadena)
+                {
+                    var resultado = "";
+                    for (var i = 0; i < cadena.length; i++)
+                    {
+                        if (cadena.charAt(i) !== " ")
+                        {
+                            resultado = resultado.concat(cadena.charAt(i));
+                        }
+                    }
+                    return(resultado);
+                }
+
+
+
+
+                /**
+                 * Inserta 1 digito u operador en lmantisa.
+                 * @type Number
+                 */
+                this.insertar_en_lmantisa = function insertar_en_lmantisa(caracter)
+                {
+                    var l = document.getElementById("lmantisa").value.toString();
+                    l = l.substring(2, l.length);
+                    l = l.concat(caracter);
+                    document.getElementById("lmantisa").value = l;
+                }
+
+                /**
+                 * Inserta un digito en una mantisa. Debe ser número 
+                 * @param {type} ultimo
+                 * @returns {String|reverse_string.r|Boolean}
+                 */
+                this.insertar_en_mantisa = function insertar_en_mantisa(caracter)
+                {
+                    if (n_inserciones < 11)
+                    {
+                        var cad = document.getElementById("mantisa").value.toString();
+                        cad = cad.substring(2, cad.length);
+                        cad = cad.concat(caracter);
+                        //alert(cad);
+                        document.getElementById("mantisa").value = cad;
+                        n_inserciones++;
+                    }
+                }
+
+                /**
+                 * cuenta cuantos operandos tiene una cadena
+                 * @param {type} m
+                 * @returns {reverse_string.r|String|Array|u}
+                 */
+                this.cuenta_operandos = function cuenta_operandos(cadena)
+                {
+                    var cadena = String(cadena);
+                    var contador = 0;
+                    for (var i = 0; i < cadena.length; i++)
+                    {
+                        if ((cadena.charAt(i) === '+') || (cadena.charAt(i) === '-') || (cadena.charAt(i) === '/') || (cadena.charAt(i) === '*'))
+                        {
+                            contador++;
+                        }
+                    }
+                    return contador;
+                }
+
+                /**
+                 * Devuelve true si le introduces un numero de 1 digito.
+                 * @param {type} s
+                 * @returns {reverse_string.r|String}
+                 */
+                this.es_numero = function es_numero(ultimo)
+                {
+                    if ((ultimo === "1") || (ultimo === "2") || (ultimo === "3") || (ultimo === "4") || (ultimo === "5") || (ultimo === "6") || (ultimo === "7") || (ultimo === "8") || (ultimo === "9") || (ultimo === "0"))
+                    {
+                        return (true);
+                    }
+                    return(false);
+                }
+
+                /**
+                 * Extrae el ultimo número de la mantisa -m- 
+                 * @param {type} m
+                 * @returns {reverse_string.r|String|u|Array}
+                 */
+                this.ultimo = function ultimo(m)
+                {
+                    u = "";
+                    m = String(m);
+                    if (ultimo_es_operando(m.charAt(m.length)))
+                        u = m.charAt(m.length);
+                    else
+                    {
+                        while ((ultimo(m) !== " ") || (ultimo(m) !== ""))
+                        {
+                            u = u.concat(m.charAt(m.length));
+                            m = m.substr(0, m.length - 1);
+                        }
+                    }
+                    u = reverse_string(u);
+                    return u;
+                }
+
+                /**
+                 * Devuelve un string del reves.
+                 * @param {type} s
+                 * @returns {reverse_string.r|String}
+                 */
+                this.reverse_string = function reverse_string(s)
+                {
+                    var r = "";
+                    for (var i = 0; i < s.length; i++)
+                    {
+                        r = r.concat(s.charAt(s.length - i));
+                    }
+                    return (r);
+                }
+
+                /**
+                 * Devuelve false si la mantisa tiene algo que no sea blanco.
+                 * @param {type} m
+                 * @returns {Boolean}
+                 */
+                this.mantisa_esta_vacia = function mantisa_esta_vacia(m)
+                {
+
+                    var m = String(m);
+                    //alert("contenido de m:"+m+" longitud :"+m.length);
+                    for (var i = 0; i < m.length; i++)
+                    {
+                        if (m.charAt(i) !== " ")
+                        {
+                            //alert("m no esta vacia");
+                            return(false);
+                        }
+                    }
+                    return(true);
+                }
+                /**
+                 * Inicializa una mantisa de id 'nombre'
+                 * @param {type} caracter
+                 * @returns {reverse_string.r|Boolean|String}
+                 */
+                calc.inicializa_mantisa = function inicializa_mantisa(nombre)
+                {
+                    var var_cadena = "";
+                    var l = 26;
+                    for (var i = 0; i < l; i++)
+                        var_cadena = var_cadena.concat(" ");
+                    document.getElementById(nombre).value = var_cadena;
+                }
+
+
+                calc.pinta_calculadora = function pinta_calculadora() {
+                    padre = document.getElementById("papi");
 //******************************************************
-            var v = new Array("MC", "MR", "MS", "M+", "M-");
-            undiv = document.createElement("DIV");
-            for (var i = 0; i < v.length; i++)
-            {
-                boton = document.createElement("input");
-                boton.style = " width:2.5em; height:2em;margin: 0.2em;"
-                boton.type = "button";
-                boton.value = v[i];
-                undiv.appendChild(boton);
-            }
+                    var v = new Array("MC", "MR", "MS", "M+", "M-");
+                    undiv = document.createElement("DIV");
+                    for (var i = 0; i < v.length; i++)
+                    {
+                        boton = document.createElement("input");
+                        boton.style = " width:2.5em; height:2em;margin: 0.2em;"
+                        boton.type = "button";
+                        boton.value = v[i];
+                        undiv.appendChild(boton);
+                    }
 
-            padre.appendChild(undiv);
+                    padre.appendChild(undiv);
 
-            //****************************************************
-            var v = new Array("<=", "CE", "C", "+/-", "R");
-            undiv = document.createElement("DIV");
-            for (var i = 0; i < v.length; i++)
-            {
-                boton = document.createElement("input");
-                boton.style = " width:2.5em; height:2em;margin: 0.2em;"
-                boton.type = "button";
-                boton.value = v[i];
-                undiv.appendChild(boton);
-            }
+                    //****************************************************
+                    var v = new Array("<=", "CE", "C", "+/-", "R");
+                    undiv = document.createElement("DIV");
+                    for (var i = 0; i < v.length; i++)
+                    {
+                        boton = document.createElement("input");
+                        boton.style = " width:2.5em; height:2em;margin: 0.2em;"
+                        boton.type = "button";
+                        boton.value = v[i];
+                        undiv.appendChild(boton);
+                    }
 
-            padre.appendChild(undiv);
+                    padre.appendChild(undiv);
 
-            //****************************************************
-            undiv = document.createElement("DIV");
-            //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
-            for (i = 7; i < 10; i++)
-            {
-                boton = document.createElement("input");
-                boton.style = " width:2.5em; height:2em;margin: 0.2em;"
-                boton.type = "button";
-                boton.value = i;
-                undiv.appendChild(boton);
-            }
-            boton = document.createElement("input");
-            boton.style = " width:2.5em; height:2em;margin: 0.2em;"
-            boton.type = "button";
-            boton.value = "/";
-            undiv.appendChild(boton);
+                    //****************************************************
+                    undiv = document.createElement("DIV");
+                    //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
+                    for (i = 7; i < 10; i++)
+                    {
+                        boton = document.createElement("input");
+                        boton.style = " width:2.5em; height:2em;margin: 0.2em;"
+                        boton.type = "button";
+                        boton.value = i;
+                        undiv.appendChild(boton);
+                    }
+                    boton = document.createElement("input");
+                    boton.style = " width:2.5em; height:2em;margin: 0.2em;"
+                    boton.type = "button";
+                    boton.value = "/";
+                    undiv.appendChild(boton);
 
-            boton = document.createElement("input");
-            boton.style = " width:2.5em; height:2em;margin: 0.2em;"
-            boton.type = "button";
-            boton.value = "%";
-            undiv.appendChild(boton);
+                    boton = document.createElement("input");
+                    boton.style = " width:2.5em; height:2em;margin: 0.2em;"
+                    boton.type = "button";
+                    boton.value = "%";
+                    undiv.appendChild(boton);
 
-            padre.appendChild(undiv);
-            //****************************************************
+                    padre.appendChild(undiv);
+                    //****************************************************
 
-            dosdiv = document.createElement("DIV");
-            for (i = 4; i < 7; i++)
-            {
-                boton = document.createElement("input");
-                boton.style = "width:2.5em; height:2em;margin: 0.2em;"
-                boton.type = "button";
-                boton.value = i;
-                dosdiv.appendChild(boton);
-            }
-            boton = document.createElement("input");
-            boton.style = "width:2.5em; height:2em;margin: 0.2em;"
-            boton.type = "button";
-            boton.value = "*";
-            dosdiv.appendChild(boton);
+                    dosdiv = document.createElement("DIV");
+                    for (i = 4; i < 7; i++)
+                    {
+                        boton = document.createElement("input");
+                        boton.style = "width:2.5em; height:2em;margin: 0.2em;"
+                        boton.type = "button";
+                        boton.value = i;
+                        dosdiv.appendChild(boton);
+                    }
+                    boton = document.createElement("input");
+                    boton.style = "width:2.5em; height:2em;margin: 0.2em;"
+                    boton.type = "button";
+                    boton.value = "*";
+                    dosdiv.appendChild(boton);
 
-            boton = document.createElement("input");
-            boton.style = "width:2.5em; height:2em;margin: 0.2em;"
-            boton.type = "button";
-            boton.value = "1/x";
-            dosdiv.appendChild(boton);
+                    boton = document.createElement("input");
+                    boton.style = "width:2.5em; height:2em;margin: 0.2em;"
+                    boton.type = "button";
+                    boton.value = "1/x";
+                    dosdiv.appendChild(boton);
 
-            padre.appendChild(dosdiv);
+                    padre.appendChild(dosdiv);
 //*******************************************************************************
-            tresdiv = document.createElement("DIV");
-            //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
-            for (i = 1; i < 4; i++)
-            {
-                boton = document.createElement("input");
-                boton.style = "width:2.5em; height:2em;margin: 0.2em;"
-                boton.type = "button";
-                boton.value = i;
+                    tresdiv = document.createElement("DIV");
+                    //undiv.style="float:left; margin: 0.1em 0.1em 1em 1em;border: 0.1em solid;";
+                    for (i = 1; i < 4; i++)
+                    {
+                        boton = document.createElement("input");
+                        boton.style = "width:2.5em; height:2em;margin: 0.2em;"
+                        boton.type = "button";
+                        boton.value = i;
 
-                tresdiv.appendChild(boton);
-            }
-            boton = document.createElement("input");
-            boton.style = "width:2.5em; height:2em;margin: 0.2em;"
-            boton.type = "button";
-            boton.value = "-";
-            tresdiv.appendChild(boton);
+                        tresdiv.appendChild(boton);
+                    }
+                    boton = document.createElement("input");
+                    boton.style = "width:2.5em; height:2em;margin: 0.2em;"
+                    boton.type = "button";
+                    boton.value = "-";
+                    tresdiv.appendChild(boton);
 
 //*****************************style="position: absolute; top: 12em; width: 35em; height: 4em;"
-            boton = document.createElement("input");
-            boton.style = " position: absolute; top: 13.65em; left:-2.7em; width:2.5em; height:4.4em;margin: 0.4em; margin-left: 206px;float:rigth;"
-            boton.type = "button";
-            boton.value = "=";
-            //boton.setAttribute('onclick',"boton_pulsado()");
-            tresdiv.appendChild(boton);
+                    boton = document.createElement("input");
+                    boton.style = " position: absolute; top: 13.65em; left:-2.7em; width:2.5em; height:4.4em;margin: 0.4em; margin-left: 206px;float:rigth;"
+                    boton.type = "button";
+                    boton.value = "=";
+                    //boton.setAttribute('onclick',"boton_pulsado()");
+                    tresdiv.appendChild(boton);
 
-            padre.appendChild(tresdiv);
+                    padre.appendChild(tresdiv);
 //*********************************************************************
-            undiv = document.createElement("DIV");
-            boton = document.createElement("input");
-            boton.style = " width:5.4em; height:2em;margin: 0.2em;"
-            boton.type = "button";
-            boton.value = "0";
-            undiv.appendChild(boton);
+                    undiv = document.createElement("DIV");
+                    boton = document.createElement("input");
+                    boton.style = " width:5.4em; height:2em;margin: 0.2em;"
+                    boton.type = "button";
+                    boton.value = "0";
+                    undiv.appendChild(boton);
 ////**********************************+
-            var v = new Array(",", "+");
-            for (var i = 0; i < v.length; i++)
-            {
-                boton = document.createElement("input");
-                boton.style = "width:2.5em; height:2em;margin: 0.2em;"
-                boton.type = "button";
-                boton.value = v[i];
-                undiv.appendChild(boton);
-            }
+                    var v = new Array(",", "+");
+                    for (var i = 0; i < v.length; i++)
+                    {
+                        boton = document.createElement("input");
+                        boton.style = "width:2.5em; height:2em;margin: 0.2em;"
+                        boton.type = "button";
+                        boton.value = v[i];
+                        undiv.appendChild(boton);
+                    }
 
-            padre.appendChild(undiv);
+                    padre.appendChild(undiv);
 //*********************************************************************
-            var botones = document.getElementsByTagName('input');
-            for (var i = 0; i < botones.length; i++)
-            {
-                //   botones[i].setAttribute('onclick', "boton_pulsado()");
+                    var botones = document.getElementsByTagName('input');
+                    for (var i = 0; i < botones.length; i++)
+                    {
+                        //   botones[i].setAttribute('onclick', "boton_pulsado()");
+                    }
+                }
+
+                
+
             }
 
-            function boton_pulsado()
+            /**
+             * Probando.
+             * @returns {undefined}
+             */
+            calc.boton_pulsado = function boton_pulsado()
             {
                 var evento = window.event;
 
@@ -255,134 +582,8 @@ and open the template in the editor.
                     alert(evento.Target + " " + evento.currenTarget + " " + evento.relatedTarget);
             }
 
-            function opera()
-            {
-                var op1 = document.getElementById("mantisa").value;
-                var op2 = document.getElementById("lmantisa").value;
-                //alert("op1 :" + op1);
-                //alert("op2 :" + op2);
-                // alert("length :" + (op2.trim()).length);
-                if (cuenta_operandos(op2) === 2)
-                {
-                    var operacion = op2.substring(op2.length - 4, op2.length - 1);
 
-                    //alert("entradas :" + operacion);
-                    var resultado = eval(operacion);
-                    //alert("resultado :" + resultado);
-                    insertar_en_mantisa(resultado);
-                } else
-                {
 
-                    //copia_mantisa_l_mantisa();
-                    alert("numero de operandos es :" + cuenta_operandos(op2));
-                    alert("ultimo es operando :" + !ultimo_es_operando(lmantisa));
-                    if (!ultimo_es_operando(lmantisa))
-                    {
-                        var operacion = op2.substring(op2.length - 2, op2.length - 1);
-
-                        // operacion = op2.concat(op1.charAt(op1.length - 1));
-
-                        // alert("lmantisa es :"+operacion);
-
-                        alert("operacion es :" + operacion);
-
-                        var resultado = eval(operacion);
-                        //alert("resultado :" + resultado);
-                        insertar_en_mantisa(resultado);
-                    }
-                }
-
-            }
-
-            function ultimo_es_operando(mantis)
-            {
-                mantis = String(mantis);
-                var ultimo = mantis.charAt(mantis.length);
-                var es = false;
-                if ((ultimo === '+') || (ultimo === '-') || (ultimo === '/') || (ultimo === '*'))
-                {
-                    es = true;
-                }
-                return es;
-            }
-            function copia_mantisa_l_mantisa()
-            {
-                var mantisa = document.getElementById("mantisa").value;
-                var lmantisa = document.getElementById("lmantisa").value;
-                mantisa = trim_alternativo(mantisa);
-                lmantisa = trim_alternativo(lmantisa);
-
-                lmantisa = lmantisa.concat(mantisa);
-
-                var n_blancos = eval(26 - 2 * lmantisa.length);
-                //var lon_lmantisa = lmantisa.length;
-                //alert("lmantisa.length:" + lon_lmantisa);
-                //alert("n_blancos :" + n_blancos);
-                var cad = "";
-
-                for (var i = 0; i < n_blancos; i++)
-                {
-                    cad += " ";
-                }
-                document.getElementById("lmantisa").value = cad.concat(lmantisa);
-                inicializa_mantisa('mantisa');
-            }
-
-            function trim_alternativo(cadena)
-            {
-                var resultado = "";
-                for (var i = 0; i < cadena.length; i++)
-                {
-                    if (cadena.charAt(i) !== " ")
-                    {
-                        resultado = resultado.concat(cadena.charAt(i));
-                    }
-                }
-                return(resultado);
-            }
-            function inicializa_mantisa(nombre)
-            {
-                var var_cadena = "";
-                var l = 26;
-                for (var i = 0; i < l; i++)
-                    var_cadena = var_cadena.concat(" ");
-                document.getElementById(nombre).value = var_cadena;
-            }
-
-            function insertar_en_mantisa(caracter)
-            {
-                if (n_inserciones < 11)
-                {
-                    var cad = document.getElementById("mantisa").value.toString();
-                    cad = cad.substring(2, cad.length);
-                    cad = cad.concat(caracter);
-                    //alert(cad);
-                    document.getElementById("mantisa").value = cad;
-                    n_inserciones++;
-                }
-            }
-
-            function cuenta_operandos(cadena)
-            {
-                var contador = 0;
-                for (var i = 0; i < cadena.length; i++)
-                {
-                    if ((cadena.charAt(i) === '+') || (cadena.charAt(i) === '-') || (cadena.charAt(i) === '/') || (cadena.charAt(i) === '*'))
-                    {
-                        contador++;
-                    }
-                }
-                return contador;
-            }
-
-            function es_numero(ultimo)
-            {
-                if ((ultimo === "1") || (ultimo === "2") || (ultimo === "3") || (ultimo === "4") || (ultimo === "5") || (ultimo === "6") || (ultimo === "7") || (ultimo === "8") || (ultimo === "9") || (ultimo === "0"))
-                {
-                    return (true);
-                }
-                return(false);
-            }
         </script>
     </body>
 </html>
